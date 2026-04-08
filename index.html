@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letargia — Arquivo do Gelo Negro</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inconsolata:wght@300;400;700&family=Cormorant+SC:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg:          #040710;
+  --surface:     #070c1a;
+  --surface-2:   #0a1020;
+  --blue-bright: #4a9fd8;
+  --blue-dim:    #1a5a8a;
+  --ink:         #e8ddc8;
+  --ink-mid:     #b8a898;
+  --ink-dim:     #6a5e50;
+  --ink-bright:  #f5eedf;
+  --border:      rgba(26,90,138,.15);
+  --border-md:   rgba(26,90,138,.28);
+  --tab-h:       50px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.grain {
+  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px;
+}
+.vignette {
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 50%, transparent 20%, rgba(0,0,0,.8) 100%),
+    radial-gradient(ellipse 70% 40% at 50% 0%,   rgba(0,3,8,.7) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 30% at 50% 100%,  rgba(0,3,8,.8) 0%, transparent 60%);
+}
+.scanlines {
+  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.025;
+  background:repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(26,90,138,.25) 3px, rgba(26,90,138,.25) 4px
+  );
+}
+.ice-bg { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.ice-bg span {
+  position:absolute; width:1px; height:1px;
+  background:rgba(130,190,230,.5); border-radius:50%;
+  animation:ice-float linear infinite;
+}
+@keyframes ice-float {
+  0%   { transform:translateY(100vh) scale(0); opacity:0; }
+  10%  { opacity:.4; }
+  90%  { opacity:.15; }
+  100% { transform:translateY(-10px) scale(1.5); opacity:0; }
+}
+
+/* ══════ TELA DE SENHA ══════ */
+#lock-screen {
+  position:fixed; inset:0; z-index:9999;
+  background:#020407;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+}
+.ls-grain {
+  position:absolute; inset:0; pointer-events:none; opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px;
+}
+.ls-vignette {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 90% 90% at 50% 50%, transparent 15%, rgba(0,0,0,.92) 100%);
+}
+.ls-sigil {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:min(680px,90vw); height:min(680px,90vw);
+  opacity:.22;
+  animation:sigil-breathe 10s ease-in-out infinite;
+  pointer-events:none; z-index:0;
+}
+@keyframes sigil-breathe {
+  0%,100% { opacity:.15; filter:drop-shadow(0 0 20px rgba(26,90,138,.3)) drop-shadow(0 0 70px rgba(26,90,138,.12)); }
+  50%      { opacity:.32; filter:drop-shadow(0 0 50px rgba(74,159,216,.6)) drop-shadow(0 0 120px rgba(26,90,138,.3)); }
+}
+@keyframes ray-pulse {
+  0%,100% { opacity:.5; }
+  50%      { opacity:1; }
+}
+.ls-title {
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.8rem,5.5vw,3.2rem); font-weight:900;
+  letter-spacing:.45em; color:rgba(74,159,216,.2);
+  margin-bottom:10px; text-align:center; position:relative; z-index:1;
+  animation:ls-title-in 2.2s cubic-bezier(.16,1,.3,1) forwards;
+  text-shadow:0 0 80px rgba(26,90,138,.4);
+}
+@keyframes ls-title-in {
+  from { opacity:0; letter-spacing:.75em; }
+  to   { opacity:1; letter-spacing:.45em; }
+}
+.ls-sub {
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:.95rem; color:var(--ink-dim);
+  margin-bottom:52px; text-align:center;
+  letter-spacing:.08em; position:relative; z-index:1;
+  opacity:.7;
+}
+.ls-label {
+  font-family:'Inconsolata',monospace;
+  font-size:.36rem; letter-spacing:.55em; text-transform:uppercase;
+  color:rgba(100,170,220,.28); margin-bottom:12px;
+  position:relative; z-index:1; text-align:center;
+}
+.ls-input-wrap {
+  position:relative; display:flex; align-items:center; z-index:1;
+}
+.ls-input {
+  background:rgba(6,12,24,.9);
+  border:none;
+  border-bottom:1px solid rgba(26,90,138,.45);
+  padding:16px 56px 16px 28px;
+  font-family:'Cinzel',serif; font-size:1.05rem;
+  font-weight:400; letter-spacing:.38em;
+  color:var(--ink); outline:none; width:280px;
+  text-align:center; text-transform:lowercase;
+  transition:border-color .3s, box-shadow .3s;
+  caret-color:rgba(74,159,216,.6);
+}
+.ls-input:focus {
+  border-color:rgba(74,159,216,.65);
+  box-shadow:0 4px 30px rgba(26,90,138,.12);
+}
+.ls-input::placeholder { color:rgba(100,130,160,.18); letter-spacing:.2em; }
+.ls-btn {
+  position:absolute; right:0; top:0; bottom:0;
+  width:50px; background:none; border:none;
+  border-left:1px solid rgba(26,90,138,.18);
+  color:rgba(74,159,216,.3); cursor:pointer; font-size:.85rem;
+  transition:color .2s, background .2s;
+}
+.ls-btn:hover { color:rgba(74,159,216,.85); background:rgba(26,90,138,.08); }
+.ls-error {
+  font-family:'Inconsolata',monospace;
+  font-size:.36rem; letter-spacing:.4em; text-transform:uppercase;
+  color:rgba(200,80,60,.6); margin-top:14px; opacity:0;
+  transition:opacity .3s; text-align:center; position:relative; z-index:1;
+}
+.ls-error.visible { opacity:1; }
+.ls-deco {
+  display:flex; align-items:center; gap:16px;
+  opacity:.1; margin-top:54px; width:300px; position:relative; z-index:1;
+}
+.ls-deco-line { flex:1; height:1px; background:rgba(26,90,138,.6); }
+.ls-deco-mark {
+  font-family:'Inconsolata',monospace;
+  font-size:.34rem; letter-spacing:.5em; text-transform:uppercase;
+  color:rgba(74,159,216,.6); white-space:nowrap;
+}
+.ls-fade-out { animation:ls-fade .8s ease forwards; }
+@keyframes ls-fade { to { opacity:0; pointer-events:none; } }
+
+/* ══════ APP ══════ */
+#app { display:none; position:relative; z-index:2; min-height:100vh; }
+#app.visible { display:flex; flex-direction:column; }
+
+/* ── BANNER RETANGULAR ── */
+.app-banner {
+  position:relative; width:100%; overflow:hidden;
+  height:clamp(200px,30vw,320px);
+  background:linear-gradient(180deg, #020408 0%, #040812 40%, var(--bg) 100%);
+  border-bottom:1px solid rgba(26,90,138,.18);
+  flex-shrink:0;
+}
+.app-banner::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 50%, rgba(26,90,138,.06) 0%, transparent 70%),
+    radial-gradient(ellipse 100% 40% at 50% 100%, rgba(4,8,20,.9) 0%, transparent 60%);
+  z-index:1;
+}
+/* Linhas horizontais decorativas acima e abaixo do banner */
+.app-banner::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent 0%, rgba(74,159,216,.35) 20%, rgba(74,159,216,.55) 50%, rgba(74,159,216,.35) 80%, transparent 100%);
+  z-index:2;
+}
+.banner-top-line {
+  position:absolute; top:0; left:0; right:0; height:1px; z-index:2;
+  background:linear-gradient(90deg, transparent 0%, rgba(26,90,138,.3) 30%, rgba(26,90,138,.3) 70%, transparent 100%);
+}
+.banner-sigil {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:min(900px,95vw); height:auto;
+  opacity:.12;
+  pointer-events:none; z-index:1;
+  animation:sigil-breathe 14s ease-in-out infinite;
+}
+.banner-content {
+  position:absolute; inset:0; z-index:3;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:24px 40px;
+  text-align:center;
+}
+.banner-eyebrow {
+  font-family:'Inconsolata',monospace;
+  font-size:.34rem; letter-spacing:.7em; text-transform:uppercase;
+  color:rgba(100,150,200,.3); margin-bottom:16px;
+}
+.banner-title {
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.2rem,6vw,4.8rem); font-weight:900;
+  letter-spacing:.38em; color:rgba(74,159,216,.22);
+  line-height:1; user-select:none;
+  text-shadow:0 0 80px rgba(26,90,138,.5), 0 0 200px rgba(26,90,138,.2);
+  animation:ls-title-in 2.2s cubic-bezier(.16,1,.3,1) forwards;
+}
+.banner-subtitle {
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:clamp(.8rem,.9rem,1rem); color:var(--ink-dim);
+  margin-top:14px; letter-spacing:.08em; opacity:.5;
+  line-height:1.8;
+}
+/* Ornamentos cantos do banner */
+.banner-corner {
+  position:absolute; z-index:3; opacity:.2;
+  width:40px; height:40px;
+}
+.banner-corner svg { width:100%; height:100%; }
+.banner-corner.tl { top:14px; left:18px; }
+.banner-corner.tr { top:14px; right:18px; transform:scaleX(-1); }
+.banner-corner.bl { bottom:14px; left:18px; transform:scaleY(-1); }
+.banner-corner.br { bottom:14px; right:18px; transform:scale(-1,-1); }
+/* Linhas de margem laterais do banner */
+.banner-vline {
+  position:absolute; top:0; bottom:0; width:1px; z-index:2;
+  background:linear-gradient(180deg, transparent 0%, rgba(26,90,138,.2) 20%, rgba(26,90,138,.2) 80%, transparent 100%);
+}
+.banner-vline.left  { left:clamp(16px,3vw,40px); }
+.banner-vline.right { right:clamp(16px,3vw,40px); }
+/* Metadados do banner — esquerda e direita */
+.banner-meta {
+  position:absolute; z-index:3;
+  font-family:'Inconsolata',monospace;
+  font-size:.33rem; letter-spacing:.45em; text-transform:uppercase;
+  color:rgba(100,140,180,.2);
+  bottom:22px;
+}
+.banner-meta.left  { left:clamp(20px,3.5vw,52px); }
+.banner-meta.right { right:clamp(20px,3.5vw,52px); text-align:right; }
+
+/* ── ABAS ── */
+.tabs-wrap {
+  position:sticky; top:0; z-index:50;
+  background:rgba(4,7,16,.95);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+}
+.tabs-inner {
+  max-width:1100px; margin:0 auto; padding:0 40px;
+  display:flex; align-items:stretch; gap:0;
+  overflow-x:auto; scrollbar-width:none;
+}
+.tabs-inner::-webkit-scrollbar { display:none; }
+.tab-btn {
+  display:flex; align-items:center; gap:8px;
+  padding:0 24px; height:var(--tab-h);
+  background:none; border:none; cursor:pointer;
+  border-bottom:2px solid transparent;
+  font-family:'Cinzel',serif; font-size:.52rem;
+  font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--ink-dim); white-space:nowrap;
+  transition:color .25s, border-color .25s;
+}
+.tab-btn .tab-icon { font-size:.8rem; opacity:.45; }
+.tab-btn:hover { color:var(--ink-mid); }
+.tab-btn.active { color:var(--ink); border-bottom-color:rgba(74,159,216,.5); }
+.tab-btn.active .tab-icon { opacity:.9; }
+
+/* ── CONTEÚDO ── */
+.main-content {
+  max-width:1100px; margin:0 auto;
+  padding:40px 40px 100px; width:100%;
+}
+.section-panel { display:none; }
+.section-panel.active { display:block; }
+
+/* ── GRID ── */
+.cards-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1px; background:rgba(26,90,138,.1);
+  border:1px solid rgba(26,90,138,.1); margin-top:8px;
+}
+
+/* ── CARD ── */
+.entry-card {
+  position:relative; overflow:hidden;
+  background:var(--surface);
+  padding:30px 28px 26px;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  min-height:210px; cursor:pointer;
+  transition:background .4s;
+  animation:card-in .5s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes card-in {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:none; }
+}
+.entry-card:hover { background:var(--surface-2); }
+.entry-card:hover .card-cta     { opacity:1; transform:translateY(0); }
+.entry-card:hover .card-topline { opacity:.6; transform:scaleX(1); }
+.entry-card:hover .card-glyph   { opacity:.045; }
+.entry-card.locked {
+  cursor:not-allowed; filter:blur(3px);
+  opacity:.22; pointer-events:none; user-select:none;
+}
+.card-topline {
+  position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--blue-bright), transparent);
+  opacity:.08; transform:scaleX(.15); transform-origin:left;
+  transition:opacity .5s, transform .7s cubic-bezier(.16,1,.3,1);
+}
+.card-glyph {
+  position:absolute; bottom:-16px; right:-4px;
+  font-family:'Cinzel',serif; font-size:clamp(60px,9vw,100px); font-weight:900;
+  color:var(--blue-bright); opacity:.018; user-select:none; pointer-events:none; line-height:1;
+  transition:opacity .4s;
+}
+.card-date {
+  font-family:'Inconsolata',monospace;
+  font-size:.34rem; letter-spacing:.44em; text-transform:uppercase;
+  color:var(--ink-dim); margin-bottom:14px; position:relative; z-index:1;
+}
+.card-title {
+  font-family:'Cinzel',serif;
+  font-size:clamp(.95rem,2.2vw,1.3rem); font-weight:600; letter-spacing:.1em;
+  color:var(--ink-bright); line-height:1.25; margin-bottom:7px; position:relative; z-index:1;
+}
+.card-subtitle {
+  font-family:'Cormorant SC',serif;
+  font-size:.55rem; letter-spacing:.14em;
+  color:var(--ink-mid); opacity:.45;
+  margin-bottom:14px; position:relative; z-index:1;
+}
+.card-desc {
+  font-style:italic; font-size:.82rem; line-height:1.85;
+  color:var(--ink-mid); opacity:.58;
+  margin-bottom:20px; position:relative; z-index:1;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+}
+.card-tags {
+  display:flex; flex-wrap:wrap; gap:4px;
+  margin-bottom:18px; position:relative; z-index:1;
+}
+.card-tag {
+  font-family:'Inconsolata',monospace;
+  font-size:.32rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:2px 6px; border:1px solid rgba(26,90,138,.15); color:rgba(122,104,88,.65);
+}
+.card-cta {
+  font-family:'Inconsolata',monospace;
+  font-size:.34rem; letter-spacing:.44em; text-transform:uppercase;
+  color:var(--blue-bright); opacity:0; transform:translateY(6px);
+  transition:opacity .3s, transform .35s; position:relative; z-index:1;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  display:flex; align-items:center; gap:14px; opacity:.15; margin-bottom:36px;
+}
+.divider-line { flex:1; height:1px; background:rgba(26,90,138,.4); }
+.divider-mark {
+  font-family:'Inconsolata',monospace;
+  font-size:.34rem; letter-spacing:.5em; text-transform:uppercase;
+  color:rgba(74,159,216,.5); white-space:nowrap;
+}
+
+/* ── QUOTE ── */
+.letargia-quote {
+  border-left:1px solid rgba(26,90,138,.16);
+  padding:8px 24px; margin:40px 0;
+  font-style:italic; font-size:.9rem;
+  color:var(--ink-mid); opacity:.38; line-height:2;
+}
+
+/* ── FOOTER ── */
+.footer {
+  display:flex; justify-content:space-between; align-items:center;
+  padding-top:20px; border-top:1px solid var(--border); opacity:.13; margin-top:40px;
+}
+.footer-text {
+  font-family:'Inconsolata',monospace;
+  font-size:.34rem; letter-spacing:.4em; text-transform:uppercase; color:var(--ink-dim);
+}
+
+/* ── BACK LINK ── */
+.back-link {
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:'Inconsolata',monospace;
+  font-size:.35rem; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--ink-dim); opacity:.28; text-decoration:none;
+  transition:opacity .3s; margin-bottom:36px;
+}
+.back-link:hover { opacity:.6; }
+
+/* ══════ MODAL LEITURA ══════ */
+#modal-overlay {
+  position:fixed; inset:0; z-index:1000;
+  background:rgba(1,3,9,.95);
+  display:none; align-items:center; justify-content:center;
+  padding:24px; backdrop-filter:blur(10px);
+}
+#modal-overlay.open { display:flex; }
+.modal-box {
+  position:relative; max-width:700px; width:100%;
+  background:#050c1c; border:1px solid rgba(26,90,138,.18);
+  padding:54px 50px 46px;
+  max-height:88vh; overflow-y:auto;
+  animation:modal-rise .3s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes modal-rise {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:none; }
+}
+.modal-topline {
+  position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(74,159,216,.4), transparent);
+}
+.modal-close {
+  position:absolute; top:18px; right:22px;
+  font-family:'Inconsolata',monospace; font-size:.42rem;
+  letter-spacing:.28em; text-transform:uppercase;
+  color:var(--ink-dim); cursor:pointer; opacity:.5;
+  transition:opacity .2s; background:none; border:none; padding:4px 8px;
+}
+.modal-close:hover { opacity:1; }
+.modal-meta {
+  font-family:'Inconsolata',monospace;
+  font-size:.34rem; letter-spacing:.5em; text-transform:uppercase;
+  color:var(--ink-dim); margin-bottom:10px; opacity:.6;
+}
+.modal-title {
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.2rem,3vw,1.8rem); font-weight:700; letter-spacing:.15em;
+  color:var(--ink-bright); margin-bottom:6px;
+}
+.modal-subtitle {
+  font-family:'Cormorant SC',serif;
+  font-size:.58rem; letter-spacing:.18em;
+  color:var(--ink-mid); opacity:.45; margin-bottom:28px;
+}
+.modal-divider { height:1px; background:rgba(26,90,138,.1); margin-bottom:28px; }
+.modal-body {
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:1.02rem; line-height:2.1;
+  color:var(--ink-mid); white-space:pre-wrap;
+}
+.modal-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:28px; }
+.modal-tag {
+  font-family:'Inconsolata',monospace;
+  font-size:.32rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:2px 7px; border:1px solid rgba(26,90,138,.15); color:rgba(122,104,88,.6);
+}
+
+/* ── MURAL DE RETRATO ── */
+.char-portrait-wall {
+  margin-top:28px;
+  border-top:1px solid rgba(26,90,138,.08);
+  padding-top:22px;
+}
+.char-portrait-label {
+  font-family:'Inconsolata',monospace;
+  font-size:.33rem; letter-spacing:.5em; text-transform:uppercase;
+  color:var(--ink-dim); margin-bottom:14px; opacity:.5;
+}
+.char-portrait-frame {
+  position:relative; display:inline-block; max-width:100%;
+}
+.char-portrait-frame::before {
+  content:''; position:absolute; inset:-4px;
+  border:1px solid rgba(26,90,138,.16); pointer-events:none; z-index:1;
+}
+.char-portrait-frame::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to bottom, transparent 55%, rgba(4,7,16,.65));
+  pointer-events:none; z-index:1;
+}
+.char-portrait-img {
+  display:block; max-width:100%; max-height:360px; object-fit:cover;
+  filter:sepia(.2) contrast(.92) brightness(.82);
+}
+
+/* ══════ SCROLLBAR ══════ */
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:#0c1e30; }
+
+/* ══════ MODO EDIÇÃO ══════ */
+#edit-bar {
+  display:none;
+  position:fixed; bottom:0; left:0; right:0; z-index:900;
+  background:rgba(2,6,16,.98);
+  border-top:1px solid rgba(26,90,138,.25);
+  padding:14px 32px;
+  flex-wrap:wrap; gap:12px; align-items:center;
+  font-family:'Inconsolata',monospace;
+}
+#edit-bar.active { display:flex; }
+.edit-bar-title {
+  font-size:.36rem; letter-spacing:.5em; text-transform:uppercase;
+  color:rgba(74,159,216,.5); margin-right:8px;
+}
+.edit-btn {
+  font-family:'Inconsolata',monospace;
+  font-size:.34rem; letter-spacing:.28em; text-transform:uppercase;
+  padding:8px 18px; cursor:pointer;
+  background:rgba(26,90,138,.07); border:1px solid rgba(26,90,138,.22);
+  color:var(--ink-mid); transition:background .2s, color .2s;
+}
+.edit-btn:hover { background:rgba(26,90,138,.18); color:var(--ink-bright); }
+.edit-btn.danger {
+  border-color:rgba(200,40,20,.25); color:rgba(220,80,60,.6);
+  background:rgba(80,10,5,.1);
+}
+.edit-btn.danger:hover { background:rgba(80,10,5,.25); color:rgba(240,100,80,.9); }
+
+#edit-modal {
+  position:fixed; inset:0; z-index:2000;
+  background:rgba(0,2,6,.97);
+  display:none; align-items:flex-start; justify-content:center;
+  padding:40px 24px; overflow-y:auto;
+}
+#edit-modal.open { display:flex; }
+.edit-modal-box {
+  width:100%; max-width:760px;
+  background:#050c1c; border:1px solid rgba(26,90,138,.18);
+  padding:44px 40px;
+  animation:modal-rise .3s cubic-bezier(.16,1,.3,1) both;
+}
+.edit-modal-title {
+  font-family:'Cinzel',serif; font-size:1rem; letter-spacing:.2em;
+  color:var(--ink-bright); margin-bottom:28px;
+}
+.edit-field-group { margin-bottom:18px; }
+.edit-label {
+  font-family:'Inconsolata',monospace;
+  font-size:.34rem; letter-spacing:.38em; text-transform:uppercase;
+  color:var(--ink-dim); display:block; margin-bottom:6px; opacity:.7;
+}
+.edit-input, .edit-textarea, .edit-select {
+  width:100%; background:rgba(6,14,32,.5);
+  border:1px solid rgba(26,90,138,.14);
+  padding:10px 14px;
+  font-family:'Cormorant Garamond',serif; font-size:.9rem;
+  color:var(--ink); outline:none; transition:border-color .2s;
+}
+.edit-input:focus, .edit-textarea:focus, .edit-select:focus {
+  border-color:rgba(26,90,138,.44);
+}
+.edit-textarea { min-height:160px; resize:vertical; line-height:1.8; }
+.edit-select { cursor:pointer; }
+.edit-select option { background:#050c1c; }
+.edit-row { display:flex; gap:14px; }
+.edit-row .edit-field-group { flex:1; }
+.edit-actions { display:flex; gap:12px; margin-top:26px; flex-wrap:wrap; }
+
+/* ── VOLUME ── */
+#vol-ctrl {
+  position:fixed; bottom:22px; right:24px; z-index:800;
+  display:none; align-items:center; gap:10px;
+  background:rgba(4,7,16,.85); border:1px solid rgba(26,90,138,.14);
+  padding:8px 14px; backdrop-filter:blur(6px);
+  opacity:.32; transition:opacity .3s;
+}
+#vol-ctrl:hover { opacity:1; }
+#vol-ctrl label {
+  font-family:'Inconsolata',monospace;
+  font-size:.32rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--ink-dim);
+}
+#vol-slider {
+  -webkit-appearance:none; appearance:none;
+  width:72px; height:1px;
+  background:rgba(74,159,216,.25); outline:none; cursor:pointer;
+}
+#vol-slider::-webkit-slider-thumb {
+  -webkit-appearance:none; appearance:none;
+  width:8px; height:8px; border-radius:50%;
+  background:rgba(74,159,216,.6); cursor:pointer;
+}
+
+@media(max-width:640px){
+  .app-banner { height:clamp(160px,45vw,240px); }
+  .banner-title { font-size:clamp(1.8rem,9vw,2.8rem); }
+  .banner-corner, .banner-vline, .banner-meta { display:none; }
+  .main-content { padding:28px 20px 80px; }
+  .tabs-inner { padding:0 20px; }
+  .tab-btn { padding:0 14px; font-size:.46rem; }
+  .cards-grid { grid-template-columns:1fr; }
+  .modal-box { padding:36px 22px 28px; }
+  .edit-modal-box { padding:28px 20px; }
+  .edit-row { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="vignette"></div>
+<div class="scanlines"></div>
+<div class="ice-bg" id="ice-bg"></div>
+
+<audio id="bgm" loop>
+  <source src="./ltg.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ══════ TELA DE SENHA ══════ -->
+<div id="lock-screen">
+  <div class="ls-grain"></div>
+  <div class="ls-vignette"></div>
+  <!-- Sigilo hermético de fundo -->
+  <svg class="ls-sigil" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow-c" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#4a9fd8" stop-opacity=".9"/>
+        <stop offset="60%"  stop-color="#1a5a8a" stop-opacity=".5"/>
+        <stop offset="100%" stop-color="#0a1525" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="blur-ray">
+        <feGaussianBlur stdDeviation="1.5"/>
+      </filter>
+      <filter id="glow-strong">
+        <feGaussianBlur stdDeviation="4" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- Raios de luz irradiando do centro (gelo negro) -->
+    <g opacity=".55" filter="url(#blur-ray)" style="animation:ray-pulse 6s ease-in-out infinite;">
+      <line x1="250" y1="250" x2="250" y2="10"   stroke="#4a9fd8" stroke-width="1.2" stroke-dasharray="4 8"/>
+      <line x1="250" y1="250" x2="250" y2="490"  stroke="#4a9fd8" stroke-width="1.2" stroke-dasharray="4 8"/>
+      <line x1="250" y1="250" x2="10"  y2="250"  stroke="#4a9fd8" stroke-width="1.2" stroke-dasharray="4 8"/>
+      <line x1="250" y1="250" x2="490" y2="250"  stroke="#4a9fd8" stroke-width="1.2" stroke-dasharray="4 8"/>
+      <line x1="250" y1="250" x2="76"  y2="76"   stroke="#4a9fd8" stroke-width=".8"  stroke-dasharray="3 9"/>
+      <line x1="250" y1="250" x2="424" y2="76"   stroke="#4a9fd8" stroke-width=".8"  stroke-dasharray="3 9"/>
+      <line x1="250" y1="250" x2="76"  y2="424"  stroke="#4a9fd8" stroke-width=".8"  stroke-dasharray="3 9"/>
+      <line x1="250" y1="250" x2="424" y2="424"  stroke="#4a9fd8" stroke-width=".8"  stroke-dasharray="3 9"/>
+      <line x1="250" y1="250" x2="148" y2="18"   stroke="#4a9fd8" stroke-width=".5"  stroke-dasharray="2 12"/>
+      <line x1="250" y1="250" x2="352" y2="18"   stroke="#4a9fd8" stroke-width=".5"  stroke-dasharray="2 12"/>
+      <line x1="250" y1="250" x2="148" y2="482"  stroke="#4a9fd8" stroke-width=".5"  stroke-dasharray="2 12"/>
+      <line x1="250" y1="250" x2="352" y2="482"  stroke="#4a9fd8" stroke-width=".5"  stroke-dasharray="2 12"/>
+      <line x1="250" y1="250" x2="18"  y2="148"  stroke="#4a9fd8" stroke-width=".5"  stroke-dasharray="2 12"/>
+      <line x1="250" y1="250" x2="18"  y2="352"  stroke="#4a9fd8" stroke-width=".5"  stroke-dasharray="2 12"/>
+      <line x1="250" y1="250" x2="482" y2="148"  stroke="#4a9fd8" stroke-width=".5"  stroke-dasharray="2 12"/>
+      <line x1="250" y1="250" x2="482" y2="352"  stroke="#4a9fd8" stroke-width=".5"  stroke-dasharray="2 12"/>
+    </g>
+
+    <!-- Círculo exterior -->
+    <circle cx="250" cy="250" r="220" fill="none" stroke="#4a9fd8" stroke-width="1" opacity=".4"/>
+    <circle cx="250" cy="250" r="214" fill="none" stroke="#4a9fd8" stroke-width=".4" opacity=".2"/>
+
+    <!-- Heptágono (7 — número de Saturno/Mercúrio) -->
+    <polygon points="
+      250,32  440,126  475,332  355,474  145,474  25,332  60,126
+    " fill="none" stroke="#4a9fd8" stroke-width=".9" opacity=".5"/>
+
+    <!-- Triângulo apontando para cima (Fogo / princípio ativo) -->
+    <polygon points="250,68 432,375 68,375"
+      fill="none" stroke="#4a9fd8" stroke-width="1.1" opacity=".55"/>
+
+    <!-- Triângulo apontando para baixo (Água / Gelo) -->
+    <polygon points="250,432 68,125 432,125"
+      fill="none" stroke="#4a9fd8" stroke-width="1.1" opacity=".55"/>
+
+    <!-- Estrela de Davi (interseção — Sigilum Saturni) -->
+    <!-- reutiliza os dois triângulos acima — já está desenhado -->
+
+    <!-- Círculo médio (anel de Saturno) -->
+    <circle cx="250" cy="250" r="150" fill="none" stroke="#4a9fd8" stroke-width=".7" opacity=".3"/>
+    <circle cx="250" cy="250" r="140" fill="none" stroke="#4a9fd8" stroke-width=".3" opacity=".15"/>
+
+    <!-- Cruz hermética com prolongamentos -->
+    <line x1="250" y1="100" x2="250" y2="400" stroke="#4a9fd8" stroke-width=".9" opacity=".35"/>
+    <line x1="100" y1="250" x2="400" y2="250" stroke="#4a9fd8" stroke-width=".9" opacity=".35"/>
+    <!-- Decoração na cruz -->
+    <line x1="230" y1="110" x2="270" y2="110" stroke="#4a9fd8" stroke-width=".7" opacity=".4"/>
+    <line x1="230" y1="390" x2="270" y2="390" stroke="#4a9fd8" stroke-width=".7" opacity=".4"/>
+    <line x1="110" y1="230" x2="110" y2="270" stroke="#4a9fd8" stroke-width=".7" opacity=".4"/>
+    <line x1="390" y1="230" x2="390" y2="270" stroke="#4a9fd8" stroke-width=".7" opacity=".4"/>
+
+    <!-- Símbolo de Mercúrio no centro (☿ vetorizado) -->
+    <!-- Círculo de espírito -->
+    <circle cx="250" cy="222" r="26" fill="none" stroke="#4a9fd8" stroke-width="1.6" opacity=".85" filter="url(#glow-strong)"/>
+    <!-- Semicírculo (cornos) -->
+    <path d="M 224,222 A 26,26 0 0 1 276,222" fill="none" stroke="#4a9fd8" stroke-width="1.6" opacity=".85"/>
+    <!-- Haste vertical -->
+    <line x1="250" y1="248" x2="250" y2="296" stroke="#4a9fd8" stroke-width="1.6" opacity=".85" filter="url(#glow-strong)"/>
+    <!-- Barra horizontal -->
+    <line x1="228" y1="270" x2="272" y2="270" stroke="#4a9fd8" stroke-width="1.6" opacity=".85"/>
+    <!-- Círculo inferior (Terra) -->
+    <circle cx="250" cy="307" r="11" fill="none" stroke="#4a9fd8" stroke-width="1.6" opacity=".85" filter="url(#glow-strong)"/>
+
+    <!-- Glóbulo de luz central -->
+    <circle cx="250" cy="250" r="6" fill="url(#glow-c)" opacity=".9" filter="url(#glow-strong)"/>
+    <circle cx="250" cy="250" r="2" fill="#b8e0f7" opacity="1"/>
+
+    <!-- Inscrição circular periférica (pontos cardinais herméticos) -->
+    <g font-family="serif" font-size="9" fill="#4a9fd8" opacity=".35" letter-spacing="3">
+      <text x="246" y="28"  text-anchor="middle">✦</text>
+      <text x="474" y="254" text-anchor="middle">✦</text>
+      <text x="246" y="482" text-anchor="middle">✦</text>
+      <text x="18"  y="254" text-anchor="middle">✦</text>
+    </g>
+
+    <!-- Arco de gelo fragmentado (topo) -->
+    <path d="M 90,130 Q 250,50 410,130" fill="none" stroke="#4a9fd8" stroke-width=".6" stroke-dasharray="6 10" opacity=".3"/>
+    <path d="M 90,370 Q 250,450 410,370" fill="none" stroke="#4a9fd8" stroke-width=".6" stroke-dasharray="6 10" opacity=".3"/>
+  </svg>
+
+  <div class="ls-title">LETARGIA</div>
+  <div class="ls-sub">Arquivo do Gelo Negro — 1790</div>
+  <div class="ls-label">Acesso restrito — forneça a senha</div>
+  <div class="ls-input-wrap">
+    <input
+      class="ls-input" id="ls-pass" type="password"
+      placeholder="· · · · · · ·"
+      autocomplete="off" spellcheck="false"
+      onkeydown="if(event.key==='Enter') checkPass()"
+    />
+    <button class="ls-btn" onclick="checkPass()">▶</button>
+  </div>
+  <div class="ls-error" id="ls-error">senha incorreta</div>
+  <div class="ls-deco">
+    <div class="ls-deco-line"></div>
+    <div class="ls-deco-mark">1790</div>
+    <div class="ls-deco-line"></div>
+  </div>
+</div>
+
+<!-- ══════ MODAL LEITURA ══════ -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-topline"></div>
+    <button class="modal-close" onclick="closeModalDirect()">✕ &nbsp; Fechar</button>
+    <div class="modal-meta" id="modal-meta"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-subtitle" id="modal-subtitle"></div>
+    <div class="modal-divider"></div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-tags" id="modal-tags"></div>
+    <div id="modal-portrait-wall" class="char-portrait-wall" style="display:none;">
+      <div class="char-portrait-label">Retrato</div>
+      <div class="char-portrait-frame">
+        <img class="char-portrait-img" id="modal-portrait-img" src="" alt=""/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ EDIT MODAL ══════ -->
+<div id="edit-modal">
+  <div class="edit-modal-box">
+    <div class="edit-modal-title" id="edit-modal-title">✦ &nbsp; Novo Registro</div>
+    <div class="edit-row">
+      <div class="edit-field-group">
+        <label class="edit-label">Seção</label>
+        <select class="edit-select" id="ef-secao"></select>
+      </div>
+      <div class="edit-field-group">
+        <label class="edit-label">Status</label>
+        <select class="edit-select" id="ef-status">
+          <option value="Y">Y — Visível</option>
+          <option value="N">N — Bloqueado</option>
+        </select>
+      </div>
+    </div>
+    <div class="edit-row">
+      <div class="edit-field-group">
+        <label class="edit-label">Título</label>
+        <input class="edit-input" id="ef-titulo" type="text" placeholder="ex: O Gelo Negro"/>
+      </div>
+      <div class="edit-field-group">
+        <label class="edit-label">Subtítulo</label>
+        <input class="edit-input" id="ef-subtitulo" type="text" placeholder="ex: Jornais de Alessandro Cagliostro"/>
+      </div>
+    </div>
+    <div class="edit-row">
+      <div class="edit-field-group">
+        <label class="edit-label">Data / Período</label>
+        <input class="edit-input" id="ef-data" type="text" placeholder="ex: 2 de setembro de 1772"/>
+      </div>
+      <div class="edit-field-group">
+        <label class="edit-label">Tags (separadas por vírgula)</label>
+        <input class="edit-input" id="ef-tags" type="text" placeholder="ex: Gelo Negro, Fenômeno, Sentire"/>
+      </div>
+    </div>
+    <div class="edit-field-group">
+      <label class="edit-label">Resumo (exibido no card)</label>
+      <input class="edit-input" id="ef-resumo" type="text" placeholder="Frase curta descritiva do registro"/>
+    </div>
+    <div class="edit-field-group">
+      <label class="edit-label">Imagem do personagem (opcional — ex: pasqually.jpg)</label>
+      <input class="edit-input" id="ef-arquivo" type="text" placeholder="nome-da-imagem.jpg — vai puxar de personagens/"/>
+    </div>
+    <div class="edit-field-group">
+      <label class="edit-label">Conteúdo completo</label>
+      <textarea class="edit-textarea" id="ef-conteudo" placeholder="Texto completo exibido ao abrir o registro. Use linhas em branco para separar parágrafos."></textarea>
+    </div>
+    <div class="edit-actions">
+      <button class="edit-btn" onclick="saveEditEntry()">▶ &nbsp; Salvar Registro</button>
+      <button class="edit-btn" onclick="exportJSON()">⬇ &nbsp; Exportar JSON</button>
+      <button class="edit-btn danger" id="edit-delete-btn" style="display:none;" onclick="deleteEditEntry()">✕ &nbsp; Excluir</button>
+      <button class="edit-btn danger" onclick="closeEditModal()">— &nbsp; Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ EDIT BAR ══════ -->
+<div id="edit-bar">
+  <span class="edit-bar-title">✦ Modo Edição</span>
+  <button class="edit-btn" onclick="openNewEntry()">+ &nbsp; Novo Registro</button>
+  <button class="edit-btn" onclick="exportJSON()">⬇ &nbsp; Exportar letargia_data.json</button>
+  <button class="edit-btn" onclick="importJSON()">⬆ &nbsp; Importar JSON</button>
+  <input type="file" id="json-import-input" accept=".json" style="display:none;" onchange="handleImport(event)"/>
+  <button class="edit-btn danger" onclick="toggleEditMode()">✕ &nbsp; Sair do Modo Edição</button>
+</div>
+
+<!-- ══════ APP ══════ -->
+<div id="app">
+
+  <!-- Banner retangular de ponta a ponta -->
+  <div class="app-banner">
+    <div class="banner-top-line"></div>
+    <div class="banner-vline left"></div>
+    <div class="banner-vline right"></div>
+
+    <!-- Ornamentos de canto -->
+    <div class="banner-corner tl">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0" x2="40" y2="0" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="40" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="8" y1="8" x2="24" y2="8" stroke="#4a9fd8" stroke-width=".5"/>
+        <line x1="8" y1="8" x2="8" y2="24" stroke="#4a9fd8" stroke-width=".5"/>
+        <circle cx="4" cy="4" r="2" fill="none" stroke="#4a9fd8" stroke-width=".8"/>
+      </svg>
+    </div>
+    <div class="banner-corner tr">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0" x2="40" y2="0" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="40" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="8" y1="8" x2="24" y2="8" stroke="#4a9fd8" stroke-width=".5"/>
+        <line x1="8" y1="8" x2="8" y2="24" stroke="#4a9fd8" stroke-width=".5"/>
+        <circle cx="4" cy="4" r="2" fill="none" stroke="#4a9fd8" stroke-width=".8"/>
+      </svg>
+    </div>
+    <div class="banner-corner bl">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0" x2="40" y2="0" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="40" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="8" y1="8" x2="24" y2="8" stroke="#4a9fd8" stroke-width=".5"/>
+        <line x1="8" y1="8" x2="8" y2="24" stroke="#4a9fd8" stroke-width=".5"/>
+        <circle cx="4" cy="4" r="2" fill="none" stroke="#4a9fd8" stroke-width=".8"/>
+      </svg>
+    </div>
+    <div class="banner-corner br">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0" x2="40" y2="0" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="40" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="8" y1="8" x2="24" y2="8" stroke="#4a9fd8" stroke-width=".5"/>
+        <line x1="8" y1="8" x2="8" y2="24" stroke="#4a9fd8" stroke-width=".5"/>
+        <circle cx="4" cy="4" r="2" fill="none" stroke="#4a9fd8" stroke-width=".8"/>
+      </svg>
+    </div>
+
+    <!-- Sigilo horizontal — Ouroboros / Sigillum Saturni retangular -->
+    <svg class="banner-sigil" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <filter id="bg-glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="bg-blur"><feGaussianBlur stdDeviation="1.2"/></filter>
+        <radialGradient id="bg-rad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4a9fd8" stop-opacity=".8"/>
+          <stop offset="100%" stop-color="#4a9fd8" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Linha horizontal mestra de ponta a ponta -->
+      <line x1="0" y1="140" x2="900" y2="140" stroke="#4a9fd8" stroke-width=".6" stroke-dasharray="8 16" opacity=".4"/>
+
+      <!-- Raios irradiando do centro -->
+      <g filter="url(#bg-blur)" opacity=".6">
+        <line x1="450" y1="140" x2="450" y2="0"   stroke="#4a9fd8" stroke-width="1" stroke-dasharray="4 10"/>
+        <line x1="450" y1="140" x2="450" y2="280"  stroke="#4a9fd8" stroke-width="1" stroke-dasharray="4 10"/>
+        <line x1="450" y1="140" x2="0"   y2="140"  stroke="#4a9fd8" stroke-width="1.2" stroke-dasharray="5 12"/>
+        <line x1="450" y1="140" x2="900" y2="140"  stroke="#4a9fd8" stroke-width="1.2" stroke-dasharray="5 12"/>
+        <line x1="450" y1="140" x2="252" y2="0"   stroke="#4a9fd8" stroke-width=".7" stroke-dasharray="3 12"/>
+        <line x1="450" y1="140" x2="648" y2="0"   stroke="#4a9fd8" stroke-width=".7" stroke-dasharray="3 12"/>
+        <line x1="450" y1="140" x2="252" y2="280"  stroke="#4a9fd8" stroke-width=".7" stroke-dasharray="3 12"/>
+        <line x1="450" y1="140" x2="648" y2="280"  stroke="#4a9fd8" stroke-width=".7" stroke-dasharray="3 12"/>
+        <line x1="450" y1="140" x2="110" y2="0"   stroke="#4a9fd8" stroke-width=".4" stroke-dasharray="2 14"/>
+        <line x1="450" y1="140" x2="790" y2="0"   stroke="#4a9fd8" stroke-width=".4" stroke-dasharray="2 14"/>
+        <line x1="450" y1="140" x2="110" y2="280"  stroke="#4a9fd8" stroke-width=".4" stroke-dasharray="2 14"/>
+        <line x1="450" y1="140" x2="790" y2="280"  stroke="#4a9fd8" stroke-width=".4" stroke-dasharray="2 14"/>
+        <line x1="450" y1="140" x2="0"   y2="58"  stroke="#4a9fd8" stroke-width=".35" stroke-dasharray="2 16"/>
+        <line x1="450" y1="140" x2="900" y2="58"  stroke="#4a9fd8" stroke-width=".35" stroke-dasharray="2 16"/>
+        <line x1="450" y1="140" x2="0"   y2="222" stroke="#4a9fd8" stroke-width=".35" stroke-dasharray="2 16"/>
+        <line x1="450" y1="140" x2="900" y2="222" stroke="#4a9fd8" stroke-width=".35" stroke-dasharray="2 16"/>
+      </g>
+
+      <!-- Elipse exterior (Ouroboros) -->
+      <ellipse cx="450" cy="140" rx="420" ry="122" fill="none" stroke="#4a9fd8" stroke-width=".9" opacity=".5"/>
+      <ellipse cx="450" cy="140" rx="412" ry="115" fill="none" stroke="#4a9fd8" stroke-width=".3" opacity=".25"/>
+
+      <!-- Elipse interior -->
+      <ellipse cx="450" cy="140" rx="280" ry="82"  fill="none" stroke="#4a9fd8" stroke-width=".7" opacity=".35"/>
+
+      <!-- Rectângulo sagrado interno com entalhes -->
+      <rect x="240" y="60" width="420" height="160" fill="none" stroke="#4a9fd8" stroke-width=".7" opacity=".4"/>
+      <!-- Entalhes nos lados do rectângulo -->
+      <line x1="240" y1="110" x2="230" y2="110" stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="240" y1="140" x2="225" y2="140" stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="240" y1="170" x2="230" y2="170" stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="660" y1="110" x2="670" y2="110" stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="660" y1="140" x2="675" y2="140" stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="660" y1="170" x2="670" y2="170" stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="380" y1="60"  x2="380" y2="50"  stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="450" y1="60"  x2="450" y2="44"  stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="520" y1="60"  x2="520" y2="50"  stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="380" y1="220" x2="380" y2="230" stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="450" y1="220" x2="450" y2="236" stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+      <line x1="520" y1="220" x2="520" y2="230" stroke="#4a9fd8" stroke-width=".7" opacity=".5"/>
+
+      <!-- Triângulos (Solomônico) -->
+      <polygon points="450,72 598,212 302,212" fill="none" stroke="#4a9fd8" stroke-width=".9" opacity=".5"/>
+      <polygon points="450,208 302,68 598,68" fill="none" stroke="#4a9fd8" stroke-width=".9" opacity=".5"/>
+
+      <!-- Círculo central -->
+      <circle cx="450" cy="140" r="50" fill="none" stroke="#4a9fd8" stroke-width=".8" opacity=".4"/>
+      <circle cx="450" cy="140" r="44" fill="none" stroke="#4a9fd8" stroke-width=".3" opacity=".2"/>
+
+      <!-- Símbolo de Mercúrio central (☿) -->
+      <circle cx="450" cy="124" r="16" fill="none" stroke="#4a9fd8" stroke-width="1.4" opacity=".95" filter="url(#bg-glow)"/>
+      <line x1="450" y1="140" x2="450" y2="170" stroke="#4a9fd8" stroke-width="1.4" opacity=".95" filter="url(#bg-glow)"/>
+      <line x1="436" y1="154" x2="464" y2="154" stroke="#4a9fd8" stroke-width="1.4" opacity=".95"/>
+      <circle cx="450" cy="178" r="8"  fill="none" stroke="#4a9fd8" stroke-width="1.4" opacity=".95" filter="url(#bg-glow)"/>
+
+      <!-- Cruz horizontal atravessando (eixo de Saturno) -->
+      <line x1="100" y1="140" x2="350" y2="140" stroke="#4a9fd8" stroke-width=".5" stroke-dasharray="3 6" opacity=".3"/>
+      <line x1="550" y1="140" x2="800" y2="140" stroke="#4a9fd8" stroke-width=".5" stroke-dasharray="3 6" opacity=".3"/>
+
+      <!-- Motivos laterais — diamantes decorativos -->
+      <g opacity=".45">
+        <polygon points="80,140 100,120 120,140 100,160" fill="none" stroke="#4a9fd8" stroke-width=".8"/>
+        <polygon points="820,140 840,120 860,140 840,160" fill="none" stroke="#4a9fd8" stroke-width=".8"/>
+        <line x1="100" y1="120" x2="100" y2="108" stroke="#4a9fd8" stroke-width=".6"/>
+        <line x1="100" y1="160" x2="100" y2="172" stroke="#4a9fd8" stroke-width=".6"/>
+        <line x1="840" y1="120" x2="840" y2="108" stroke="#4a9fd8" stroke-width=".6"/>
+        <line x1="840" y1="160" x2="840" y2="172" stroke="#4a9fd8" stroke-width=".6"/>
+      </g>
+
+      <!-- Ponto de luz central -->
+      <circle cx="450" cy="140" r="3" fill="url(#bg-rad)" opacity=".9" filter="url(#bg-glow)"/>
+      <circle cx="450" cy="140" r="1.2" fill="#c8e8f8" opacity="1"/>
+
+      <!-- Ornamentos de canto do SVG -->
+      <g opacity=".3">
+        <line x1="0"   y1="0"  x2="30" y2="0"   stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="0"   y1="0"  x2="0"  y2="28"  stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="870" y1="0"  x2="900" y2="0"  stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="900" y1="0"  x2="900" y2="28" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="0"   y1="252" x2="0"  y2="280" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="0"   y1="280" x2="30" y2="280" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="870" y1="280" x2="900" y2="280" stroke="#4a9fd8" stroke-width="1"/>
+        <line x1="900" y1="252" x2="900" y2="280" stroke="#4a9fd8" stroke-width="1"/>
+      </g>
+    </svg>
+
+    <!-- Metadados laterais -->
+    <div class="banner-meta left">Sistema — 02 · O Gelo Negro</div>
+    <div class="banner-meta right">Arquivo: LETARGIA — Rev. 1.0</div>
+
+    <!-- Conteúdo central -->
+    <div class="banner-content">
+      <div class="banner-eyebrow">Arquivo de Sistemas — Odisseia</div>
+      <div class="banner-title" id="banner-title">LETARGIA</div>
+      <div class="banner-subtitle" id="header-subtitle">
+        O mal emergiu dos polos.<br>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs-wrap">
+    <div class="tabs-inner" id="tabs-nav"></div>
+  </div>
+
+  <div class="main-content">
+    <a class="back-link" href="../index.html">← &nbsp; Voltar ao Odisseia</a>
+    <div id="sections-container"></div>
+    <div class="letargia-quote" id="letargia-quote">
+      "O mal emergiu dos polos."<br>
+      "O gelo negro não deu qualquer aviso de sua chegada. Ele simplesmente se manifestou."
+    </div>
+    <div class="divider" style="opacity:.13; margin-bottom:18px;">
+      <div class="divider-line"></div>
+      <div class="divider-mark">✦</div>
+      <div class="divider-line"></div>
+    </div>
+    <div class="footer">
+      <span class="footer-text">Letargia — Arquivo do Gelo Negro</span>
+      <span class="footer-text" id="footer-version">Rev. 1.0.0</span>
+    </div>
+  </div>
+</div>
+
+<div id="vol-ctrl">
+  <label for="vol-slider">Vol</label>
+  <input type="range" id="vol-slider" min="0" max="100" value="30"/>
+</div>
+
+<script>
+
+/* ══════════════════════════════════════
+   ANTI-INSPECT
+   — camada de dificuldade para usuários casuais.
+   — some automaticamente após a senha correta.
+══════════════════════════════════════ */
+(function(){
+  function blockKeys(e){
+    if(e.key==='F12'){ e.preventDefault(); return false; }
+    if(e.ctrlKey && e.shiftKey && /^[ijckIJCK]$/.test(e.key)){ e.preventDefault(); return false; }
+    if(e.ctrlKey && /^[uU]$/.test(e.key)){ e.preventDefault(); return false; }
+  }
+  function blockCtx(e){ e.preventDefault(); return false; }
+
+  document.addEventListener('keydown', blockKeys, true);
+  document.addEventListener('contextmenu', blockCtx, true);
+
+  // detectar abertura de DevTools por diferença de tamanho de janela
+  let _devWarn = false;
+  setInterval(function(){
+    if(window._unlocked) return;
+    const threshold = 160;
+    if((window.outerWidth - window.innerWidth > threshold) ||
+       (window.outerHeight - window.innerHeight > threshold)){
+      if(!_devWarn){ _devWarn=true; document.body.innerHTML=''; }
+    } else { _devWarn=false; }
+  }, 1200);
+
+  window._antiKeys = blockKeys;
+  window._antiCtx  = blockCtx;
+})();
+
+/* ══════════════════════════════════════
+   SENHA
+══════════════════════════════════════ */
+const _S = 'gnose';
+
+function checkPass(){
+  const v = (document.getElementById('ls-pass').value||'').trim().toLowerCase();
+  if(v === _S){
+    _unlock();
+  } else {
+    const err = document.getElementById('ls-error');
+    document.getElementById('ls-pass').value='';
+    err.classList.add('visible');
+    setTimeout(()=>err.classList.remove('visible'), 2400);
+  }
+}
+
+function _unlock(){
+  window._unlocked = true;
+
+  // desligar anti-inspect
+  document.removeEventListener('keydown', window._antiKeys, true);
+  document.removeEventListener('contextmenu', window._antiCtx, true);
+
+  // fade na tela de senha
+  const ls = document.getElementById('lock-screen');
+  ls.classList.add('ls-fade-out');
+  setTimeout(()=>{ ls.style.display='none'; }, 720);
+
+  // mostrar app e controle de volume
+  document.getElementById('app').classList.add('visible');
+  document.getElementById('vol-ctrl').style.display='flex';
+
+  // música
+  _startMusic();
+
+  // dados
+  loadData();
+}
+
+/* ══════════════════════════════════════
+   MÚSICA
+   — edite VOLUME_INICIAL (0.0 a 1.0)
+══════════════════════════════════════ */
+const VOLUME_INICIAL = 0.30;   // ← altere aqui
+
+function _startMusic(){
+  const bgm = document.getElementById('bgm');
+  const slider = document.getElementById('vol-slider');
+  bgm.volume = VOLUME_INICIAL;
+  slider.value = Math.round(VOLUME_INICIAL * 100);
+  slider.addEventListener('input', ()=>{ bgm.volume = slider.value/100; });
+  bgm.play().catch(()=>{
+    // fallback: aguarda interação do utilizador
+    document.addEventListener('click', ()=>{ bgm.play(); }, { once:true });
+  });
+}
+
+/* ══════════════════════════════════════
+   CONFIGURAÇÃO
+══════════════════════════════════════ */
+const EDIT_MODE = false;
+
+let DATA = null;
+let editingId = null;
+let editingSecaoId = null;
+let _activeTab = null;
+
+/* ── partículas ── */
+(function(){
+  const bg = document.getElementById('ice-bg');
+  for(let i=0;i<28;i++){
+    const s=document.createElement('span');
+    const sz=Math.random()*2.5+.5;
+    s.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-duration:${Math.random()*14+8}s;animation-delay:${Math.random()*12}s;opacity:${Math.random()*.4+.1};`;
+    bg.appendChild(s);
+  }
+})();
+
+/* ── carregar JSON ── */
+async function loadData(){
+  try{
+    const res = await fetch('./letargia_data.json?'+Date.now());
+    if(!res.ok) throw new Error('not found');
+    DATA = await res.json();
+  }catch(e){
+    DATA={
+      meta:{sistema:'Letargia',subtitulo:'O Gelo Negro — 1790',tagline:'O mal emergiu dos polos.',versao:'1.0.0'},
+      secoes:[]
+    };
+    console.warn('letargia_data.json não encontrado.',e);
+  }
+  renderAll();
+}
+
+/* ── render ── */
+function renderAll(){
+  if(!DATA) return;
+  if(DATA.meta){
+    const sub=document.getElementById('header-subtitle');
+    if(DATA.meta.tagline) sub.innerHTML=DATA.meta.tagline.replace(/\. /g,'.<br>');
+    document.getElementById('footer-version').textContent='Rev. '+(DATA.meta.versao||'1.0.0');
+  }
+
+  const nav=document.getElementById('tabs-nav');
+  const container=document.getElementById('sections-container');
+  nav.innerHTML=''; container.innerHTML='';
+
+  (DATA.secoes||[]).forEach((sec,idx)=>{
+    // aba
+    const btn=document.createElement('button');
+    btn.className='tab-btn'+(idx===0?' active':'');
+    btn.dataset.secId=sec.id;
+    btn.innerHTML=`<span class="tab-icon">${sec.icone||'✦'}</span>${sec.titulo}`;
+    btn.addEventListener('click',()=>switchTab(sec.id));
+    nav.appendChild(btn);
+
+    // painel
+    const panel=document.createElement('div');
+    panel.className='section-panel'+(idx===0?' active':'');
+    panel.id='panel-'+sec.id;
+
+    if(sec.descricao){
+      const d=document.createElement('p');
+      d.style.cssText='font-style:italic;font-size:.82rem;color:var(--ink-dim);opacity:.52;margin-bottom:22px;letter-spacing:.04em;';
+      d.textContent=sec.descricao;
+      panel.appendChild(d);
+    }
+
+    const grid=document.createElement('div');
+    grid.className='cards-grid';
+    grid.id='grid-'+sec.id;
+    panel.appendChild(grid);
+    container.appendChild(panel);
+
+    (sec.itens||[]).forEach((item,i)=>{
+      const locked=item.status!=='Y';
+      const card=document.createElement('div');
+      card.className='entry-card'+(locked?' locked':'');
+      card.style.animationDelay=(i*.065)+'s';
+      card.innerHTML=`
+        <div class="card-topline"></div>
+        <div class="card-glyph">${(i+1).toString().padStart(2,'0')}</div>
+        <div class="card-date">${item.data||'—'}</div>
+        <div class="card-title">${item.titulo}</div>
+        <div class="card-subtitle">${item.subtitulo||''}</div>
+        <div class="card-desc">${item.resumo||''}</div>
+        <div class="card-tags">${(item.tags||[]).map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+        ${EDIT_MODE&&!locked?`<div class="card-cta">✎ &nbsp; Editar</div>`:''}
+        ${!locked&&!EDIT_MODE?`<div class="card-cta">▶ &nbsp; Ler Registro</div>`:''}
+      `;
+      if(!locked){
+        if(EDIT_MODE) card.addEventListener('click',()=>openEditEntry(sec.id,item.id));
+        else          card.addEventListener('click',()=>openModal(item));
+      }
+      grid.appendChild(card);
+    });
+
+    if(EDIT_MODE){
+      const add=document.createElement('div');
+      add.className='entry-card';
+      add.style.cssText='cursor:pointer;opacity:.28;min-height:100px;justify-content:center;align-items:center;';
+      add.innerHTML=`<div style="text-align:center;font-family:Inconsolata,monospace;font-size:.34rem;letter-spacing:.5em;text-transform:uppercase;color:var(--ink-dim);">+ &nbsp; Novo Registro</div>`;
+      add.addEventListener('click',()=>openNewEntryInSection(sec.id));
+      grid.appendChild(add);
+    }
+  });
+
+  if(_activeTab) switchTab(_activeTab,false);
+  const bar=document.getElementById('edit-bar');
+  if(EDIT_MODE) bar.classList.add('active'); else bar.classList.remove('active');
+  populateSecaoSelect();
+}
+
+function switchTab(secId, save=true){
+  if(save) _activeTab=secId;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.secId===secId));
+  document.querySelectorAll('.section-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+secId));
+}
+
+/* ══════ MODAL ══════ */
+function openModal(item){
+  document.getElementById('modal-meta').textContent    = item.data||'';
+  document.getElementById('modal-title').textContent   = item.titulo;
+  document.getElementById('modal-subtitle').textContent= item.subtitulo||'';
+  document.getElementById('modal-body').textContent    = item.conteudo||item.resumo||'';
+  document.getElementById('modal-tags').innerHTML      = (item.tags||[]).map(t=>`<span class="modal-tag">${t}</span>`).join('');
+
+  const wall=document.getElementById('modal-portrait-wall');
+  const img=document.getElementById('modal-portrait-img');
+  if(item.arquivo){
+    img.src='./personagens/'+item.arquivo;
+    wall.style.display='block';
+    img.onerror=()=>{ wall.style.display='none'; };
+  } else {
+    wall.style.display='none'; img.src='';
+  }
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e.target===document.getElementById('modal-overlay')) closeModalDirect();
+}
+function closeModalDirect(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeModalDirect(); closeEditModal(); }
+});
+
+/* ══════ EDIÇÃO ══════ */
+function toggleEditMode(){
+  alert(EDIT_MODE
+    ?'Para desativar o modo edição, altere EDIT_MODE para false no código.'
+    :'Para ativar o modo edição, altere EDIT_MODE para true no código.');
+}
+function populateSecaoSelect(){
+  const sel=document.getElementById('ef-secao');
+  if(!sel) return;
+  sel.innerHTML='';
+  (DATA.secoes||[]).forEach(sec=>{
+    const o=document.createElement('option');
+    o.value=sec.id; o.textContent=sec.titulo; sel.appendChild(o);
+  });
+}
+function openNewEntry(){ openNewEntryInSection(DATA.secoes&&DATA.secoes[0]?DATA.secoes[0].id:''); }
+function openNewEntryInSection(secaoId){
+  editingId=null; editingSecaoId=secaoId;
+  document.getElementById('edit-modal-title').textContent='✦  Novo Registro';
+  document.getElementById('edit-delete-btn').style.display='none';
+  ['secao','status','titulo','subtitulo','data','tags','resumo','arquivo','conteudo'].forEach(f=>{
+    const el=document.getElementById('ef-'+f);
+    if(el) el.value = f==='secao'?secaoId : f==='status'?'Y' : '';
+  });
+  document.getElementById('edit-modal').classList.add('open');
+}
+function openEditEntry(secaoId,itemId){
+  const sec=DATA.secoes.find(s=>s.id===secaoId); if(!sec) return;
+  const item=(sec.itens||[]).find(i=>i.id===itemId); if(!item) return;
+  editingId=itemId; editingSecaoId=secaoId;
+  document.getElementById('edit-modal-title').textContent='✎  Editar Registro';
+  document.getElementById('edit-delete-btn').style.display='';
+  document.getElementById('ef-secao').value=secaoId;
+  document.getElementById('ef-status').value=item.status||'Y';
+  document.getElementById('ef-titulo').value=item.titulo||'';
+  document.getElementById('ef-subtitulo').value=item.subtitulo||'';
+  document.getElementById('ef-data').value=item.data||'';
+  document.getElementById('ef-tags').value=(item.tags||[]).join(', ');
+  document.getElementById('ef-resumo').value=item.resumo||'';
+  document.getElementById('ef-arquivo').value=item.arquivo||'';
+  document.getElementById('ef-conteudo').value=item.conteudo||'';
+  document.getElementById('edit-modal').classList.add('open');
+}
+function closeEditModal(){ document.getElementById('edit-modal').classList.remove('open'); }
+function saveEditEntry(){
+  const secaoId=document.getElementById('ef-secao').value;
+  const sec=DATA.secoes.find(s=>s.id===secaoId);
+  if(!sec){ alert('Seção não encontrada.'); return; }
+  const titulo=document.getElementById('ef-titulo').value.trim();
+  if(!titulo){ alert('Título obrigatório.'); return; }
+  const newItem={
+    id:editingId||('item-'+Date.now()),
+    status:document.getElementById('ef-status').value,
+    titulo,
+    subtitulo:document.getElementById('ef-subtitulo').value.trim(),
+    data:document.getElementById('ef-data').value.trim(),
+    tags:document.getElementById('ef-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    resumo:document.getElementById('ef-resumo').value.trim(),
+    arquivo:document.getElementById('ef-arquivo').value.trim()||undefined,
+    conteudo:document.getElementById('ef-conteudo').value.trim()
+  };
+  if(editingId){
+    const oldSec=DATA.secoes.find(s=>(s.itens||[]).some(i=>i.id===editingId));
+    if(oldSec&&oldSec.id!==secaoId) oldSec.itens=(oldSec.itens||[]).filter(i=>i.id!==editingId);
+    if(oldSec&&oldSec.id===secaoId){
+      const idx=sec.itens.findIndex(i=>i.id===editingId);
+      if(idx>=0) sec.itens[idx]=newItem; else sec.itens.push(newItem);
+    } else { sec.itens=sec.itens||[]; sec.itens.push(newItem); }
+  } else { sec.itens=sec.itens||[]; sec.itens.push(newItem); }
+  closeEditModal(); renderAll();
+}
+function deleteEditEntry(){
+  if(!editingId) return;
+  if(!confirm('Excluir este registro permanentemente?')) return;
+  DATA.secoes.forEach(sec=>{ sec.itens=(sec.itens||[]).filter(i=>i.id!==editingId); });
+  closeEditModal(); renderAll();
+}
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='letargia_data.json'; a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importJSON(){ document.getElementById('json-import-input').click(); }
+function handleImport(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const parsed=JSON.parse(ev.target.result);
+      if(!parsed.secoes) throw new Error('JSON inválido: campo "secoes" não encontrado.');
+      DATA=parsed; renderAll();
+      alert('JSON importado com sucesso!');
+    }catch(err){ alert('Erro ao importar: '+err.message); }
+  };
+  reader.readAsText(file); e.target.value='';
+}
+
+</script>
+</body>
+</html>
