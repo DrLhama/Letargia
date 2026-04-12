@@ -1,0 +1,341 @@
+{
+  "meta": {
+    "sistema": "Letargia",
+    "subtitulo": "O Gelo Negro — 1400",
+    "tagline": "O mal emergiu dos polos.",
+    "versao": "1.1.0",
+    "cor_primaria": "#1a6bab",
+    "cor_glow": "rgba(30,100,180,.45)"
+  },
+  "secoes": [
+    {
+      "id": "jornais",
+      "titulo": "Jornais",
+      "icone": "✦",
+      "descricao": "Registros e diários de estudiosos que viveram sob o jugo do Gelo Negro.",
+      "itens": [
+        {
+          "id": "jornal-numerologia",
+          "status": "Y",
+          "titulo": "Numerologia",
+          "subtitulo": "Jornais de Alessandro Cagliostro",
+          "data": "11 de abril de 1771",
+          "tags": [
+            "Hermetismo",
+            "Ocultismo",
+            "Simbolismo"
+          ],
+          "resumo": "Certas recorrências numéricas atravessam culturas sem explicação aparente. Cagliostro começa a suspeitar que o padrão não é coincidência.",
+          "conteudo": "O número 7 é visto ao longo de toda a história, desde a quantidade de dias que Deus levou para criar o universo até os sete dias da semana ou os chakras presentes no corpo humano. Curiosamente, muitas civilizações antigas, mesmo sem aparente contato entre si, deram um lugar de destaque a esse número em suas crenças, rituais e sistemas simbólicos. Na tradição hebraica, por exemplo, ele representa a perfeição divina, enquanto no mundo antigo greco-romano associava-se à harmonia cósmica. Essa recorrência sugere não apenas uma predileção cultural, mas talvez um eco espiritual compartilhado, insinuando que há algo intrinsecamente especial em sua essência. Por algum motivo, parece que os números têm poder, ou pelo menos o simbolismo que eles carregam.\n\nNa cultura japonesa, por exemplo, o número 4 é temido e evitado em muitas situações, pois seu kanji se assemelha ao da palavra \"morte\". Essa aversão não é um capricho isolado, mas uma manifestação de um princípio comum em diversas tradições místicas: a crença de que certos números podem canalizar energias positivas ou negativas, influenciando o curso dos eventos. Isso demonstra que certos elementos do mundo possuem um simbolismo que vai além do aspecto visual, alcançando uma dimensão espiritual.\n\nAs sete leis herméticas cobrem todos os parâmetros necessários para a compreensão ampla da espiritualidade. Por serem abrangentes e coerentes dentro de suas próprias premissas, essas leis permanecem pouco discutidas, ainda que altamente eficazes. Nenhuma delas é mais importante do que as outras, mas pessoalmente considero que uma se destaca: o Princípio da Correspondência. \nO Princípio da Correspondência, a segunda lei do hermetismo, afirma que existe uma correspondência entre os diferentes planos da existência: físico, mental e espiritual. Quando o corpo se fere, a mente e a alma também sofrem; quando a alma se fere, reflexos surgem no corpo e na mente, e assim por diante. Esse princípio tem implicações profundas, sugerindo que o mundo visível é apenas um espelho imperfeito das realidades superiores. Acredito que essa lei tenha fundamentado a criação de muitos conceitos existentes e a compreensão de sentimentos universais. Mesmo pessoas de diferentes nacionalidades, culturas e costumes compartilham reações semelhantes diante de situações específicas, como se, apesar das diferenças, fossem iguais em essência.\n\nJá o Princípio da Polaridade, a quarta lei do hermetismo, também apresenta grande relevância para a compreensão da realidade. Esse princípio sustenta que tudo possui um oposto: para cada herói, existe um vilão; para cada bem, há um mal; para cada yin, há um yang. Essa dualidade se torna evidente quando adotamos uma visão menos arbitrária e mais abrangente sobre o mundo. Infelizmente, muitas pessoas permanecem cegas para os opostos das suas próprias crenças, rejeitando qualquer ideia que desafie minimamente seu modo de pensar. Essa resistência, lamentavelmente, funciona como um veneno que corrói lentamente a alma, a mente e, eventualmente, até o corpo — conforme ensina o Princípio da Correspondência.\n\nTalvez o \"gelo negro\" tenha surgido para servir como um contraponto, mas contraponto a quê? Esse mistério parece habitar os recessos mais profundos da realidade humana, desafiando a compreensão racional. Pois, se há luz e escuridão, ordem e caos, não seria lógico que também houvesse elementos cujo significado reside no limiar entre o conhecido e o incompreensível?"
+        },
+        {
+          "id": "jornal-gelo",
+          "status": "Y",
+          "titulo": "O Gelo",
+          "subtitulo": "Jornais de Alessandro Cagliostro",
+          "data": "2 de setembro de 1772",
+          "tags": [
+            "Gelo Negro",
+            "Propriedades",
+            "Sentire"
+          ],
+          "resumo": "Uma tentativa séria de descrever o que o Gelo Negro é — não o que representa, não o que causou, mas o que é fisicamente.",
+          "conteudo": "O gelo negro, surgido em meados do século XIV, destacou-se como um marco singular na história do mundo conhecido, gerando consequências profundas e permanentes para a humanidade. A despeito das calamidades que causou — incluindo a extinção em massa de espécies polares e a morte de incontáveis milhões de vidas humanas — sua aparição trouxe consigo transformações que moldaram o curso da civilização, suscitando o nascimento de novas religiões, a proliferação de medos insondáveis e impulsionando o avanço de diversas ciências. De certo modo, pode-se dizer que, por mais funesto que tenha sido, esse fenômeno cataclísmico serviu como catalisador para o desenvolvimento da espécie, ao forçar uma união global sem precedentes diante de um inimigo comum.\n\nEscritos por estudiosos que viveram sob o jugo desse evento assustador, sugerem que o gelo negro não deu qualquer aviso de sua chegada. Ele simplesmente se manifestou de forma abrupta. O evento foi seguido por uma rápida e violenta deformação dos continentes, um fenômeno geológico que remete à fragmentação da antiga Pangeia, mas ocorrido de maneira infinitamente mais intensa e veloz. Cidades inteiras foram tragadas por abismos recém-formados; montanhas ergueram-se onde antes havia vastos campos; rios mudaram seus cursos, e a geografia do planeta jamais voltou a ser a mesma.\n\nUma das peculiaridades mais intrigantes do gelo negro reside em sua aparência, que difere radicalmente do gelo convencional. Longe de apresentar a transparência ou opacidade esbranquiçada comum aos blocos polares, ele possui uma coloração que remete ao betume — um negro profundo, mas transparente. Esse aspecto sinistro é complementado por um brilho escuro-azulado que emana de sua superfície, não muito diferente do efeito visual de um neon espectral. Ainda assim, com todas essas peculiaridades, ele conserva a frieza cortante do gelo ordinário. \nOs polos terrestres, outrora vastas extensões de gelo branco e cristalino, foram completamente transformados por esse material. Nada restou das calotas polares tradicionais; as massas de gelo que se desprenderam do gelo negro durante os séculos seguintes praticamente se imobilizaram, mantendo-se em suas posições como sentinelas  que jamais derretem. Como já se pode imaginar, na quase completa extinção de criaturas adaptadas ao frio extremo, incluindo os pinguins, ursos polares e demais habitantes das águas gélidas dos polos.\n\nEntre as propriedades do gelo negro, algumas se destacam não apenas por sua singularidade, mas por seu caráter quase sobrenatural. Sua resistência estrutural é notável, sendo praticamente imune a golpes e impactos, incluindo disparos de armas de fogo. Todavia, o aspecto que mais aterroriza estudiosos e curiosos é sua capacidade de decomposição biológica extrema: qualquer matéria viva que toque sua superfície é rapidamente corroída, transformando-se em uma substância pastosa de coloração cinzento-avermelhada. Impressionantemente, esse processo não afeta tecido adiposo, poupando a gordura enquanto dissolve ossos, músculos e vísceras com uma eficiência que desafia a razão.\n\nVale mencionar, entretanto, uma exceção misteriosa a essa regra brutal: os Sentire. Por razões ainda desconhecidas, essas enigmáticas criaturas são completamente imunes à ação corrosiva do gelo negro. Esse fato, naturalmente, despertou grande interesse entre os cientistas da Academia de Arcanismo, que dedicaram incontáveis experimentos para compreender tal resistência incomum. \nAlém de suas propriedades físicas, o gelo negro possui ainda um cheiro característico, descrito como uma pólvora adocicada. Curiosamente, cadáveres recentes dos Sentire exalam um aroma semelhante, enquanto os corpos em estado avançado de decomposição se assemelham ao odor de frutas podres, particularmente uvas. Essa estranha correspondência sensorial tem gerado múltiplas teorias entre pesquisadores, muitas delas envolvendo hipóteses que mesclam alquimia, biologia arcana e influências de planos além do compreensível pela ciência terrena."
+        },
+        {
+          "id": "jornal-relatos",
+          "status": "Y",
+          "titulo": "Relatos",
+          "subtitulo": "Jornais de Alessandro Cagliostro",
+          "data": "17 de março de 1774",
+          "tags": [
+            "História",
+            "Justiniano",
+            "Praga"
+          ],
+          "resumo": "Documentos encontrados em Constantinopla sugerem que a Grande Peste não foi um evento natural. Cagliostro traça as conexões.",
+          "conteudo": "Durante o reinado do imperador Justiniano I (527–565 d.C.), um dos governantes mais ambiciosos do Império Bizantino, ocorreu um evento que mudou para sempre o curso da humanidade. De 541 a 549, uma praga assolou o império, uma doença responsável pela morte aproximada de mais de 50 milhões de pessoas. \"A Grande Peste\", como era chamada, hoje é conhecida como Peste Bubônica, ou Peste Negra, a mesma que causaria o colapso da Europa durante o século XIV.\n\nJustiniano queria restaurar o antigo território do Império Romano e expandir suas campanhas militares, conquistando partes da Itália, norte da África e sul da Espanha. No entanto, essa expansão foi severamente prejudicada pela pandemia, que praticamente erradicou suas forças e debilitou sua conquista e sua resistência.\n\nObviamente, isso aconteceu há muito tempo e os registros cabais são limitadíssimos, mas, recentemente, na Antiga Turquia, especificamente em Constantinopla, foram achados documentos de 562 d.C., 12 anos após a Grande Peste, que revelavam alguns segredos absurdos.\n\nO Papa João III, dois anos após sua sucessão de Pelágio I, teria confessado uma traição da parte de Pelágio I, uma traição tanto contra seu povo, quanto contra a humanidade, quanto contra Deus.\n\nEm novembro de 545, o Papa Vigílio (antecessor de Pelágio) foi forçado pelo imperador a ir a Constantinopla, deixando Pelágio em Roma como seu representante. No entanto, ao chegar à capital bizantina, Vigílio foi vítima de uma emboscada arquitetada pelo próprio Justiniano. Acusado de heresia e traição, ele foi aprisionado e misteriosamente desapareceu. Muitos acreditam que tenha sido assassinado sob ordens do imperador, consolidando assim o domínio de Justiniano sobre a Igreja. \nQuando a notícia de sua morte chegou a Roma, Pelágio I, tomado pela ira e desejo de vingança, usou seus conhecimentos ocultos e alianças secretas para invocar uma maldição sobre Constantinopla. Ele teria realizado um ritual proibido, particularmente, creio que Pelágio utilizou de artes místicas como a Alquimia ou um predecessor da Iatroquímica para convocar essa \"maldição\". Pouco depois do ritual, a Grande Peste teve início.\n\nCronistas da época relatam que a praga não surgiu de maneira natural e gradativa, mas sim como um \"vento negro\" que varreu Constantinopla. Os primeiros infectados relataram delírios sobre sombras movendo-se pelas ruas e uma presença invisível observando-os. Em poucos dias, os sintomas se tornaram avassaladores: febre alta, bubões escurecidos e hemorragias internas devastaram a população. Nem mesmo o próprio Justiniano foi poupado, embora tenha milagrosamente sobrevivido, enfraquecido e mais paranoico do que nunca.\n\nO legado dessa traição ressoou por séculos. O império nunca se recuperou completamente, e alguns estudiosos sugerem que a catástrofe marcou o início da decadência do poder bizantino. A praga não foi apenas um evento natural, mas uma vingança realizada por um papa traído, que trocou sua fé pela maldição e selou o destino de um império inteiro.\n\nE se todas essas coisas estiverem conectadas? E se o que aconteceu em Constantinopla não foi um evento isolado, mas apenas o primeiro sussurro de algo maior?\n\nEm 536 d.C., poucos anos antes da praga, os céus da Europa e da Ásia foram tomados por um nevoeiro escuro. O Sol perdeu seu brilho, as colheitas falharam e o frio se espalhou, como se a própria Terra estivesse chorando em um aviso. Algumas escrituras falam de um \"vento negro\" soprando pelo mundo. \nDécadas depois, em 588, a praga retornou, como se fosse uma força implacável, seguindo os passos do império em colapso. Mais adiante, em 847, a Terra tremeu. O terremoto de Damasco destruiu cidades inteiras, escrituras e pinturas mostram grandes rachaduras, ravinas, se abrindo e mostrando um vazio negro absoluto.\n\nE então vieram a fome, a desesperança e, por fim, a Peste Negra de 1347. Mais de 200 milhões de mortos. O golpe final antes da grande calamidade de 1400, com a expansão do Gelo Negro.\n\nSeriam esses apenas eventos naturais? Ou a manifestação gradual de algo muito mais obscuro, algo que se erguia das sombras do mundo, algo que preparava seu grande retorno?\n\nA resposta pode estar oculta nos segredos que não deveríamos ter descoberto."
+        },
+        {
+          "id": "jornal-decaidos",
+          "status": "Y",
+          "titulo": "Decaídos",
+          "subtitulo": "Jornais de Alessandro Cagliostro",
+          "data": "5 de novembro de 1776",
+          "tags": [
+            "Decaídos",
+            "Cultistas",
+            "Magia Negra"
+          ],
+          "resumo": "Cagliostro documenta o que sabe sobre os cultistas do Gelo Negro — o suficiente para ter medo, não o suficiente para entendê-los.",
+          "conteudo": "Infelizmente, não sofremos apenas com um mal externo, mas também com algo que nos corrompe por dentro. Desde os primeiros relatos sobre essa força sombria, há registros de pessoas que, talvez seduzidas pelo desejo de poder ou sucumbindo às influências mentais do Gelo Negro, passaram a manipular a história de maneira sutil e calculada. Esses cultistas, embora nem todos tenham sido totalmente dominados pela influência mental do gelo, são chamados de Decaídos. Apesar de manterem uma aparência humana, a marca deixada pelo gelo em seus corpos é evidente.\n\nNa maioria dos casos, os Decaídos exibem rasgos negros que cortam suas peles. A profundidade e a quantidade dessas fendas variam conforme o contato que tiveram com o Gelo Negro — desde pequenas marcas quase imperceptíveis até cicatrizes profundas que se estendem de uma extremidade do corpo à outra.\n\nEsses cultistas atuam em grupos, preferindo áreas isoladas como base de operações. Muitas vezes, um ou dois infiltram-se em faculdades, cidades ou tropas combatentes com o objetivo de sabotar estratégias, envenenar líderes ou converter outras pessoas à sua causa insana.\n\nOs Decaídos recorrem à magia negra, cujo funcionamento ainda permanece um mistério. Todos os que foram capturados até hoje cometeram suicídio de forma misteriosa logo após sua prisão. Apesar dessa barreira, conhecemos os efeitos de seus encantamentos. Na maioria das vezes, eles exercem uma influência mental sutil, instigando erros e desordens sem levantar suspeitas. Ainda assim, os cultistas mais experientes também recorrem a magias mais agressivas, capazes de provocar confusão, sonolência, extrema agressividade ou até mesmo levar suas vítimas ao suicídio. \nOs registros históricos indicam que os Decaídos surgiram com o aparecimento do Gelo Negro, por volta de 1400. Contudo, escrituras antigas apontam para a existência de um culto devotado a essa força já antes de 600 d.C. Dependendo da localização, esses grupos adotam diferentes nomes, funcionando como clãs que vão de denominações genéricas a títulos verdadeiramente macabros.\n\nOs Decaídos acreditam que o Gelo Negro é uma espécie de punição divina ou um anticorpo da Terra — algo que veio de fora para restaurar o equilíbrio do planeta. Para eles, pragas, fomes e secas seriam avisos claros para que a humanidade recuasse. Como esses sinais foram ignorados, o Gelo Negro seria a última solução, enviada por Deus ou pela própria Terra para colocar fim ao desrespeito humano. No fundo, talvez sejam apenas fanáticos religiosos.\n\nCuriosamente, as habilidades de um Decaído se fortalecem quando ele ingere o cadáver de um Sentire. Essa prática, contudo, é extremamente perigosa. Decaídos inexperientes geralmente não suportam o processo e acabam derretendo da mesma forma que alguém que toca o Gelo Negro. Entretanto, os mais experientes — com um nível de conhecimento comparável ao de formados na faculdade de Arcanismo — adquirem habilidades extraordinárias. Embora essas habilidades possam aumentar ao consumir mais Sentire, isso também eleva drasticamente o risco de morrer por derretimento.\n\nDesconhecemos como os Decaídos se organizam, qual é seu sistema hierárquico ou como coordenam suas ações, mas uma coisa é certa: eles são perigosamente eficientes e representam uma ameaça que jamais deve ser subestimada."
+        },
+        {
+          "id": "jornal-pactos",
+          "status": "Y",
+          "titulo": "Pactos",
+          "subtitulo": "Jornais de Alessandro Cagliostro",
+          "data": "28 de junho de 1779",
+          "tags": [
+            "Pactos",
+            "Arcanismo",
+            "Iatroquimismo"
+          ],
+          "resumo": "O sistema de pactos, a descoberta de Vaughan sobre seus limites, e o ritual que nenhum documento oficial descreve direito.",
+          "conteudo": "Desde a invenção dos pactos por meio do ocultismo, a vida dos praticantes e estudantes das diversas faculdades tornou-se mais fácil, especialmente para os estudantes de Arcanismo e Iatroquimismo. Com seus pactos, era possível realizar feitos inéditos, como duplicar materiais para ritos, prever ataques inimigos (tanto em batalhas quanto em estratégias de guerra) ou até mesmo potencializar a própria física.\n\nDentre as descobertas de Vaughan, a limitação dos pactos com certeza foi uma das mais importantes. Vaughan desenvolveu, ou descobriu sozinho, um contador para medir esse limite. De forma simplificada, todas as criaturas possuem um limitador natural para pactos, ou seja, uma quantidade máxima que podem realizar antes de enlouquecer, infartar ou simplesmente definhar. Embora todas as criaturas possuam esse limitador, sua quantidade varia de indivíduo para indivíduo, podendo ir de um até cinco ou mais pactos. Obviamente, para os guerreiros que planejam atuar no campo de batalha, quanto mais pactos, melhor. No entanto, para civis comuns, essa capacidade não é algo essencial.\n\nQuando um estudante ingressa em qualquer uma das faculdades, o teste do limitador é realizado, e o instrutor tem acesso à quantidade máxima de pactos que o estudante pode suportar, informando-o sobre seu limite. A partir desse momento, a responsabilidade é única e exclusiva do próprio estudante. \nPactos podem ser feitos de poucas maneiras, mas a mais assertiva e segura é com o auxílio de um especialista em Iatroquimismo. Uma sala escura, algumas velas e giz são tudo o que é necessário para realizar o ritual. Após fechar todas as fontes de luz e certificar-se de que o símbolo ritualístico está correto e alinhado, o instrutor ordena que o estudante se sente no centro do círculo, tomando cuidado para não rompê-lo. O instrutor, então, acende as velas e recita as palavras: \"Qua uti serpio nyrkor em il necro nyl uti vortes\", que significam, basicamente, \"Que você tenha um contrato e não morra\", ou algo semelhante.\n\nA partir desse ponto, cada estudante descreve sua experiência de maneira diferente, mas, no final, ele oferece algo em troca e recebe uma habilidade além do comum. Embora essa prática não seja bem vista pela maioria das pessoas, ela se tornou uma ferramenta indispensável na batalha contra o Gelo Negro."
+        }
+      ]
+    },
+    {
+      "id": "figuras",
+      "titulo": "Figuras Notáveis",
+      "icone": "◈",
+      "descricao": "Aqueles cujos nomes o tempo não conseguiu apagar.",
+      "itens": [
+        {
+          "id": "cornelio-agrippa",
+          "status": "Y",
+          "titulo": "Cornélio de Aggripa",
+          "subtitulo": "O Grande Profeta · ~1480–1530",
+          "data": "Nascido ~1480 d.C.",
+          "tags": [
+            "Profeta",
+            "Discipulus",
+            "Líder"
+          ],
+          "arquivo": "cornelio-agrippa.png",
+          "resumo": "Nasceu oitenta anos depois do Gelo Negro e morreu misteriosamente em 1530, sem deixar corpo nem explicação. No intervalo, mudou o mundo.",
+          "conteudo": "Oitenta anos depois que o Gelo Negro reconfigurou a geografia do planeta e matou mais gente do que qualquer praga antes dele, nasceu um homem com olhos negros e pupilas azuis que ninguém soube explicar. Cornélio de Aggripa era filho de uma época que não sabia mais muito bem o que era normal — novas raças, crianças com poderes, continentes que tinham se movido —, então uma peculiaridade ocular entrou na lista de coisas que as pessoas comentavam e depois paravam de comentar.\n\nO que não parava de crescer era a reputação. Cornélio não curava, não profetizava vitórias, não prometia paraíso. Fazia algo mais difícil: convencia pessoas que se odiavam a olhar na mesma direção. Tinha esse jeito raro de entrar numa sala dividida e sair com ela menos dividida, não porque tinha convencido todo mundo, mas porque tinha conseguido que todo mundo concordasse sobre o que realmente importava discutir.\n\nOs pagãos o chamavam de Grande Profeta. Os bruxos o chamavam de Grande Detentor — o que detém a dissolução, o que segura o que está se separando. A Igreja não sabia o que fazer com ele e por um tempo decidiu que era mais seguro não decidir.\n\nEm 1530, desapareceu. Não morreu — pelo menos não de forma que alguém pudesse confirmar. Não deixou carta, não avisou ninguém. Um dia estava, no outro não estava mais. Os que ficaram gastaram anos tentando entender o que tinha acontecido. Alguns ainda gastam."
+        },
+        {
+          "id": "thomas-vaughan",
+          "status": "Y",
+          "titulo": "Thomás Vaughan",
+          "subtitulo": "Fundador do Arcanismo · ~1620–1690",
+          "data": "~1650 d.C.",
+          "tags": [
+            "Ocultista",
+            "Fundador",
+            "Ciência"
+          ],
+          "arquivo": "thomas-vaughan.png",
+          "resumo": "Não manipulava magia. Estudava o que ela fazia com o corpo humano — e descobriu que isso era suficiente para mudar tudo.",
+          "conteudo": "Vaughan tinha quarenta anos quando decidiu que a abordagem de todos os outros estava errada. Enquanto a maioria dos estudiosos tentava entender a magia em si — sua origem, sua natureza metafísica, se era dom divino ou aberração —, Vaughan parou de se importar com a pergunta e começou a se importar com o efeito.\n\nO que a magia faz com o corpo humano? Com o sangue, com o sistema nervoso, com a longevidade? Essas perguntas tinham respostas mensuráveis, e respostas mensuráveis podiam ser verificadas, repetidas, ensinadas.\n\nA Ciência do Arcanismo nasceu disso. Não é magia — é o estudo sistemático do que a magia produz quando aplicada ao organismo. Vaughan descobriu que era possível prolongar a vida de forma significativa, suprimir fome e sede por períodos extensos, acelerar recuperação de ferimentos. Também descobriu o sistema de pactos e, mais importante, o limite de cada pessoa — o contador que hoje todo estudante conhece antes de fazer seu primeiro pacto.\n\nA Faculdade de Arcanismo foi construída em torno das notas que ele deixou. Vaughan era professoral no pior sentido: não sabia simplificar, não tinha paciência para repetir, esperava que os outros chegassem sozinhos onde ele já estava. Mas o que deixou por escrito era denso da maneira certa, e pessoas inteligentes continuam encontrando coisas naquelas páginas que ele não mencionou explicitamente."
+        },
+        {
+          "id": "jacques-germain",
+          "status": "Y",
+          "titulo": "Jacques Germain",
+          "subtitulo": "O Nivelador · ~1650–1740",
+          "data": "Séc. XVII–XVIII",
+          "tags": [
+            "Conde",
+            "Aço Negro",
+            "Cientista"
+          ],
+          "arquivo": "jacques-germain.png",
+          "resumo": "Dedicou cinquenta anos à mesma pergunta. Morreu aos noventa na mesa de trabalho, com a resposta em mãos.",
+          "conteudo": "Jacques Germain nasceu conde na Antiga Romênia e morreu cientista em qualquer lugar que tivesse uma mesa e luz suficiente para trabalhar. A aristocracia foi útil exatamente uma vez: financiou os primeiros vinte anos de pesquisa sem que ele precisasse prestar contas para ninguém.\n\nA teoria do Aço Negro era simples de enunciar e aparentemente impossível de provar: deveria existir uma liga capaz de resistir à corrosão do Gelo Negro. Tudo que existe tem um ponto de resistência, um limiar. O Gelo corroía osso, músculo, madeira, cobre, ferro, chumbo — mas a gordura sobrevivia, os Sentire sobreviviam. Havia uma lógica ali, e Germain era o tipo de pessoa que não conseguia ignorar uma lógica incompleta.\n\nPassou cinquenta anos minerando, fundindo, combinando. Estudou os tecidos dos Sentire com mais atenção do que qualquer pessoa antes dele, não porque fosse corajoso, mas porque eram os únicos materiais com resistência comprovada ao Gelo. O que encontrou nesses tecidos ele nunca publicou completamente — as notas existem, mas parcialmente codificadas, e ninguém decidiu ainda se foi por modéstia ou precaução.\n\nEm 1740, aos noventa anos, sintetizou o Aço Negro. Foi encontrado morto na mesa pouco depois, sem sinais de sofrimento. A Igreja o santificou. Os pagãos o chamaram de Nivelador. Germain provavelmente teria achado os dois excessivos e voltado ao trabalho."
+        },
+        {
+          "id": "pasqually",
+          "status": "Y",
+          "titulo": "Jacques de Pasqually",
+          "subtitulo": "O Ocultista Visionário · 33 anos",
+          "data": "Séc. XVIII",
+          "tags": [
+            "Ocultismo",
+            "Pactos",
+            "Ordem Secreta"
+          ],
+          "arquivo": "pasqually.png",
+          "resumo": "Fundou uma ordem dedicada ao estudo ritualístico dos pactos como defesa contra o Gelo Negro. Seus métodos são controversos. Seus resultados, menos.",
+          "conteudo": "O nome completo é Jacques de Livron Joachim de la Tour de la Casa Martinez de Pasqually, e ele usa todos os componentes dependendo de com quem está falando — o que diz bastante sobre como funciona a cabeça do homem.\n\nPassou a maior parte dos últimos dez anos convencendo pessoas de que os pactos estavam sendo mal utilizados. Não como ferramentas de combate ou suporte logístico — isso era o uso óbvio, e Pasqually não se interessava muito pelo óbvio. A hipótese dele era mais estranha: que os pactos, conduzidos de forma ritualística específica e com intenção deliberada, podiam criar uma barreira. Não física. Algo mais parecido com uma interferência — uma presença oposta ao Gelo Negro que o tornava menos eficaz em raio limitado.\n\nA ordem que fundou existe para testar isso. Quantos membros tem, onde operam, quem exatamente foi autorizado a conduzir os rituais — essas perguntas recebem respostas diferentes dependendo de quem você pergunta, e Pasqually parece considerar essa ambiguidade uma característica, não um problema.\n\nTrinta e três anos. Parece jovem para o que carrega, mas ele não age como alguém que acha que tem tempo. Há uma urgência nos escritos e nas conversas que as pessoas ao redor dele demoram a entender e depois não conseguem mais ignorar."
+        },
+        {
+          "id": "benedict-fane",
+          "status": "Y",
+          "titulo": "Benedict Fane",
+          "subtitulo": "O Patrono das Artes Arcanas · 66 anos",
+          "data": "Séc. XVIII",
+          "tags": [
+            "Aristocrata",
+            "Colecionador",
+            "Relíquias"
+          ],
+          "arquivo": "benedict-fane.png",
+          "resumo": "Colecionador de manuscritos e relíquias arcanas. Tem mais informação do que qualquer instituição pública e menos obrigação de compartilhar.",
+          "conteudo": "Benedict Fane nunca foi a campo, não tem pacto registrado em nenhuma faculdade, e provavelmente não conseguiria identificar um Sentire à distância. Isso não impede que seja uma das pessoas mais relevantes para qualquer pesquisador sério que precise de algo que as bibliotecas públicas decidiram não guardar.\n\nSessenta e seis anos bem vividos em casas grandes com salas fechadas onde ficam as coisas interessantes. A coleção começou com o avô — um general das primeiras Cruzadas que voltou com artefatos que ninguém sabia classificar e teve a sensatez de não tentar destruir o que não entendia. Fane herdou o hábito junto com o acervo.\n\nManuscritos anteriores ao Gelo Negro com anotações que não batem com nenhuma língua catalogada. Relíquias de Sentire preservadas em recipientes de Aço Negro. Pelo menos dois objetos que estudiosos examinaram brevemente e depois pediram para não precisar examinar de novo. Fane guarda tudo com igual cuidado, sem hierarquizar pelo nível de inquietação que causam.\n\nFinancia pesquisa quando a pesquisa parece ir numa direção que seu acervo confirma. Não faz doações. Faz trocas — informação por acesso, acesso por descobertas, descobertas por mais acesso. É transacional de um jeito que algumas pessoas acham frio e outras acham refrescante depois de anos pedindo favores para instituições que decidem por comitê."
+        },
+        {
+          "id": "pernety",
+          "status": "Y",
+          "titulo": "Antoine-Joseph Pernety",
+          "subtitulo": "O Alquimista do Simbolismo Hermético · 44 anos",
+          "data": "Séc. XVIII",
+          "tags": [
+            "Alquimia",
+            "Hermetismo",
+            "Simbolismo"
+          ],
+          "arquivo": "pernety.png",
+          "resumo": "Passou anos decifrando o que os antigos diziam sobre o Gelo Negro sem saber que estavam falando sobre o Gelo Negro. Chegou perto demais de algo e depois parou.",
+          "conteudo": "Pernety chegou ao Gelo Negro pelo caminho mais longo possível: passou a primeira metade da carreira estudando alquimia e simbolismo hermético como campos históricos, arqueológicos quase — interessado no que as pessoas do passado acreditavam, não no que era verdade.\n\nAí começou a traduzir um corpus de textos do século VI que ninguém tinha examinado com atenção porque pareciam puramente alegóricos. Encontrou, enterradas nos símbolos, descrições técnicas precisas. Substâncias com propriedades que correspondiam ao Gelo Negro. Procedimentos que combinavam com os relatos das primeiras Cruzadas. Referências a criaturas com as mesmas características que os Sentire, escritas por pessoas que viveram novecentos anos antes do Gelo Negro chegar.\n\nEssa descoberta deveria ter sido o centro de uma carreira. Pernety publicou uma parte, foi razoavelmente celebrado nos círculos certos, e então parou. Não de publicar — de pesquisar aquilo especificamente. Voltou para textos mais antigos, mais seguros, que não pareciam apontar para nada que pudesse ser verificado no mundo real.\n\nO que encontrou na segunda parte dos textos, a parte não publicada, não está claro. Pernety não fala sobre isso. Com quarenta e quatro anos ainda parece intelectualmente ativo, ainda corresponde com colegas, ainda aceita visitantes. Só não aceita perguntas sobre esse corpus específico."
+        }
+      ]
+    },
+    {
+      "id": "lugares",
+      "titulo": "Lugares",
+      "icone": "⬡",
+      "descricao": "Cidades e territórios que o Gelo Negro moldou, destruiu ou criou do zero.",
+      "itens": [
+        {
+          "id": "lugar-hartford",
+          "status": "Y",
+          "titulo": "Hartford",
+          "subtitulo": "Capital das Novas Américas",
+          "data": "Fundada pós-1400",
+          "tags": [
+            "Capital",
+            "Maçonaria",
+            "Governo"
+          ],
+          "resumo": "Planejada do zero por Obreiros que sabiam o que estavam fazendo. Funciona exatamente como deveria funcionar. Isso é o que a torna estranha.",
+          "conteudo": "Hartford foi construída depois do Gelo Negro por pessoas que tinham um plano claro e tempo suficiente para executá-lo sem pressa. Isso aparece em tudo. As ruas são largas demais para uma cidade dessa época, os edifícios têm uma simetria que você nota sem conseguir nomear o que está notando, e o centro da cidade é um conjunto de praças interligadas que nenhum documento oficial explica completamente. Os lampiões queimam com chama levemente azulada. Todo visitante menciona isso pelo menos uma vez.\n\nÉ aqui que as decisões sobre as Cruzadas são tomadas, que os contratos das Faculdades são assinados, que os regulamentos que afetam todas as outras cidades são escritos. Funciona. Para quem tem acesso às camadas certas, é provavelmente a melhor cidade das Américas para viver. Para quem não tem, é um lugar onde as regras são claras, a aplicação é consistente, e as possibilidades de mudar de posição são menores do que parecem à primeira vista.\n\nNem sempre é em Hartford que você descobre o que foi decidido em Hartford."
+        },
+        {
+          "id": "lugar-york",
+          "status": "Y",
+          "titulo": "York",
+          "subtitulo": "A Maior Cidade das Américas",
+          "data": "Anterior ao Gelo Negro",
+          "tags": [
+            "Comércio",
+            "Porto",
+            "Plural"
+          ],
+          "resumo": "Nenhuma facção controla York. Todas tentam. O resultado é uma cidade genuinamente plural onde o poder muda de mãos com uma fluidez que Hartford acha perturbadora.",
+          "conteudo": "York cresceu antes de qualquer planejamento conseguir acompanhá-la e nunca parou para esperar. Porto natural, localização central, história comercial que antecede o Gelo Negro — uma densidade de gente e dinheiro que nenhuma outra cidade do continente chegou perto de replicar.\n\nA Maçonaria tem presença forte nos contratos maiores e nos tribunais comerciais. Mas York é grande o suficiente para que isso não signifique controle total, e todo mundo na cidade sabe disso, inclusive a Maçonaria. É genuinamente plural de um jeito que Hartford acha perturbador e não consegue consertar.\n\nSe você precisa de algo que não encontrou em mais lugar nenhum, York provavelmente tem. A questão é saber onde perguntar e o que você está disposto a oferecer em troca. A cidade está sempre acordada, sempre barulhenta, e tem uma energia que visitantes descrevem como estimulante nos primeiros dias e exaustiva na segunda semana."
+        },
+        {
+          "id": "lugar-trenton",
+          "status": "Y",
+          "titulo": "Trenton",
+          "subtitulo": "Centro Industrial das Américas",
+          "data": "Fundada pós-1740",
+          "tags": [
+            "Indústria",
+            "Aço Negro",
+            "Cruzadas"
+          ],
+          "resumo": "O céu de Trenton nunca é azul. Cinquenta anos de carvoarias e fundições tornaram a fumaça uma característica climática permanente.",
+          "conteudo": "Trenton começou como assentamento de mineração depois que o Aço Negro foi sintetizado em 1740 e cresceu rápido demais para ser bem planejada. Hoje é o centro industrial das Américas — a cidade que produz as armas, as estruturas e os materiais que mantêm as Cruzadas funcionando.\n\nO céu nunca é azul. Cinquenta anos de carvoarias e fundições tornaram a fumaça uma característica climática permanente, e os rios têm colorações que não existiam antes de 1750. Os trabalhadores têm a maior concentração de Pactos simples do continente, feitos com uma supervisão que existe mais no papel do que na prática.\n\nÉ uma cidade que funciona com uma eficiência que impressiona à distância e pesa de perto. Se você precisa de equipamento, material ou alguém com conhecimento técnico real sobre Aço Negro e processos industriais, Trenton é onde vai encontrar."
+        },
+        {
+          "id": "lugar-portsmouth",
+          "status": "Y",
+          "titulo": "Portsmouth",
+          "subtitulo": "O Porto Antigo",
+          "data": "Anterior ao Gelo Negro",
+          "tags": [
+            "Porto",
+            "Cruzadas",
+            "Informação"
+          ],
+          "resumo": "Porto de abastecimento das Cruzadas na Europa. A névoa raramente se dissipa. É por aqui que chegam as notícias do que realmente acontece nas linhas de frente.",
+          "conteudo": "Portsmouth é uma das poucas cidades das Américas com história real anterior ao Gelo Negro, e isso aparece de formas que você vai notando com o tempo. Partes da cidade existem há tanto tempo que ninguém sabe completamente o que está estruturalmente integrado com o quê. Há inscrições em pedra nos trechos mais antigos do porto que estudiosos classificaram como anteriores ao Hermetismo e não conseguiram decodificar completamente.\n\nÉ pelo porto de Portsmouth que passa a maioria do suprimento destinado às Cruzadas na Europa. É também por Portsmouth que chegam de volta as notícias do que está realmente acontecendo nas linhas de frente — filtradas em graus variados antes de seguir para Hartford.\n\nA névoa do porto raramente se dissipa completamente, mesmo nos dias de sol. A relação da cidade com a Maçonaria é antiga e de necessidade mútua sem muita simpatia de nenhum dos lados. Se você quer informação sobre o que está acontecendo além do Atlântico, Portsmouth é o melhor lugar para procurar. Só não espere que alguém entregue de graça."
+        },
+        {
+          "id": "lugar-albany",
+          "status": "Y",
+          "titulo": "Albany",
+          "subtitulo": "A Cidade do Processo Correto",
+          "data": "Pós-Gelo Negro",
+          "tags": [
+            "Política",
+            "Rosa-Cruz",
+            "Reformismo"
+          ],
+          "resumo": "Parlamento, eleições, tribunais públicos. Funciona como deveria funcionar, dentro de limites que se tornam visíveis quando alguém tenta cruzá-los com determinação suficiente.",
+          "conteudo": "Albany tem tudo que um governo civil deveria ter. Parlamento, eleições regulares, tribunais públicos com registros acessíveis, jornais que cobrem os debates, advogados que aceitam casos difíceis. A cidade funciona como deveria funcionar, dentro de limites que se tornam visíveis quando alguém tenta cruzá-los com determinação suficiente.\n\nÉ para Albany que vão reformistas, jornalistas e pessoas que acreditam que o sistema pode ser mudado por dentro. Alguns chegam a conclusões úteis. Outros descobrem, em velocidades variadas, o que o sistema permite questionar e o que prefere não ser questionado.\n\nNão há censura declarada em Albany. Há carreiras que prosperam e carreiras que estagnam, e o padrão de qual é qual não é difícil de identificar para quem presta atenção. A Ordem Rosa-Cruz tem presença visível — membros em posições acadêmicas e judiciais. As pessoas falam com cuidado em Albany. Não por medo exatamente, mas porque é um hábito que a cidade ensina depressa e que fica."
+        },
+        {
+          "id": "lugar-concord",
+          "status": "Y",
+          "titulo": "Concord",
+          "subtitulo": "A Fronteira do Norte",
+          "data": "Pós-1760",
+          "tags": [
+            "Militar",
+            "Fronteira",
+            "Cruzadas"
+          ],
+          "resumo": "Parte base militar, parte centro de abastecimento, parte lugar onde pessoas que não se encaixam mais em lugar nenhum eventualmente aparecem.",
+          "conteudo": "Concord cresceu rápido depois de 1760, quando as Cruzadas precisaram de uma base no norte do continente, e nunca teve tempo de se tornar uma cidade organizada no sentido convencional. É parte base militar, parte centro de abastecimento, parte lugar onde pessoas que não se encaixam mais em lugar nenhum eventualmente aparecem.\n\nÉ a cidade mais próxima dos territórios que as Cruzadas ainda não mapearam completamente, e isso define o caráter do lugar. Há uma urgência em Concord que Hartford e Albany não têm. As muralhas externas são de Aço Negro puro e têm um brilho estranho à noite que moradores param de mencionar depois de algum tempo.\n\nSoldados que partem para o norte se abastecem em Concord. Soldados que voltam chegam por aqui primeiro. As pessoas falam direto, sem o cuidado de Albany, e têm pouca paciência para pretensão. Quando você vive perto o suficiente do que existe lá fora, certas coisas perdem a importância que tinham antes."
+        }
+      ]
+    },
+    {
+      "id": "registros",
+      "titulo": "Registros Históricos",
+      "icone": "▸",
+      "descricao": "Eventos e ocorrências que os arquivos oficiais prefeririam não catalogar.",
+      "itens": [
+        {
+          "id": "reg-inicio",
+          "status": "Y",
+          "titulo": "O Início",
+          "subtitulo": "Registro Histórico — 1400",
+          "data": "~1400 d.C.",
+          "tags": [
+            "Gelo Negro",
+            "Origem",
+            "Discipulus"
+          ],
+          "resumo": "O que se sabe sobre o período entre 1400 e 1600 — o caos, as novas raças, os primeiros Discipulus, e o homem que impediu que tudo se dissolvesse.",
+          "conteudo": "Em 1400, algo emergiu dos polos que nenhum texto anterior havia previsto com especificidade suficiente para ser útil. Os continentes se moveram. Cidades desapareceram em fissuras que abriram e fecharam em horas. Montanhas surgiram onde havia planícies. Os polos ficaram pretos.\n\nNesse mesmo período, crianças começaram a nascer de formas que não tinham explicação. Alguns com habilidades que o mundo até então chamava de bruxaria e passou a chamar de Discipulus — uma palavra que significa aprendiz e foi escolhida por alguém que preferia não decidir se era bênção ou aberração. Junto com os humanos e os Discipulus, surgiram raças novas. Diferentes em aparência. Parecidas em tudo que importa.\n\nEntre 1400 e 1600, o mundo não tinha um nome para o que estava enfrentando e se matava por isso. Cornélio de Aggripa nasceu nesse intervalo e passou a vida fazendo o que ninguém conseguia: convencer as pessoas a pararem de se matar entre si enquanto havia algo externo matando todo mundo.\n\nEm 1650, Vaughan nomeou o campo. Em 1740, Germain criou o material. Em 1760, as Cruzadas começaram de verdade — com estrutura, hierarquia e Aço Negro suficiente para entrar nos territórios e voltar."
+        },
+        {
+          "id": "reg-cruzadas",
+          "status": "Y",
+          "titulo": "As Cruzadas",
+          "subtitulo": "Registro Histórico — 1760",
+          "data": "1760 d.C.",
+          "tags": [
+            "Cruzadas",
+            "Gibraltar",
+            "Zarcas",
+            "Xzul'Dan"
+          ],
+          "resumo": "Três tropas. Três continentes. A primeira expedição organizada ao território do Gelo Negro com equipamento capaz de sobreviver ao que encontraria lá.",
+          "conteudo": "As Cruzadas para o Gelo Negro começaram em 1760, vinte anos depois que o Aço Negro foi sintetizado e distribuído em quantidade suficiente para equipar uma força de tamanho razoável. A tecnologia era nova e os territórios eram desconhecidos, o que significava que o primeiro critério de seleção não era habilidade — era disposição para ir mesmo sem garantia de voltar.\n\nTrês unidades foram organizadas. A Tropa de Gibraltar representava a Europa e operava a partir das bordas do que restava do mediterrâneo. A Tropa de Zarcas vinha das Novas Américas e avançava para o noroeste, onde os mapas simplesmente paravam. A Tropa de Xzul'Dan, proveniente da Ásia, era a mais antiga das três em termos de prática de combate contra Sentire, e suas táticas foram adotadas parcialmente pelas outras.\n\nO que essas tropas encontraram nas primeiras décadas de operação mudou o que se pensava saber sobre o Gelo Negro. Os relatórios completos existem. Poucos têm acesso a eles."
+        },
+        {
+          "id": "reg-sentire",
+          "status": "Y",
+          "titulo": "Anatomia dos Sentire",
+          "subtitulo": "Registro Acadêmico — Academia de Arcanismo",
+          "data": "Pós-1650",
+          "tags": [
+            "Sentire",
+            "Biologia",
+            "Arcanismo"
+          ],
+          "resumo": "O que se sabe sobre os Sentire depois de décadas de estudo — que é menos do que parece e mais do que era antes.",
+          "conteudo": "Antes de Vaughan, os Sentire eram tratados como fenômenos — sem origem, sem biologia, sem lógica interna. Depois que a Academia de Arcanismo começou a estudar os cadáveres que as Cruzadas trouxeram, o quadro mudou. São biológicos. Têm tecidos, têm o que parece ser um sistema circulatório, têm estruturas que correspondem vagamente a órgãos. São anormais para qualquer padrão natural, mas são materiais. Reais. Que podem ser estudados.\n\nA imunidade ao Gelo Negro ainda não tem explicação satisfatória. Os tecidos de Sentire compartilham algo — uma propriedade química, possivelmente — com a gordura humana, que também sobrevive ao contato. Foi essa linha de pesquisa que Germain seguiu para chegar ao Aço Negro.\n\nO cheiro de pólvora adocicada é consistente em espécimes frescos. Em decomposição avançada, a semelhança com frutas podres levou pelo menos um pesquisador a uma teoria sobre processos fermentativos que a Academia ainda não confirmou nem descartou formalmente."
+        },
+        {
+          "id": "reg-wip",
+          "status": "N",
+          "titulo": "Em Construção",
+          "subtitulo": "Registro Não Catalogado",
+          "data": "—",
+          "tags": [],
+          "resumo": "",
+          "conteudo": ""
+        }
+      ]
+    }
+  ]
+}
