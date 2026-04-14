@@ -600,8 +600,8 @@ body {
 .map-marker-label {
   position:absolute; left:16px; top:50%;
   transform:translateY(-50%);
-  font-family:'Inconsolata',monospace;
-  font-size:.28rem; letter-spacing:.25em; text-transform:uppercase;
+  font-family:'Special Elite',serif;
+  font-size:.30rem; letter-spacing:.05em;
   color:rgba(232,221,200,.55); white-space:nowrap;
   pointer-events:none;
   text-shadow:0 1px 4px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,.9);
@@ -636,26 +636,65 @@ body {
   background:rgba(4,7,16,.97);
   border:1px solid rgba(26,90,138,.28);
   border-top:1px solid rgba(74,159,216,.22);
-  padding:12px 16px; max-width:260px;
+  padding:12px 16px; width:260px;
   pointer-events:none; display:none;
   backdrop-filter:blur(4px);
   box-shadow:0 4px 24px rgba(0,0,0,.6);
+  transition:width .3s cubic-bezier(.16,1,.3,1), padding .3s, max-height .3s;
 }
 #map-tooltip.visible { display:block; }
+#map-tooltip.expanded {
+  pointer-events:all;
+  width:360px;
+  max-height:min(520px, 70vh);
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(26,90,138,.35) transparent;
+}
+#map-tooltip.expanded::-webkit-scrollbar { width:4px; }
+#map-tooltip.expanded::-webkit-scrollbar-track { background:transparent; }
+#map-tooltip.expanded::-webkit-scrollbar-thumb { background:rgba(26,90,138,.35); border-radius:2px; }
 .map-tt-tipo {
   font-family:'Inconsolata',monospace;
   font-size:.28rem; letter-spacing:.5em; text-transform:uppercase;
   color:rgba(74,159,216,.45); margin-bottom:6px;
 }
 .map-tt-nome {
-  font-family:'Cinzel',serif;
-  font-size:.75rem; font-weight:600; letter-spacing:.1em;
+  font-family:'Special Elite',serif;
+  font-size:.85rem; font-weight:600; letter-spacing:.04em;
   color:rgba(232,221,200,.9); margin-bottom:6px;
 }
 .map-tt-desc {
   font-family:'Special Elite',serif;
   font-size:.7rem; color:rgba(184,168,152,.55);
   line-height:1.7;
+}
+.map-tt-expanded {
+  display:none;
+  margin-top:2px;
+}
+#map-tooltip.expanded .map-tt-expanded { display:block; }
+#map-tooltip.expanded .map-tt-desc { display:none; }
+.map-tt-sep {
+  height:1px; background:rgba(26,90,138,.2); margin:10px 0;
+}
+.map-tt-img {
+  width:100%; margin-bottom:10px;
+  border:1px solid rgba(26,90,138,.18);
+  display:block;
+  max-height:220px;
+  object-fit:cover;
+}
+.map-tt-lore {
+  font-family:'Special Elite',serif;
+  font-size:.72rem; color:rgba(184,168,152,.7);
+  line-height:1.8; white-space:pre-wrap;
+}
+.map-tt-coords {
+  font-family:'Inconsolata',monospace;
+  font-size:.24rem; letter-spacing:.35em; text-transform:uppercase;
+  color:rgba(74,159,216,.25); margin-top:10px; padding-top:8px;
+  border-top:1px solid rgba(26,90,138,.08);
 }
 #map-controls {
   position:absolute; bottom:18px; right:18px;
@@ -1622,6 +1661,12 @@ body {
             <div class="map-tt-tipo" id="mtt-tipo"></div>
             <div class="map-tt-nome" id="mtt-nome"></div>
             <div class="map-tt-desc" id="mtt-desc"></div>
+            <div class="map-tt-expanded" id="mtt-expanded">
+              <div class="map-tt-sep"></div>
+              <img class="map-tt-img" id="mtt-img" src="" alt="" style="display:none;"/>
+              <div class="map-tt-lore" id="mtt-lore"></div>
+              <div class="map-tt-coords" id="mtt-coords"></div>
+            </div>
           </div>
           <div id="map-add-modal">
             <div id="map-modal-drag-handle">
@@ -2353,7 +2398,8 @@ function _applyHighlightsToDOM() {
   });
 }
 
-/* --- Abertura / Fecho com fade --- */
+
+/* --- Abertura / Fecho --- */
 function openModal(item) {
   document.getElementById('modal-meta').textContent     = item.data || '';
   document.getElementById('modal-title').textContent    = item.titulo;
@@ -2647,6 +2693,12 @@ function initMap(){
   });
 
   renderMapMarkers();
+
+  // Fechar tooltip expandido ao clicar fora (no mapa)
+  container.addEventListener('click', e=>{
+    if(e.target.closest('.map-marker') || e.target.closest('#map-tooltip') || e.target.closest('#map-add-modal')) return;
+    hideMapTooltip();
+  });
 }
 
 function getRenderedImageRect(container, img){
@@ -2824,31 +2876,92 @@ function renderMapMarkers(){
     el.style.top  = py + 'px';
     el.innerHTML = `<div class="map-pulse"></div><div class="map-marker-dot"></div><div class="map-marker-label">${m.nome}</div>`;
 
-    el.addEventListener('click', e=>{ e.stopPropagation(); openMapDetail(m.id); });
+    el.addEventListener('click', e=>{ e.stopPropagation(); expandMapTooltip(m, e); });
     el.addEventListener('mouseenter', e=>{ showMapTooltip(m, e); });
-    el.addEventListener('mouseleave', ()=>{ hideMapTooltip(); });
+    el.addEventListener('mouseleave', ()=>{ hideMapTooltipIfNotExpanded(); });
 
     layer.appendChild(el);
   });
 }
 
-function showMapTooltip(m, e){
-  const tt = document.getElementById('map-tooltip');
+let _tooltipExpandedId = null;
+
+function _positionTooltip(tt, clientX, clientY, expanded){
   const panel = document.getElementById('map-panel');
   const rect = panel.getBoundingClientRect();
+  const w = expanded ? 330 : 274;
+  const h = expanded ? 420 : 130;
+  let left = clientX - rect.left - w - 14;
+  let top  = clientY - rect.top  + 14;
+  if(left < 8) left = clientX - rect.left + 14;
+  if(top + h > panel.offsetHeight - 8) top = clientY - rect.top - h - 14;
+  if(top < 8) top = 8;
+  tt.style.left = left + 'px';
+  tt.style.top  = top  + 'px';
+}
+
+function showMapTooltip(m, e){
+  const tt = document.getElementById('map-tooltip');
+  if(tt.classList.contains('expanded') && _tooltipExpandedId === m.id) return;
+  if(tt.classList.contains('expanded') && _tooltipExpandedId !== m.id){
+    collapseMapTooltip();
+  }
   document.getElementById('mtt-tipo').textContent = tipoLabel(m.tipo);
   document.getElementById('mtt-nome').textContent = m.nome;
   document.getElementById('mtt-desc').textContent = (m.lore||'').substring(0,120)+(m.lore&&m.lore.length>120?'…':'');
-  let left = e.clientX - rect.left + 14;
-  let top  = e.clientY - rect.top  + 14;
-  if(left + 270 > panel.offsetWidth)  left = e.clientX - rect.left - 274;
-  if(top  + 120 > panel.offsetHeight) top  = e.clientY - rect.top  - 124;
-  tt.style.left = left + 'px';
-  tt.style.top  = top  + 'px';
+  _positionTooltip(tt, e.clientX, e.clientY, false);
   tt.classList.add('visible');
+  tt.classList.remove('expanded');
 }
+
+function hideMapTooltipIfNotExpanded(){
+  const tt = document.getElementById('map-tooltip');
+  if(!tt.classList.contains('expanded')){
+    tt.classList.remove('visible');
+  }
+}
+
 function hideMapTooltip(){
-  document.getElementById('map-tooltip').classList.remove('visible');
+  const tt = document.getElementById('map-tooltip');
+  tt.classList.remove('visible','expanded');
+  _tooltipExpandedId = null;
+}
+
+function collapseMapTooltip(){
+  const tt = document.getElementById('map-tooltip');
+  tt.classList.remove('expanded');
+  _tooltipExpandedId = null;
+}
+
+function expandMapTooltip(m, e){
+  const tt = document.getElementById('map-tooltip');
+  // toggle: clicou no mesmo marcador já expandido → fecha
+  if(_tooltipExpandedId === m.id && tt.classList.contains('expanded')){
+    collapseMapTooltip();
+    tt.classList.remove('visible');
+    return;
+  }
+  _tooltipExpandedId = m.id;
+  document.getElementById('mtt-tipo').textContent = tipoLabel(m.tipo);
+  document.getElementById('mtt-nome').textContent = m.nome;
+  document.getElementById('mtt-desc').textContent = (m.lore||'').substring(0,120)+(m.lore&&m.lore.length>120?'…':'');
+  document.getElementById('mtt-lore').textContent = m.lore||'';
+  document.getElementById('mtt-coords').textContent = `Coord · ${m.x.toFixed(2)}° L · ${m.y.toFixed(2)}° N`;
+  // Foto
+  const imgEl = document.getElementById('mtt-img');
+  imgEl.onerror = null; imgEl.src = ''; imgEl.style.display = 'none';
+  const slug = m.nome.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+  const formats = ['jpg','png','jpeg','webp'];
+  let fi = 0;
+  const tryImg = () => {
+    if(fi >= formats.length){ imgEl.style.display='none'; imgEl.onerror=null; return; }
+    imgEl.onerror = () => { fi++; tryImg(); };
+    imgEl.src = './mapa/' + slug + '.' + formats[fi];
+    imgEl.style.display = 'block';
+  };
+  tryImg();
+  _positionTooltip(tt, e.clientX, e.clientY, true);
+  tt.classList.add('visible','expanded');
 }
 
 function openMapDetail(id){
