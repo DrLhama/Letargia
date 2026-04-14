@@ -1794,9 +1794,9 @@ let _activeTab = null;
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
     _cachedBgGrad = null;
+    buildWaveGrads();
   }
   window.addEventListener('resize', resize, {passive:true});
-  resize();
 
   const layers = [
     { amp:18, freq:0.008, speed:0.00028, phase:0,    alpha:0.045, color:'30,60,110',   thick:1.5, yFrac:0.52 },
@@ -1813,7 +1813,21 @@ let _activeTab = null;
     l._c1 = `rgba(${l.color},${(l.alpha*0.9).toFixed(3)})`;
     l._c2 = `rgba(${l.color},${(l.alpha*0.3).toFixed(3)})`;
     l._cs = `rgba(${l.color},${(l.alpha*2.2).toFixed(3)})`;
+    l._cachedWaveGrad = null; // cache do gradiente de onda
   });
+
+  function buildWaveGrads(){
+    layers.forEach(l=>{
+      const baseY = H * l.yFrac;
+      const wg = ctx.createLinearGradient(0, baseY - l.amp, 0, H);
+      wg.addColorStop(0,   l._c0);
+      wg.addColorStop(0.3, l._c1);
+      wg.addColorStop(1,   l._c2);
+      l._cachedWaveGrad = wg;
+    });
+  }
+
+  resize(); // inicializar W/H e construir gradientes cacheados
 
   const foamLines = Array.from({length:6}, ()=>({
     yFrac: 0.3 + Math.random()*0.55,
@@ -1844,6 +1858,8 @@ let _activeTab = null;
 
   let _paused = false;
   document.addEventListener('visibilitychange', ()=>{ _paused = document.hidden; if(!_paused) requestAnimationFrame(draw); });
+  // Permitir pausa externa quando o mapa estiver visível (evita carga desnecessária)
+  window._oceanPause = (v)=>{ _paused = v; if(!_paused) requestAnimationFrame(draw); };
 
   let t = 0;
   let frameCount = 0;
@@ -1861,10 +1877,6 @@ let _activeTab = null;
     layers.forEach(l => {
       l.phase += l.speed;
       const baseY = H * l.yFrac;
-      const wg = ctx.createLinearGradient(0, baseY - l.amp, 0, H);
-      wg.addColorStop(0,   l._c0);
-      wg.addColorStop(0.3, l._c1);
-      wg.addColorStop(1,   l._c2);
 
       ctx.beginPath();
       ctx.moveTo(0, H);
@@ -1873,7 +1885,7 @@ let _activeTab = null;
       }
       ctx.lineTo(W, H);
       ctx.closePath();
-      ctx.fillStyle = wg;
+      ctx.fillStyle = l._cachedWaveGrad;
       ctx.fill();
 
       // Linha de crista
@@ -2190,6 +2202,7 @@ function switchTab(secId, save=true){
     document.querySelector('.letargia-quote') && (document.querySelector('.letargia-quote').style.display='none');
     document.querySelector('.divider') && (document.querySelector('.divider').style.display='none');
     document.querySelector('.footer') && (document.querySelector('.footer').style.display='none');
+    if(window._oceanPause) window._oceanPause(true);
     renderMapMarkers();
   } else {
     mapSec.style.display = 'none';
@@ -2197,6 +2210,7 @@ function switchTab(secId, save=true){
     document.querySelector('.letargia-quote') && (document.querySelector('.letargia-quote').style.display='');
     document.querySelector('.divider') && (document.querySelector('.divider').style.display='');
     document.querySelector('.footer') && (document.querySelector('.footer').style.display='');
+    if(window._oceanPause) window._oceanPause(false);
   }
 }
 
@@ -2638,13 +2652,19 @@ function openMapDetail(id){
   const imgEl = document.getElementById('mdp-img');
   // Tenta carregar imagem automática pelo nome do lugar em mapa/
   const slug = m.nome.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
-  const tryImg = (formats, idx) => {
-    if(idx >= formats.length){ imgEl.style.display='none'; imgEl.src=''; return; }
-    imgEl.src = './mapa/' + slug + '.' + formats[idx];
+  // Limpar handler anterior para evitar acumulação de listeners
+  imgEl.onerror = null;
+  imgEl.src = '';
+  imgEl.style.display = 'none';
+  const formats = ['jpg','png','jpeg','webp'];
+  let _fmtIdx = 0;
+  const tryImg = () => {
+    if(_fmtIdx >= formats.length){ imgEl.style.display='none'; imgEl.src=''; imgEl.onerror=null; return; }
+    imgEl.onerror = () => { _fmtIdx++; tryImg(); };
+    imgEl.src = './mapa/' + slug + '.' + formats[_fmtIdx];
     imgEl.style.display = 'block';
-    imgEl.onerror = () => tryImg(formats, idx+1);
   };
-  tryImg(['jpg','png','jpeg','webp'], 0);
+  tryImg();
   const editBtn = document.getElementById('mdp-edit-btn');
   editBtn.style.display = EDIT_MODE ? '' : 'none';
   document.getElementById('map-detail-panel').classList.add('open');
@@ -2654,6 +2674,9 @@ function openMapDetail(id){
 function closeMapDetail(){
   document.getElementById('map-detail-panel').classList.remove('open');
   _mapActiveMarkerId = null;
+  // Cancelar qualquer carregamento de imagem pendente
+  const imgEl = document.getElementById('mdp-img');
+  if(imgEl){ imgEl.onerror = null; imgEl.src = ''; imgEl.style.display = 'none'; }
 }
 
 function editMapMarker(){
