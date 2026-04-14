@@ -347,5 +347,287 @@
         }
       ]
     }
+  ],
+  "mapa": [
+    {
+      "id": "marker-1776120421307",
+      "tipo": "capital",
+      "nome": "Hartford",
+      "lore": "Sede do governo maçônico. Cidade planejada do zero, ruas largas demais, lampiões de chama azulada. Tudo funciona — para quem tem acesso.",
+      "x": 36.33412128472192,
+      "y": 39.760832046103154
+    },
+    {
+      "id": "marker-1776120479008",
+      "tipo": "cidade",
+      "nome": "York",
+      "lore": "A maior das Américas. Nenhuma facção controla completamente. Tudo tem preço, tudo pode ser encontrado. Sempre acordada.",
+      "x": 41.00122941268311,
+      "y": 41.95237807809741
+    },
+    {
+      "id": "marker-1776120557527",
+      "tipo": "cidade",
+      "nome": "Trenton",
+      "lore": "Centro industrial. Céu nunca azul. Produz as armas das Cruzadas. Trabalhadores com Pactos feitos sob pressão.",
+      "x": 18.371561354107552,
+      "y": 48.84368718188879
+    },
+    {
+      "id": "marker-1776120593491",
+      "tipo": "porto",
+      "nome": "Portsmouth",
+      "lore": "Porto estratégico. Suprimentos das Cruzadas partem daqui. Informações sobre a linha de frente chegam aqui primeiro — filtradas.",
+      "x": 39.371561354107556,
+      "y": 50.99368718188879
+    },
+    {
+      "id": "marker-1776120638760",
+      "tipo": "capital",
+      "nome": "Albany",
+      "lore": "Centro político e judicial. Parlamento, tribunais, eleições. A ilusão de governança civil mais bem mantida do continente.",
+      "x": 18.621561354107552,
+      "y": 55.393687181888794
+    },
+    {
+      "id": "marker-1776120682711",
+      "tipo": "forte",
+      "nome": "Concord",
+      "lore": "Fronteira norte. Base das Cruzadas. Muralhas de Aço Negro puro que brilham à noite. Soldados que partem e nem sempre voltam.",
+      "x": 44.67156135410755,
+      "y": 34.243687181888795
+    },
+    {
+      "id": "marker-1776120885568",
+      "tipo": "gelo",
+      "nome": "Erebus",
+      "lore": "Iceberg acoplado na costa sul das Américas. O maior registro de acoplamento do continente. Os Fortes do sul existem por causa dele.",
+      "x": 18.172650975840803,
+      "y": 68.85080384996677
+    },
+    {
+      "id": "marker-1776120908896",
+      "tipo": "gelo",
+      "nome": "Resolute",
+      "lore": "Costa americana mais ao norte. Apareceu em 1771 sem aviso. Hartford demorou seis meses para reconhecer oficialmente.",
+      "x": 47.72820653139636,
+      "y": 23.29524829441121
+    },
+    {
+      "id": "marker-1776120960991",
+      "tipo": "forte",
+      "nome": "Caldeira",
+      "lore": "O mais próximo do Erebus que qualquer estrutura humana ainda se sustenta. Operado pela Tropa de Zarcas em rotação — nenhum soldado fica mais de três meses.",
+      "x": 15.454019891167514,
+      "y": 64.92212873619351
+    },
+    {
+      "id": "marker-1776120989142",
+      "tipo": "forte",
+      "nome": "Maracá",
+      "lore": "Primeira linha contra o Erebus. Construído às pressas em 1762. Abastecido por Trenton, esquecido por Hartford.",
+      "x": 25.65401989116751,
+      "y": 64.27212873619351
+    },
+    {
+      "id": "marker-1776121101835",
+      "tipo": "faculdade",
+      "nome": "GAHA",
+      "lore": "Grande Academia Hermética das Américas\nA maior instituição hermética do continente. Arcanismo, Iatroquimismo, Estrategismo e Fisicalismo ensinados lado a lado com esgrima e doutrina militar. Os formandos não recebem diploma — recebem uma patente.",
+      "x": 40.80401989116751,
+      "y": 38.17212873619351
+    },
+    {
+      "id": "marker-1776121391373",
+      "tipo": "forte",
+      "nome": "Xzul'dan",
+      "lore": "Sede da Tropa de Xzul'Dan. A mais temida das três tropas das Cruzadas. Fica no interior da região norte, longe do mar. Poucos civis sabem onde exatamente fica — e quem sabe não chegou lá por acidente.",
+      "x": 72.60061875851972,
+      "y": 41.82459780963048
+    },
+    {
+      "id": "marker-1776121418474",
+      "tipo": "cidade",
+      "nome": "Nanjing",
+      "lore": "Principal centro urbano asiático. Hub comercial e político da região. A Maçonaria tem presença aqui mas tênue — a cultura local resistiu à estrutura ocidental de formas que Hartford ainda não conseguiu resolver completamente.",
+      "x": 66.68567602799102,
+      "y": 45.24883064579711
+    },
+    {
+      "id": "marker-1776121438526",
+      "tipo": "porto",
+      "nome": "Vladivostok",
+      "lore": "Porto estratégico no extremo nordeste. Ponto de saída das expedições para os icebergs asiáticos. Cidade fria, pragmática, sem lealdade declarada a nenhuma facção.",
+      "x": 57.61493269665935,
+      "y": 43.05934087616532
+    },
+    {
+      "id": "marker-1776121469524",
+      "tipo": "cidade",
+      "nome": "Kashgar",
+      "lore": "Cidade antiga no interior profundo. Cruzamento de rotas comerciais que existem há séculos. Tem mais história do que qualquer cidade das Américas — e segredos proporcionais.",
+      "x": 60.74277522470477,
+      "y": 50.357640108271276
+    },
+    {
+      "id": "marker-1776121514459",
+      "tipo": "faculdade",
+      "nome": "Academia de Xzul'dan",
+      "lore": "Anexa à sede da Tropa. Não aceita candidatos de fora da região sem aprovação da própria Tropa. O currículo é desconhecido pelas Faculdades das Américas.",
+      "x": 71.69022407286369,
+      "y": 51.19173144908339
+    },
+    {
+      "id": "marker-1776121557160",
+      "tipo": "gelo",
+      "nome": "Goliath",
+      "lore": "Iceberg acoplado na costa leste asiática. O maior iceberg registrado no hemisfério norte. As expedições que tentaram mapeá-lo completamente não voltaram completas.",
+      "x": 89.63452945089367,
+      "y": 41.56262240827762
+    },
+    {
+      "id": "marker-1776121609178",
+      "tipo": "gelo",
+      "nome": "Covenant",
+      "lore": "Costa norte. Mais antigo que o Goliath — registros de 1680 já o mencionam. Avança lentamente mas de forma consistente há mais de um século.",
+      "x": 74.81717003438771,
+      "y": 29.327931933083867
+    },
+    {
+      "id": "marker-1776121634070",
+      "tipo": "forte",
+      "nome": "Mongke",
+      "lore": "Linha de defesa contra o Covenant no norte. Nome de um Khan antigo — os soldados locais insistiram no nome quando a Maçonaria tentou padronizar.",
+      "x": 74.25162196505543,
+      "y": 37.13249528986945
+    },
+    {
+      "id": "marker-1776121657531",
+      "tipo": "forte",
+      "nome": "Argun",
+      "lore": "Defesa leste contra o Goliath. Rio histórico da região virou linha de contenção. Os relatórios de Argun são os mais censurados nos arquivos de Hartford.",
+      "x": 86.69367949036577,
+      "y": 42.674866369325876
+    },
+    {
+      "id": "marker-1776121722776",
+      "tipo": "capital",
+      "nome": "London",
+      "lore": "Centro político da Europa maçônica. Mais antiga que Hartford, mais resistente à padronização. A Maçonaria europeia e a americana discordam em mais coisas do que admitem publicamente.",
+      "x": 49.766284956557705,
+      "y": 57.118668123865156
+    },
+    {
+      "id": "marker-1776121738124",
+      "tipo": "cidade",
+      "nome": "Paris",
+      "lore": "Centro intelectual. Rosa-Cruz tem presença forte aqui. Onde filósofos, ocultistas e reformistas se encontram — e onde a Astrum Argentum recruta discretamente.",
+      "x": 54.43611049953263,
+      "y": 58.99675013571377
+    },
+    {
+      "id": "marker-1776121765532",
+      "tipo": "porto",
+      "nome": "Rotterdam",
+      "lore": "Principal porto europeu. Tudo que vai e vem da Europa passa por aqui em algum momento. Segundo porto mais movimentado depois de Portsmouth.",
+      "x": 54.84218228587827,
+      "y": 50.976832355387295
+    },
+    {
+      "id": "marker-1776121822933",
+      "tipo": "cidade",
+      "nome": "Constantinopla",
+      "lore": "Cidade antiga com camadas de história que nenhuma outra tem. Os documentos que Cagliostro menciona nos jornais foram encontrados aqui. A Maçonaria tem interesse especial nos arquivos locais.",
+      "x": 63.217412879257154,
+      "y": 61.07786804073518
+    },
+    {
+      "id": "marker-1776121859102",
+      "tipo": "faculdade",
+      "nome": "Academia Hermética Europeia",
+      "lore": "Baseada em Londres. A mais antiga das três grandes Faculdades. Tecnicamente precedeu a das Américas — e nunca esqueceu disso.",
+      "x": 49.614008036678094,
+      "y": 59.25054500217979
+    },
+    {
+      "id": "marker-1776121937373",
+      "tipo": "gelo",
+      "nome": "Leviathan",
+      "lore": "Iceberg acoplado na costa leste europeia, no Mar do Norte. Nome dado pelos primeiros marinheiros que o avistaram em 1698. O brilho azulado é mais intenso que em qualquer outro iceberg documentado.",
+      "x": 80.64119175438539,
+      "y": 61.89151035694178
+    },
+    {
+      "id": "marker-1776121951875",
+      "tipo": "gelo",
+      "nome": "Tempest",
+      "lore": "Costa leste, mais ao sul que o Leviathan. Menor mas mais ativo — os Sentire emergem com frequência irregular que nenhum padrão conseguiu prever.",
+      "x": 79.0993253186241,
+      "y": 65.34529117304704
+    },
+    {
+      "id": "marker-1776121986140",
+      "tipo": "forte",
+      "nome": "Danzig",
+      "lore": "Costa leste, defesa primária contra o Leviathan. Cidade portuária convertida em base militar. A linha entre civil e soldado aqui desapareceu há muito tempo.",
+      "x": 71.51334245467858,
+      "y": 63.00165419068989
+    },
+    {
+      "id": "marker-1776122004826",
+      "tipo": "forte",
+      "nome": "Trieste",
+      "lore": "Costa leste mais ao sul, defesa contra o Tempest. Ponto de observação avançado — daqui é possível ver o brilho do iceberg em noites sem nuvem.",
+      "x": 68.73798287030827,
+      "y": 67.8122774702651
+    },
+    {
+      "id": "marker-1776122077382",
+      "tipo": "forte",
+      "nome": "Gibraltar",
+      "lore": "Sede da Tropa de Gibraltar. Controla o único estreito que ainda funciona como rota segura. Não enfrenta iceberg diretamente mas é de onde partem as expedições de contenção para o leste.",
+      "x": 59.06002880074557,
+      "y": 61.63123678565048
+    },
+    {
+      "id": "marker-1776122136198",
+      "tipo": "forte",
+      "nome": "Dakar",
+      "lore": "Costa oeste africana. Ponto de abastecimento para expedições que contornam o continente em direção ao leste europeu. Operado conjuntamente por Gibraltar e pela Maçonaria local.",
+      "x": 40.615347912031204,
+      "y": 70.10674429106011
+    },
+    {
+      "id": "marker-1776122152593",
+      "tipo": "forte",
+      "nome": "Cairo",
+      "lore": "Norte africano. Posição estratégica entre Europa, Ásia e o interior do continente. Documentos herméticos antigos foram encontrados aqui — alguns anteriores ao Gelo Negro.",
+      "x": 59.71252528507402,
+      "y": 66.2005034647559
+    },
+    {
+      "id": "marker-1776122181099",
+      "tipo": "forte",
+      "nome": "Zanzibar",
+      "lore": "Costa leste africana. O mais isolado dos fortes africanos. Relatórios chegam com atraso de semanas. O que acontece aqui entre um relatório e outro é questão em aberto.",
+      "x": 71.2452362960674,
+      "y": 77.91922594366855
+    },
+    {
+      "id": "marker-1776122222598",
+      "tipo": "forte",
+      "nome": "Luanda",
+      "lore": "Costa oeste, sul profundo. Abastecido por navio desde Dakar — quando os navios chegam. Isolamento crescente conforme o Erebus avança pelo sul.",
+      "x": 53.016112439981086,
+      "y": 83.06554322276774
+    },
+    {
+      "id": "marker-1776122235336",
+      "tipo": "forte",
+      "nome": "Quelimane",
+      "lore": "Costa leste, extremo sul africano. O forte mais próximo do hemisfério sul habitado por humanos. Os soldados aqui sabem que se o Erebus avançar mais, são os primeiros a saber.",
+      "x": 66.65695342072596,
+      "y": 86.22773817739497
+    }
   ]
 }

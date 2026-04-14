@@ -54,18 +54,26 @@ body {
     rgba(26,90,138,.20) 5px, rgba(26,90,138,.20) 6px
   );
 }
-/* Partículas de pó/cinzas douradas */
+/* Oceano animado de fundo */
+#ocean-canvas {
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  width:100%; height:100%;
+  opacity:.55;
+}
+/* Partículas de bioluminescência */
 .ice-bg { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
 .ice-bg span {
-  position:absolute; width:1px; height:1px;
-  background:rgba(74,159,216,.55); border-radius:50%;
+  position:absolute; width:2px; height:2px;
+  background:rgba(74,200,230,.7); border-radius:50%;
   animation:ice-float linear infinite;
+  box-shadow:0 0 4px rgba(74,200,230,.5);
+  will-change:transform, opacity;
 }
 @keyframes ice-float {
   0%   { transform:translateY(100vh) scale(0); opacity:0; }
-  10%  { opacity:.35; }
-  90%  { opacity:.12; }
-  100% { transform:translateY(-10px) scale(1.5); opacity:0; }
+  10%  { opacity:.5; }
+  90%  { opacity:.15; }
+  100% { transform:translateY(-10px) scale(1.8); opacity:0; }
 }
 
 /* ══════ TELA DE SENHA ══════ */
@@ -489,6 +497,351 @@ body {
 }
 .back-link:hover { opacity:.6; }
 
+/* ══════ MAPA ══════ */
+#map-panel {
+  width:100%; height:calc(100vh - 320px); min-height:500px;
+  position:relative; overflow:hidden;
+  background:transparent;
+}
+#map-container {
+  width:100%; height:100%;
+  position:relative; overflow:hidden;
+  cursor:grab;
+}
+#map-container.grabbing { cursor:grabbing; }
+#map-img {
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+  object-fit:contain;
+  pointer-events:none;
+  user-select:none;
+  transform-origin:0 0;
+}
+#map-markers-layer {
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  transform-origin:0 0;
+}
+.map-marker {
+  position:absolute;
+  width:20px; height:20px;
+  transform:translate(-50%,-50%);
+  pointer-events:all;
+  cursor:pointer;
+  z-index:10;
+}
+/* Crosshair temporário de mira */
+#map-pin-crosshair {
+  position:absolute;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  z-index:50;
+  width:20px; height:20px;
+}
+#map-pin-crosshair::before,
+#map-pin-crosshair::after {
+  content:'';
+  position:absolute;
+  background:rgba(220,80,60,.9);
+  box-shadow:0 0 6px rgba(220,80,60,.6);
+}
+#map-pin-crosshair::before {
+  width:2px; height:20px;
+  left:50%; top:0; transform:translateX(-50%);
+}
+#map-pin-crosshair::after {
+  width:20px; height:2px;
+  top:50%; left:0; transform:translateY(-50%);
+}
+.map-marker-dot {
+  width:10px; height:10px;
+  border-radius:50%;
+  border:1.5px solid rgba(74,159,216,.9);
+  background:rgba(74,159,216,.25);
+  transition:transform .2s, background .2s;
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+}
+.map-marker:hover .map-marker-dot { transform:translate(-50%,-50%) scale(1.6); background:rgba(74,159,216,.55); }
+.map-marker[data-tipo="porto"]:hover .map-marker-dot { transform:translate(-50%,-50%) rotate(45deg) scale(1.6); background:rgba(80,190,210,.55); }
+.map-marker[data-tipo="gelo"]      .map-marker-dot { 
+  border:none; background:transparent;
+  width:14px; height:14px;
+  border-radius:0;
+  clip-path: polygon(50% 0%, 58% 38%, 93% 7%, 62% 42%, 100% 50%, 62% 58%, 93% 93%, 58% 62%, 50% 100%, 42% 62%, 7% 93%, 38% 58%, 0% 50%, 38% 42%, 7% 7%, 42% 38%);
+  background: rgba(10,25,80,.85);
+  box-shadow: 0 0 6px rgba(0,100,255,.9), 0 0 12px rgba(0,60,200,.6), inset 0 0 4px rgba(100,180,255,.3);
+  outline: 1px solid rgba(0,130,255,.95);
+  filter: drop-shadow(0 0 3px rgba(0,120,255,1));
+}
+.map-marker[data-tipo="faculdade"] .map-marker-dot { border-color:rgba(90,200,140,.85); background:rgba(15,80,50,.35); border-radius:2px; width:11px; height:11px; }
+.map-marker[data-tipo="capital"]   .map-marker-dot { border-color:rgba(220,190,80,.9); background:rgba(120,90,10,.35);width:13px;height:13px; }
+.map-marker[data-tipo="porto"]     .map-marker-dot { border-color:rgba(80,190,210,.85); background:rgba(10,60,90,.35); border-radius:0; transform:translate(-50%,-50%) rotate(45deg); width:10px; height:10px; }
+.map-marker[data-tipo="forte"]     .map-marker-dot { border-color:rgba(200,80,80,.8);  background:rgba(100,20,20,.3); border-radius:2px; }
+.map-marker[data-tipo="ruina"]     .map-marker-dot { border-color:rgba(160,130,100,.7);background:rgba(60,40,20,.3);  border-style:dashed; }
+.map-marker-icon {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  font-size:7px; line-height:1;
+  display:flex; align-items:center; justify-content:center;
+  width:14px; height:14px;
+  pointer-events:none;
+  z-index:2;
+  filter:drop-shadow(0 0 3px rgba(0,0,0,.9));
+}
+.map-marker[data-tipo="capital"]  .map-marker-icon { font-size:9px; color:rgba(220,190,80,.95); }
+.map-marker[data-tipo="gelo"]     .map-marker-icon { font-size:8px; color:rgba(140,180,255,.9); }
+.map-marker[data-tipo="forte"]    .map-marker-icon { font-size:7px; color:rgba(240,120,120,.9); }
+.map-marker[data-tipo="porto"]    .map-marker-icon { font-size:7px; color:rgba(100,220,200,.9); }
+.map-marker[data-tipo="ruina"]    .map-marker-icon { font-size:7px; color:rgba(180,150,110,.7); }
+.map-marker[data-tipo="faculdade"].map-marker-icon { font-size:7px; color:rgba(140,220,140,.9); }
+.map-marker-label {
+  position:absolute; left:16px; top:50%;
+  transform:translateY(-50%);
+  font-family:'Inconsolata',monospace;
+  font-size:.28rem; letter-spacing:.25em; text-transform:uppercase;
+  color:rgba(232,221,200,.55); white-space:nowrap;
+  pointer-events:none;
+  text-shadow:0 1px 4px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,.9);
+  background:rgba(2,5,14,.45);
+  padding:1px 5px 1px 3px;
+  opacity:0;
+  transition:opacity .18s;
+}
+.map-marker:hover .map-marker-label { opacity:1; color:rgba(232,221,200,.95); background:rgba(2,5,14,.72); }
+.map-pulse {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:10px; height:10px;
+  border-radius:50%;
+  border:1px solid rgba(74,159,216,.5);
+  animation:map-pulse 2.4s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes map-pulse {
+  0%   { transform:translate(-50%,-50%) scale(1); opacity:.7; }
+  100% { transform:translate(-50%,-50%) scale(3.2); opacity:0; }
+}
+.map-marker[data-tipo="gelo"]      .map-pulse { border-color:rgba(80,120,200,.5); }
+.map-marker[data-tipo="faculdade"] .map-pulse { border-color:rgba(120,200,120,.5); }
+.map-marker[data-tipo="capital"]   .map-pulse { border-color:rgba(220,190,80,.5); animation-duration:1.8s; }
+.map-marker[data-tipo="porto"]     .map-pulse { border-color:rgba(80,200,180,.5); }
+.map-marker[data-tipo="forte"]     .map-pulse { border-color:rgba(200,80,80,.5);  animation-duration:3s; }
+.map-marker[data-tipo="ruina"]     .map-pulse { opacity:.3; }
+
+#map-tooltip {
+  position:absolute; z-index:100;
+  background:rgba(4,7,16,.97);
+  border:1px solid rgba(26,90,138,.28);
+  border-top:1px solid rgba(74,159,216,.22);
+  padding:12px 16px; max-width:260px;
+  pointer-events:none; display:none;
+  backdrop-filter:blur(4px);
+  box-shadow:0 4px 24px rgba(0,0,0,.6);
+}
+#map-tooltip.visible { display:block; }
+.map-tt-tipo {
+  font-family:'Inconsolata',monospace;
+  font-size:.28rem; letter-spacing:.5em; text-transform:uppercase;
+  color:rgba(74,159,216,.45); margin-bottom:6px;
+}
+.map-tt-nome {
+  font-family:'Cinzel',serif;
+  font-size:.75rem; font-weight:600; letter-spacing:.1em;
+  color:rgba(232,221,200,.9); margin-bottom:6px;
+}
+.map-tt-desc {
+  font-family:'Special Elite',serif;
+  font-size:.7rem; color:rgba(184,168,152,.55);
+  line-height:1.7;
+}
+#map-controls {
+  position:absolute; bottom:18px; right:18px;
+  display:flex; flex-direction:column; gap:6px; z-index:20;
+}
+.map-ctrl-btn {
+  width:34px; height:34px;
+  background:rgba(4,7,16,.9);
+  border:1px solid rgba(26,90,138,.22);
+  color:rgba(74,159,216,.65);
+  font-family:'Inconsolata',monospace; font-size:.85rem;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:color .2s, border-color .2s;
+}
+.map-ctrl-btn:hover { color:rgba(74,159,216,1); border-color:rgba(74,159,216,.45); }
+#map-legend {
+  position:absolute; bottom:18px; left:18px; z-index:20;
+  background:rgba(4,7,16,.88);
+  border:1px solid rgba(26,90,138,.18);
+  padding:12px 16px;
+}
+.map-legend-title {
+  font-family:'Inconsolata',monospace;
+  font-size:.26rem; letter-spacing:.5em; text-transform:uppercase;
+  color:rgba(74,159,216,.3); margin-bottom:10px;
+}
+.map-legend-item {
+  display:flex; align-items:center; gap:8px; margin-bottom:6px;
+}
+.map-legend-dot {
+  width:8px; height:8px; border-radius:50%; flex-shrink:0;
+}
+.map-legend-dot.cidade    { border:1.5px solid rgba(74,159,216,.9);   background:rgba(74,159,216,.25); }
+.map-legend-dot.capital   { border:2px    solid rgba(220,190,80,.9);   background:rgba(120,90,10,.35); }
+.map-legend-dot.porto     { border:1.5px solid rgba(80,190,210,.85); background:rgba(10,60,90,.35); border-radius:0; transform:rotate(45deg); }
+.map-legend-dot.forte     { border:1.5px solid rgba(200,80,80,.8);    background:rgba(100,20,20,.3); }
+.map-legend-dot.ruina     { border:1.5px solid rgba(160,130,100,.7);  background:rgba(60,40,20,.3); }
+.map-legend-dot.faculdade { border:1.5px solid rgba(90,200,140,.85); background:rgba(15,80,50,.35); border-radius:2px; }
+.map-legend-dot.gelo      { border:none; background:rgba(10,25,80,.85); clip-path: polygon(50% 0%, 58% 38%, 93% 7%, 62% 42%, 100% 50%, 62% 58%, 93% 93%, 58% 62%, 50% 100%, 42% 62%, 7% 93%, 38% 58%, 0% 50%, 38% 42%, 7% 7%, 42% 38%); outline:1px solid rgba(0,130,255,.95); box-shadow:0 0 5px rgba(0,100,255,.8); border-radius:0; }
+
+/* Rosa dos ventos */
+#map-compass {
+  position:absolute; top:18px; right:18px; z-index:20;
+  width:110px; height:110px;
+  pointer-events:none;
+  opacity:.70;
+  filter:drop-shadow(0 0 8px rgba(26,90,138,.4));
+}
+.map-legend-label {
+  font-family:'Inconsolata',monospace;
+  font-size:.28rem; letter-spacing:.3em; text-transform:uppercase;
+  color:rgba(184,168,152,.45);
+}
+#map-edit-bar {
+  display:none;
+  padding:10px 18px; background:rgba(4,7,16,.95);
+  border-bottom:1px solid rgba(26,90,138,.18);
+  gap:10px; align-items:center; flex-wrap:wrap;
+}
+#map-edit-bar.active { display:flex; }
+.map-edit-label {
+  font-family:'Inconsolata',monospace;
+  font-size:.28rem; letter-spacing:.4em; text-transform:uppercase;
+  color:rgba(74,159,216,.4);
+}
+.map-type-btn {
+  background:rgba(6,12,24,.8);
+  border:1px solid rgba(26,90,138,.2);
+  color:rgba(184,168,152,.5);
+  font-family:'Inconsolata',monospace; font-size:.3rem; letter-spacing:.2em;
+  padding:5px 12px; cursor:pointer; text-transform:uppercase;
+  transition:color .2s, border-color .2s, background .2s;
+}
+.map-type-btn.active, .map-type-btn:hover {
+  color:rgba(74,159,216,.9); border-color:rgba(74,159,216,.4);
+  background:rgba(26,90,138,.1);
+}
+#map-add-modal {
+  display:none; position:fixed; z-index:200;
+  background:rgba(4,7,16,.98);
+  border:1px solid rgba(26,90,138,.28);
+  padding:20px 22px; min-width:280px;
+  cursor:default;
+  box-shadow: 0 8px 40px rgba(0,0,0,.7);
+}
+#map-add-modal.open { display:block; }
+#map-modal-drag-handle {
+  cursor:grab; user-select:none;
+  margin:-20px -22px 16px;
+  padding:10px 22px 8px;
+  border-bottom:1px solid rgba(26,90,138,.15);
+  background:rgba(26,90,138,.06);
+  display:flex; align-items:center; justify-content:space-between;
+}
+#map-modal-drag-handle:active { cursor:grabbing; }
+#map-modal-drag-handle-label {
+  font-family:'Inconsolata',monospace;
+  font-size:.26rem; letter-spacing:.5em; text-transform:uppercase;
+  color:rgba(74,159,216,.3);
+}
+#map-modal-drag-handle-icon {
+  font-size:.7rem; color:rgba(74,159,216,.2); line-height:1;
+}
+.map-modal-title {
+  font-family:'Cinzel',serif;
+  font-size:.55rem; letter-spacing:.2em;
+  color:rgba(74,159,216,.5); margin-bottom:16px;
+}
+.map-modal-field { margin-bottom:10px; }
+.map-modal-label {
+  display:block; font-family:'Inconsolata',monospace;
+  font-size:.26rem; letter-spacing:.4em; text-transform:uppercase;
+  color:rgba(184,168,152,.4); margin-bottom:4px;
+}
+.map-modal-input, .map-modal-select, .map-modal-textarea {
+  width:100%; background:rgba(6,12,24,.9);
+  border:none; border-bottom:1px solid rgba(26,90,138,.3);
+  padding:7px 10px; color:rgba(232,221,200,.8);
+  font-family:'Special Elite',serif; font-size:.75rem; outline:none;
+}
+.map-modal-textarea { height:70px; resize:vertical; }
+.map-modal-actions { display:flex; gap:8px; margin-top:14px; }
+.map-modal-btn {
+  background:none; border:1px solid rgba(26,90,138,.25);
+  color:rgba(74,159,216,.6); font-family:'Inconsolata',monospace;
+  font-size:.28rem; letter-spacing:.3em; text-transform:uppercase;
+  padding:6px 14px; cursor:pointer; transition:color .2s, border-color .2s;
+}
+.map-modal-btn:hover { color:rgba(74,159,216,1); border-color:rgba(74,159,216,.5); }
+.map-modal-btn.danger { color:rgba(200,80,60,.6); border-color:rgba(200,80,60,.2); }
+.map-modal-btn.danger:hover { color:rgba(200,80,60,1); border-color:rgba(200,80,60,.5); }
+#map-detail-panel {
+  display:none; position:absolute; top:0; right:0;
+  width:300px; height:100%;
+  background:rgba(4,7,16,.97);
+  border-left:1px solid rgba(26,90,138,.18);
+  z-index:50; overflow-y:auto;
+  padding:24px 20px;
+  scrollbar-width:thin;
+}
+#map-detail-panel.open { display:block; }
+.map-detail-close {
+  position:absolute; top:14px; right:16px;
+  background:none; border:none;
+  color:rgba(74,159,216,.4); font-size:.9rem; cursor:pointer;
+  font-family:'Inconsolata',monospace; letter-spacing:.1em;
+}
+.map-detail-close:hover { color:rgba(74,159,216,.9); }
+.map-detail-tipo {
+  font-family:'Inconsolata',monospace;
+  font-size:.26rem; letter-spacing:.55em; text-transform:uppercase;
+  color:rgba(74,159,216,.35); margin-bottom:8px; margin-top:4px;
+}
+.map-detail-nome {
+  font-family:'Cinzel',serif; font-weight:600;
+  font-size:1rem; letter-spacing:.1em;
+  color:rgba(232,221,200,.9); margin-bottom:14px; line-height:1.3;
+}
+.map-detail-sep {
+  height:1px; background:rgba(26,90,138,.15); margin-bottom:14px;
+}
+.map-detail-lore {
+  font-family:'Special Elite',serif;
+  font-size:.8rem; color:rgba(184,168,152,.6);
+  line-height:1.85; white-space:pre-wrap;
+}
+.map-detail-img {
+  width:100%; margin-bottom:14px;
+  border:1px solid rgba(26,90,138,.15);
+  display:none;
+}
+.map-detail-coords {
+  font-family:'Inconsolata',monospace;
+  font-size:.26rem; letter-spacing:.35em; text-transform:uppercase;
+  color:rgba(74,159,216,.25); margin-top:18px; padding-top:12px;
+  border-top:1px solid rgba(26,90,138,.08);
+}
+.map-detail-edit-btn {
+  margin-top:16px; width:100%;
+  background:none; border:1px solid rgba(26,90,138,.2);
+  color:rgba(74,159,216,.5); font-family:'Inconsolata',monospace;
+  font-size:.28rem; letter-spacing:.35em; text-transform:uppercase;
+  padding:8px; cursor:pointer; transition:color .2s, border-color .2s;
+}
+.map-detail-edit-btn:hover { color:rgba(74,159,216,.9); border-color:rgba(74,159,216,.45); }
+
 /* ══════ MODAL LEITURA ══════ */
 #modal-overlay {
   position:fixed; inset:0; z-index:1000;
@@ -650,6 +1003,62 @@ body {
 .edit-row .edit-field-group { flex:1; }
 .edit-actions { display:flex; gap:12px; margin-top:26px; flex-wrap:wrap; }
 
+/* ══════ ABAS DE AUTOR (Jornais) ══════ */
+.author-tabs-bar {
+  display:flex; flex-wrap:wrap; gap:0;
+  margin-bottom:24px;
+  border-bottom:1px solid rgba(26,90,138,.12);
+}
+.author-tab-btn {
+  font-family:'Inconsolata',monospace;
+  font-size:.32rem; letter-spacing:.38em; text-transform:uppercase;
+  padding:9px 18px; cursor:pointer;
+  background:none; border:none; border-bottom:2px solid transparent;
+  color:var(--ink-dim); transition:color .2s, border-color .2s, background .2s;
+  white-space:nowrap; position:relative; top:1px;
+}
+.author-tab-btn:hover { color:var(--ink-mid); background:rgba(26,90,138,.04); }
+.author-tab-btn.active { color:var(--ink-bright); }
+
+/* Cores temáticas por autor — aplica na borda inferior da aba e no topline do card */
+.author-color-0 { --author-color: rgba(74,159,216,.70); --author-color-dim: rgba(74,159,216,.18); }  /* azul gelo */
+.author-color-1 { --author-color: rgba(180,120,60,.75);  --author-color-dim: rgba(180,120,60,.18); }  /* âmbar */
+.author-color-2 { --author-color: rgba(100,180,100,.70); --author-color-dim: rgba(100,180,100,.18); } /* verde */
+.author-color-3 { --author-color: rgba(180,80,160,.70);  --author-color-dim: rgba(180,80,160,.18); }  /* lilás */
+.author-color-4 { --author-color: rgba(200,70,70,.70);   --author-color-dim: rgba(200,70,70,.18); }   /* vermelho */
+.author-color-5 { --author-color: rgba(80,180,180,.70);  --author-color-dim: rgba(80,180,180,.18); }  /* ciano */
+.author-color-6 { --author-color: rgba(200,180,60,.70);  --author-color-dim: rgba(200,180,60,.18); }  /* dourado */
+.author-color-7 { --author-color: rgba(120,100,200,.70); --author-color-dim: rgba(120,100,200,.18); } /* índigo */
+
+.author-tab-btn.active { border-bottom-color: var(--author-color); color:var(--ink-bright); }
+
+/* card colorido por autor */
+.entry-card.author-colored .card-topline {
+  background: linear-gradient(90deg, transparent, var(--author-color), transparent);
+}
+.entry-card.author-colored { background: color-mix(in srgb, var(--surface) 97%, var(--author-color-dim) 3%); }
+
+/* Painel de autor — oculto/visível */
+.author-panel { display:none; }
+.author-panel.active { display:block; }
+
+/* Edit mode — botão gerenciar autores */
+.edit-authors-wrap { margin-bottom:20px; }
+.edit-authors-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.edit-author-chip {
+  font-family:'Inconsolata',monospace;
+  font-size:.32rem; letter-spacing:.28em; text-transform:uppercase;
+  padding:5px 12px; cursor:pointer;
+  background:rgba(26,90,138,.06); border:1px solid rgba(26,90,138,.18);
+  color:var(--ink-mid); transition:background .2s, color .2s;
+  display:flex; align-items:center; gap:8px;
+}
+.edit-author-chip:hover { background:rgba(26,90,138,.14); color:var(--ink-bright); }
+.edit-author-chip .chip-del {
+  color:rgba(200,80,60,.5); font-size:.8em; transition:color .2s;
+}
+.edit-author-chip:hover .chip-del { color:rgba(200,80,60,.9); }
+
 /* ── VOLUME ── */
 #vol-ctrl {
   position:fixed; bottom:22px; right:24px; z-index:800;
@@ -700,6 +1109,7 @@ body {
 </head>
 <body>
 
+<canvas id="ocean-canvas"></canvas>
 <div class="grain"></div>
 <div class="vignette"></div>
 <div class="scanlines"></div>
@@ -878,6 +1288,11 @@ body {
         <label class="edit-label">Subtítulo</label>
         <input class="edit-input" id="ef-subtitulo" type="text" placeholder="ex: Jornais de Alessandro Cagliostro"/>
       </div>
+    </div>
+    <div class="edit-field-group" id="ef-autor-group" style="display:none;">
+      <label class="edit-label">Autor do Jornal</label>
+      <input class="edit-input" id="ef-autor" type="text" placeholder="ex: Alessandro Cagliostro" list="ef-autor-datalist"/>
+      <datalist id="ef-autor-datalist"></datalist>
     </div>
     <div class="edit-row">
       <div class="edit-field-group">
@@ -1088,9 +1503,163 @@ body {
     <div class="tabs-inner" id="tabs-nav"></div>
   </div>
 
-  <div class="main-content">
+  <div class="main-content" id="main-content-area">
     <a class="back-link" href="../index.html">← &nbsp; Voltar ao Odisseia</a>
     <div id="sections-container"></div>
+
+    <!-- ══ MAPA ══ -->
+    <div id="map-section" style="display:none;">
+      <div class="section-panel-header">
+        <div class="section-panel-eyebrow">Secção — Cartografia · Arquivo do Gelo Negro</div>
+        <div class="section-panel-title">Mapa Mundi</div>
+        <div class="section-panel-desc">Nova et Accurata Mapa Mundi Reverso — Ex delineationibus priscis delineata.</div>
+      </div>
+      <div id="map-edit-bar">
+        <span class="map-edit-label">Inserir:</span>
+        <button class="map-type-btn active" id="meb-cidade"   onclick="setMapType('cidade')">⬤ Cidade</button>
+        <button class="map-type-btn"        id="meb-capital"  onclick="setMapType('capital')">★ Capital</button>
+        <button class="map-type-btn"        id="meb-porto"    onclick="setMapType('porto')">⚓ Porto</button>
+        <button class="map-type-btn"        id="meb-forte"    onclick="setMapType('forte')">⚔ Forte</button>
+        <button class="map-type-btn"        id="meb-ruina"    onclick="setMapType('ruina')">◈ Ruína</button>
+        <button class="map-type-btn"        id="meb-faculdade"onclick="setMapType('faculdade')">✦ Faculdade</button>
+        <button class="map-type-btn"        id="meb-gelo"     onclick="setMapType('gelo')">❄ Gelo Negro</button>
+        <span class="map-edit-label" style="margin-left:8px; opacity:.5;">✕✕ duplo clique para fixar</span>
+        <button class="map-modal-btn" style="margin-left:auto;" onclick="exportMapJSON()">&#8595; Exportar JSON</button>
+      </div>
+      <div id="map-panel">
+        <div id="map-container">
+          <img id="map-img" src="mapa.png" alt="Mapa Mundi Letargia"
+               onerror="this.style.opacity='.15'"/>
+          <div id="map-markers-layer"></div>
+          <div id="map-tooltip">
+            <div class="map-tt-tipo" id="mtt-tipo"></div>
+            <div class="map-tt-nome" id="mtt-nome"></div>
+            <div class="map-tt-desc" id="mtt-desc"></div>
+          </div>
+          <div id="map-add-modal">
+            <div id="map-modal-drag-handle">
+              <span id="map-modal-drag-handle-label">Mover</span>
+              <span id="map-modal-drag-handle-icon">⠿</span>
+            </div>
+            <div class="map-modal-title">&#10022; &nbsp; Marcador</div>
+            <div class="map-modal-field">
+              <label class="map-modal-label">Tipo</label>
+              <select class="map-modal-select" id="mm-tipo">
+                <option value="cidade">⬤ Cidade</option>
+                <option value="capital">★ Capital</option>
+                <option value="porto">⚓ Porto</option>
+                <option value="forte">⚔ Forte / Guarnição</option>
+                <option value="ruina">◈ Ruína / Sítio</option>
+                <option value="faculdade">✦ Faculdade / Academia</option>
+                <option value="gelo">❄ Gelo Negro</option>
+              </select>
+            </div>
+            <div class="map-modal-field">
+              <label class="map-modal-label">Nome</label>
+              <input class="map-modal-input" id="mm-nome" type="text" placeholder="ex: Hartford"/>
+            </div>
+            <div class="map-modal-field">
+              <label class="map-modal-label">Lore / Descricao</label>
+              <textarea class="map-modal-textarea" id="mm-lore" placeholder="Texto de lore exibido ao clicar..."></textarea>
+            </div>
+            <div class="map-modal-actions">
+              <button class="map-modal-btn" onclick="saveMapMarker()">&#9654; Salvar</button>
+              <button class="map-modal-btn danger" onclick="closeMapModal()">&#8212; Cancelar</button>
+            </div>
+          </div>
+          <div id="map-detail-panel">
+            <button class="map-detail-close" onclick="closeMapDetail()">&#10005;</button>
+            <div class="map-detail-tipo" id="mdp-tipo"></div>
+            <div class="map-detail-nome" id="mdp-nome"></div>
+            <div class="map-detail-sep"></div>
+            <img class="map-detail-img" id="mdp-img" src="" alt=""/>
+            <div class="map-detail-lore" id="mdp-lore"></div>
+            <div class="map-detail-coords" id="mdp-coords"></div>
+            <button class="map-detail-edit-btn" id="mdp-edit-btn" style="display:none;" onclick="editMapMarker()">&#9998; &nbsp; Editar Marcador</button>
+          </div>
+        </div>
+        <div id="map-controls">
+          <button class="map-ctrl-btn" onclick="mapZoom(1.25)">+</button>
+          <button class="map-ctrl-btn" onclick="mapZoom(0.8)">&#8722;</button>
+          <button class="map-ctrl-btn" onclick="mapReset()">&#8962;</button>
+        </div>
+        <div id="map-legend">
+          <div class="map-legend-title">Legenda</div>
+          <div class="map-legend-item"><div class="map-legend-dot cidade"></div><span class="map-legend-label">Cidade</span></div>
+          <div class="map-legend-item"><div class="map-legend-dot capital"></div><span class="map-legend-label">Capital</span></div>
+          <div class="map-legend-item"><div class="map-legend-dot porto"></div><span class="map-legend-label">Porto</span></div>
+          <div class="map-legend-item"><div class="map-legend-dot forte"></div><span class="map-legend-label">Forte</span></div>
+          <div class="map-legend-item"><div class="map-legend-dot ruina"></div><span class="map-legend-label">Ruína</span></div>
+          <div class="map-legend-item"><div class="map-legend-dot faculdade"></div><span class="map-legend-label">Faculdade</span></div>
+          <div class="map-legend-item"><div class="map-legend-dot gelo"></div><span class="map-legend-label">Gelo Negro</span></div>
+        </div>
+        <!-- Rosa dos ventos -->
+        <svg id="map-compass" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="cmp-bg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#0a1828" stop-opacity=".85"/>
+              <stop offset="100%" stop-color="#020508" stop-opacity=".60"/>
+            </radialGradient>
+            <radialGradient id="cmp-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#4a9fd8" stop-opacity=".20"/>
+              <stop offset="100%" stop-color="#1a3a6a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- Fundo circular -->
+          <circle cx="60" cy="60" r="56" fill="url(#cmp-bg)" stroke="rgba(74,159,216,.18)" stroke-width="1"/>
+          <circle cx="60" cy="60" r="56" fill="url(#cmp-glow)"/>
+          <!-- Anel externo decorativo -->
+          <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(74,159,216,.10)" stroke-width=".6" stroke-dasharray="3 4"/>
+          <!-- Anel intermediário -->
+          <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(74,159,216,.08)" stroke-width=".5"/>
+
+          <!-- Pétala NORTE — branca/clara (direção para cima) -->
+          <polygon points="60,8  65,56 60,60 55,56" fill="rgba(235,225,205,.88)"/>
+          <polygon points="60,8  65,56 60,60 55,56" fill="none" stroke="rgba(74,159,216,.30)" stroke-width=".5"/>
+
+          <!-- Pétala SUL — azul escuro -->
+          <polygon points="60,112 65,64 60,60 55,64" fill="rgba(60,110,180,.60)"/>
+          <polygon points="60,112 65,64 60,60 55,64" fill="none" stroke="rgba(74,159,216,.20)" stroke-width=".5"/>
+
+          <!-- Pétala LESTE (direita) — cinza claro -->
+          <polygon points="112,60 64,55 60,60 64,65" fill="rgba(200,190,170,.55)"/>
+          <polygon points="112,60 64,55 60,60 64,65" fill="none" stroke="rgba(74,159,216,.20)" stroke-width=".5"/>
+
+          <!-- Pétala OESTE (esquerda) — cinza claro -->
+          <polygon points="8,60 56,55 60,60 56,65" fill="rgba(200,190,170,.55)"/>
+          <polygon points="8,60 56,55 60,60 56,65" fill="none" stroke="rgba(74,159,216,.20)" stroke-width=".5"/>
+
+          <!-- Pétalas diagonais menores NE / SE / SW / NW -->
+          <!-- NE -->
+          <polygon points="97,23 64,57 60,60 63,56" fill="rgba(74,159,216,.28)"/>
+          <!-- SE -->
+          <polygon points="97,97 64,63 60,60 63,64" fill="rgba(74,159,216,.20)"/>
+          <!-- SW -->
+          <polygon points="23,97 56,63 60,60 57,64" fill="rgba(74,159,216,.20)"/>
+          <!-- NW -->
+          <polygon points="23,23 56,57 60,60 57,56" fill="rgba(74,159,216,.28)"/>
+
+          <!-- Círculo central -->
+          <circle cx="60" cy="60" r="6" fill="rgba(4,7,16,.95)" stroke="rgba(74,159,216,.60)" stroke-width="1.2"/>
+          <circle cx="60" cy="60" r="2.5" fill="rgba(74,159,216,.95)"/>
+
+          <!-- Letras cardinais -->
+          <text x="60" y="6" text-anchor="middle" dominant-baseline="central"
+                font-family="Cinzel,serif" font-size="10" font-weight="700"
+                fill="rgba(235,225,205,.90)">N</text>
+          <text x="60" y="114" text-anchor="middle" dominant-baseline="central"
+                font-family="Cinzel,serif" font-size="9" font-weight="400"
+                fill="rgba(140,170,220,.75)">S</text>
+          <text x="114" y="60" text-anchor="middle" dominant-baseline="central"
+                font-family="Cinzel,serif" font-size="9" font-weight="400"
+                fill="rgba(200,190,170,.65)">L</text>
+          <text x="6" y="60" text-anchor="middle" dominant-baseline="central"
+                font-family="Cinzel,serif" font-size="9" font-weight="400"
+                fill="rgba(200,190,170,.65)">O</text>
+        </svg>
+      </div>
+    </div>
     <div class="letargia-quote" id="letargia-quote">
       "O mal emergiu dos polos."<br>
       "O gelo negro não deu qualquer aviso de sua chegada. Ele simplesmente se manifestou."
@@ -1214,13 +1783,151 @@ let editingId = null;
 let editingSecaoId = null;
 let _activeTab = null;
 
-/* ── partículas ── */
+/* ── oceano animado ── */
 (function(){
+  const canvas = document.getElementById('ocean-canvas');
+  const ctx = canvas.getContext('2d', {alpha:true});
+  let W, H;
+  let _cachedBgGrad = null;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    _cachedBgGrad = null;
+  }
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+
+  const layers = [
+    { amp:18, freq:0.008, speed:0.00028, phase:0,    alpha:0.045, color:'30,60,110',   thick:1.5, yFrac:0.52 },
+    { amp:13, freq:0.013, speed:0.00042, phase:2.1,  alpha:0.035, color:'15,45,90',    thick:1.0, yFrac:0.58 },
+    { amp:22, freq:0.006, speed:0.00018, phase:4.5,  alpha:0.030, color:'40,80,140',   thick:2.0, yFrac:0.46 },
+    { amp:10, freq:0.018, speed:0.00055, phase:1.3,  alpha:0.028, color:'20,50,100',   thick:0.8, yFrac:0.63 },
+    { amp:28, freq:0.004, speed:0.00012, phase:3.7,  alpha:0.025, color:'10,30,70',    thick:2.5, yFrac:0.40 },
+    { amp: 8, freq:0.024, speed:0.00070, phase:0.8,  alpha:0.022, color:'50,100,160',  thick:0.7, yFrac:0.70 },
+  ];
+
+  // Pré-calcular strings de gradiente das ondas (não mudam)
+  layers.forEach(l=>{
+    l._c0 = `rgba(${l.color},${(l.alpha*1.6).toFixed(3)})`;
+    l._c1 = `rgba(${l.color},${(l.alpha*0.9).toFixed(3)})`;
+    l._c2 = `rgba(${l.color},${(l.alpha*0.3).toFixed(3)})`;
+    l._cs = `rgba(${l.color},${(l.alpha*2.2).toFixed(3)})`;
+  });
+
+  const foamLines = Array.from({length:6}, ()=>({
+    yFrac: 0.3 + Math.random()*0.55,
+    phase: Math.random()*Math.PI*2,
+    speed: 0.0002 + Math.random()*0.0004,
+    amp:   6  + Math.random()*12,
+    freq:  0.012 + Math.random()*0.018,
+    alpha: 0.012 + Math.random()*0.018,
+    len:   60  + Math.random()*120,
+    xFrac: Math.random(),
+    drift: (Math.random()-0.5)*0.00005,
+  }));
+
+  // Cache do gradiente de fundo (só recria quando W/H muda)
+  function getBgGrad(){
+    if(_cachedBgGrad) return _cachedBgGrad;
+    const g = ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,   'rgba(2,4,12,0)');
+    g.addColorStop(0.25,'rgba(3,8,22,0.28)');
+    g.addColorStop(0.55,'rgba(4,12,32,0.45)');
+    g.addColorStop(1,   'rgba(2,6,18,0.60)');
+    _cachedBgGrad = g;
+    return g;
+  }
+
+  // Reflexos pré-calculados (posições fixas, só X flutua levemente)
+  const reflectX = [0.15, 0.38, 0.62, 0.85];
+
+  let _paused = false;
+  document.addEventListener('visibilitychange', ()=>{ _paused = document.hidden; if(!_paused) requestAnimationFrame(draw); });
+
+  let t = 0;
+  let frameCount = 0;
+  const STEP = 6; // pixels por passo nas ondas (era 3)
+
+  function draw(){
+    frameCount++;
+    ctx.clearRect(0,0,W,H);
+
+    // Fundo com gradiente cacheado
+    ctx.fillStyle = getBgGrad();
+    ctx.fillRect(0,0,W,H);
+
+    // Layers de onda
+    layers.forEach(l => {
+      l.phase += l.speed;
+      const baseY = H * l.yFrac;
+      const wg = ctx.createLinearGradient(0, baseY - l.amp, 0, H);
+      wg.addColorStop(0,   l._c0);
+      wg.addColorStop(0.3, l._c1);
+      wg.addColorStop(1,   l._c2);
+
+      ctx.beginPath();
+      ctx.moveTo(0, H);
+      for(let x=0; x<=W; x+=STEP){
+        ctx.lineTo(x, baseY + Math.sin(x*l.freq + l.phase)*l.amp + Math.sin(x*l.freq*1.7 + l.phase*1.3)*l.amp*0.35);
+      }
+      ctx.lineTo(W, H);
+      ctx.closePath();
+      ctx.fillStyle = wg;
+      ctx.fill();
+
+      // Linha de crista
+      ctx.beginPath();
+      for(let x=0; x<=W; x+=STEP){
+        const y = baseY + Math.sin(x*l.freq + l.phase)*l.amp + Math.sin(x*l.freq*1.7 + l.phase*1.3)*l.amp*0.35;
+        x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle = l._cs;
+      ctx.lineWidth = l.thick;
+      ctx.stroke();
+    });
+
+    // Espuma — só a cada 2 frames
+    if(frameCount % 2 === 0){
+      foamLines.forEach(f => {
+        f.phase += f.speed * 2; // compensar skip
+        f.xFrac = (f.xFrac + f.drift + 1) % 1;
+        const baseY = H * f.yFrac;
+        const cx2   = f.xFrac * W;
+        const y0    = baseY + Math.sin(cx2*f.freq + f.phase)*f.amp;
+        const fade  = Math.abs(Math.sin(f.phase * 0.5));
+        ctx.beginPath();
+        for(let dx=-f.len/2; dx<=f.len/2; dx+=4){
+          const x = cx2 + dx;
+          const y = y0 + Math.sin((cx2+dx)*f.freq*2 + f.phase*2)*f.amp*0.3;
+          dx===-f.len/2 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        }
+        ctx.strokeStyle = `rgba(100,200,240,${(f.alpha*fade*0.8).toFixed(3)})`;
+        ctx.lineWidth = 1.2;
+        ctx.stroke(); // sem shadowBlur
+      });
+    }
+
+    // Reflexos leves (sem gradiente novo, simples rect semitransparente)
+    ctx.globalAlpha = 0.018;
+    ctx.fillStyle = 'rgba(80,160,220,1)';
+    reflectX.forEach((rx,i)=>{
+      const x = W*rx + Math.sin(t*0.0003+i)*W*0.04;
+      ctx.fillRect(x-16, H*0.28, 32, H*0.47);
+    });
+    ctx.globalAlpha = 1;
+
+    t++;
+    if(!_paused) requestAnimationFrame(draw);
+  }
+  draw();
+
+  // Partículas — reduzido para 14
   const bg = document.getElementById('ice-bg');
-  for(let i=0;i<28;i++){
+  for(let i=0;i<14;i++){
     const s=document.createElement('span');
-    const sz=Math.random()*2.5+.5;
-    s.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-duration:${Math.random()*14+8}s;animation-delay:${Math.random()*12}s;opacity:${Math.random()*.4+.1};`;
+    const sz=Math.random()*2+.8;
+    s.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-duration:${Math.random()*16+10}s;animation-delay:${Math.random()*14}s;opacity:${Math.random()*.35+.08};`;
     bg.appendChild(s);
   }
 })();
@@ -1239,6 +1946,20 @@ async function loadData(){
     console.warn('letargia_data.json não encontrado.',e);
   }
   renderAll();
+}
+
+/* ══════ AUTOR HELPERS ══════ */
+var AUTHOR_COLORS = 8;
+
+function getAuthors(sec){
+  const set = new Set();
+  (sec.itens||[]).forEach(item=>{ if(item.autor) set.add(item.autor); });
+  return [...set];
+}
+
+function authorColorIdx(authors, autor){
+  const idx = authors.indexOf(autor);
+  return ((idx % AUTHOR_COLORS) + AUTHOR_COLORS) % AUTHOR_COLORS;
 }
 
 /* ── render ── */
@@ -1275,55 +1996,208 @@ function renderAll(){
     hdr.innerHTML=`<div class="section-panel-eyebrow">Secção ${String(idx+1).padStart(2,'0')} · Arquivo do Gelo Negro</div><div class="section-panel-title">${sec.titulo}</div>${sec.descricao?`<div class="section-panel-desc">${sec.descricao}</div>`:''}`;
     panel.appendChild(hdr);
 
-    const grid=document.createElement('div');
-    grid.className='cards-grid';
-    grid.id='grid-'+sec.id;
-    panel.appendChild(grid);
-    container.appendChild(panel);
+    // — Seção Jornais: agrupar por autor com sub-abas coloridas —
+    const authors = getAuthors(sec);
+    const hasAuthors = authors.length > 0;
 
-    (sec.itens||[]).forEach((item,i)=>{
-      const locked=item.status!=='Y';
-      const card=document.createElement('div');
-      card.className='entry-card'+(locked?' locked':'');
-      card.style.animationDelay=(i*.065)+'s';
-      card.innerHTML=`
-        <div class="card-topline"></div>
-        <div class="card-glyph">${(i+1).toString().padStart(2,'0')}</div>
-        <div class="card-date">${item.data||'—'}</div>
-        <div class="card-title">${item.titulo}</div>
-        <div class="card-subtitle">${item.subtitulo||''}</div>
-        <div class="card-desc">${item.resumo||''}</div>
-        <div class="card-tags">${(item.tags||[]).map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
-        ${EDIT_MODE&&!locked?`<div class="card-cta">✎ &nbsp; Editar</div>`:''}
-        ${!locked&&!EDIT_MODE?`<div class="card-cta">▶ &nbsp; Ler Registro</div>`:''}
-      `;
-      if(!locked){
-        if(EDIT_MODE) card.addEventListener('click',()=>openEditEntry(sec.id,item.id));
-        else          card.addEventListener('click',()=>openModal(item));
+    if(hasAuthors){
+      // Barra de abas de autor
+      const atBar = document.createElement('div');
+      atBar.className='author-tabs-bar';
+
+      // Aba "Todos"
+      const allTab = document.createElement('button');
+      allTab.className='author-tab-btn author-color-0 active';
+      allTab.textContent='Todos';
+      allTab.dataset.authorTab='__all__';
+      atBar.appendChild(allTab);
+
+      authors.forEach((autor, ai)=>{
+        const ci = ai % AUTHOR_COLORS;
+        const aBtn = document.createElement('button');
+        aBtn.className=`author-tab-btn author-color-${ci}`;
+        aBtn.textContent=autor;
+        aBtn.dataset.authorTab=autor;
+        atBar.appendChild(aBtn);
+      });
+
+      panel.appendChild(atBar);
+
+      // Painel "Todos"
+      const allPanel = document.createElement('div');
+      allPanel.className='author-panel active';
+      allPanel.dataset.authorPanel='__all__';
+      const allGrid = document.createElement('div');
+      allGrid.className='cards-grid';
+      allGrid.id='grid-'+sec.id;
+      allPanel.appendChild(allGrid);
+      panel.appendChild(allPanel);
+
+      // Painéis por autor
+      authors.forEach((autor, ai)=>{
+        const ci = ai % AUTHOR_COLORS;
+        const aPanel = document.createElement('div');
+        aPanel.className='author-panel';
+        aPanel.dataset.authorPanel=autor;
+        const aGrid = document.createElement('div');
+        aGrid.className='cards-grid';
+        aPanel.appendChild(aGrid);
+        panel.appendChild(aPanel);
+      });
+
+      // Lógica de troca de abas de autor
+      atBar.querySelectorAll('.author-tab-btn').forEach(ab=>{
+        ab.addEventListener('click',()=>{
+          const target = ab.dataset.authorTab;
+          atBar.querySelectorAll('.author-tab-btn').forEach(b=>b.classList.remove('active'));
+          ab.classList.add('active');
+          panel.querySelectorAll('.author-panel').forEach(ap=>{
+            ap.classList.toggle('active', ap.dataset.authorPanel===target);
+          });
+        });
+      });
+
+      // Preencher grids
+      (sec.itens||[]).forEach((item,i)=>{
+        const locked=item.status!=='Y';
+        const autor=item.autor||null;
+        const ci = autor ? authorColorIdx(authors, autor) : -1;
+
+        const makeCard = (cardIdx)=>{
+          const card=document.createElement('div');
+          card.className='entry-card'+(locked?' locked':'')+(ci>=0?' author-colored':'');
+          if(ci>=0) card.classList.add('author-color-'+ci);
+          card.style.animationDelay=(cardIdx*.065)+'s';
+          card.innerHTML=`
+            <div class="card-topline"></div>
+            <div class="card-glyph">${(cardIdx+1).toString().padStart(2,'0')}</div>
+            <div class="card-date">${item.data||'—'}</div>
+            <div class="card-title">${item.titulo}</div>
+            <div class="card-subtitle">${item.subtitulo||''}</div>
+            <div class="card-desc">${item.resumo||''}</div>
+            <div class="card-tags">${(item.tags||[]).map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+            ${EDIT_MODE&&!locked?`<div class="card-cta">✎ &nbsp; Editar</div>`:''}
+            ${!locked&&!EDIT_MODE?`<div class="card-cta">▶ &nbsp; Ler Registro</div>`:''}
+          `;
+          if(!locked){
+            if(EDIT_MODE) card.addEventListener('click',()=>openEditEntry(sec.id,item.id));
+            else          card.addEventListener('click',()=>openModal(item));
+          }
+          return card;
+        };
+
+        // Grid "Todos"
+        allGrid.appendChild(makeCard(i));
+
+        // Grid do autor específico
+        if(autor){
+          const aPanel = panel.querySelector(`[data-author-panel="${CSS.escape(autor)}"]`);
+          if(aPanel){
+            const aGrid = aPanel.querySelector('.cards-grid');
+            aGrid.appendChild(makeCard(aGrid.children.length));
+          }
+        }
+      });
+
+      if(EDIT_MODE){
+        // Botão "Novo Registro" no grid "Todos" e em cada painel de autor (ao clicar nesses passa o autor)
+        const addAllCard = _makeAddCard(()=>openNewEntryInSection(sec.id));
+        allGrid.appendChild(addAllCard);
+
+        authors.forEach(autor=>{
+          const aPanel = panel.querySelector(`[data-author-panel="${CSS.escape(autor)}"]`);
+          if(aPanel){
+            const aGrid = aPanel.querySelector('.cards-grid');
+            const addCard = _makeAddCard(()=>openNewEntryInSectionAutor(sec.id, autor));
+            aGrid.appendChild(addCard);
+          }
+        });
       }
-      grid.appendChild(card);
-    });
 
-    if(EDIT_MODE){
-      const add=document.createElement('div');
-      add.className='entry-card';
-      add.style.cssText='cursor:pointer;opacity:.28;min-height:100px;justify-content:center;align-items:center;';
-      add.innerHTML=`<div style="text-align:center;font-family:Inconsolata,monospace;font-size:.34rem;letter-spacing:.5em;text-transform:uppercase;color:var(--ink-dim);">+ &nbsp; Novo Registro</div>`;
-      add.addEventListener('click',()=>openNewEntryInSection(sec.id));
-      grid.appendChild(add);
+    } else {
+      // Seção sem autores — comportamento original
+      const grid=document.createElement('div');
+      grid.className='cards-grid';
+      grid.id='grid-'+sec.id;
+      panel.appendChild(grid);
+
+      (sec.itens||[]).forEach((item,i)=>{
+        const locked=item.status!=='Y';
+        const card=document.createElement('div');
+        card.className='entry-card'+(locked?' locked':'');
+        card.style.animationDelay=(i*.065)+'s';
+        card.innerHTML=`
+          <div class="card-topline"></div>
+          <div class="card-glyph">${(i+1).toString().padStart(2,'0')}</div>
+          <div class="card-date">${item.data||'—'}</div>
+          <div class="card-title">${item.titulo}</div>
+          <div class="card-subtitle">${item.subtitulo||''}</div>
+          <div class="card-desc">${item.resumo||''}</div>
+          <div class="card-tags">${(item.tags||[]).map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+          ${EDIT_MODE&&!locked?`<div class="card-cta">✎ &nbsp; Editar</div>`:''}
+          ${!locked&&!EDIT_MODE?`<div class="card-cta">▶ &nbsp; Ler Registro</div>`:''}
+        `;
+        if(!locked){
+          if(EDIT_MODE) card.addEventListener('click',()=>openEditEntry(sec.id,item.id));
+          else          card.addEventListener('click',()=>openModal(item));
+        }
+        grid.appendChild(card);
+      });
+
+      if(EDIT_MODE){
+        grid.appendChild(_makeAddCard(()=>openNewEntryInSection(sec.id)));
+      }
     }
+
+    container.appendChild(panel);
   });
+
+
+  // Botao fixo de Mapa na sidebar
+  const mapBtn = document.createElement("button");
+  mapBtn.className = "tab-btn" + (_activeTab === "__map__" ? " active" : "");
+  mapBtn.dataset.secId = "__map__";
+  const secCount = (DATA.secoes||[]).length;
+  mapBtn.innerHTML = `<span class="tab-num">${String(secCount+1).padStart(2,"0")}</span><span class="tab-label">Mapa</span><span class="tab-count"></span>`;
+  mapBtn.addEventListener("click", ()=> switchTab("__map__"));
+  nav.appendChild(mapBtn);
 
   if(_activeTab) switchTab(_activeTab,false);
   const bar=document.getElementById('edit-bar');
   if(EDIT_MODE) bar.classList.add('active'); else bar.classList.remove('active');
   populateSecaoSelect();
+  _updateAutorDatalist();
+}
+
+function _makeAddCard(onClick){
+  const add=document.createElement('div');
+  add.className='entry-card';
+  add.style.cssText='cursor:pointer;opacity:.28;min-height:100px;justify-content:center;align-items:center;';
+  add.innerHTML=`<div style="text-align:center;font-family:Inconsolata,monospace;font-size:.34rem;letter-spacing:.5em;text-transform:uppercase;color:var(--ink-dim);">+ &nbsp; Novo Registro</div>`;
+  add.addEventListener('click', onClick);
+  return add;
 }
 
 function switchTab(secId, save=true){
   if(save) _activeTab=secId;
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.secId===secId));
   document.querySelectorAll('.section-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+secId));
+  const mapSec = document.getElementById('map-section');
+  const mainContent = document.getElementById('main-content-area');
+  if(secId === '__map__'){
+    mapSec.style.display = 'block';
+    document.getElementById('sections-container').style.display = 'none';
+    document.querySelector('.letargia-quote') && (document.querySelector('.letargia-quote').style.display='none');
+    document.querySelector('.divider') && (document.querySelector('.divider').style.display='none');
+    document.querySelector('.footer') && (document.querySelector('.footer').style.display='none');
+    renderMapMarkers();
+  } else {
+    mapSec.style.display = 'none';
+    document.getElementById('sections-container').style.display = '';
+    document.querySelector('.letargia-quote') && (document.querySelector('.letargia-quote').style.display='');
+    document.querySelector('.divider') && (document.querySelector('.divider').style.display='');
+    document.querySelector('.footer') && (document.querySelector('.footer').style.display='');
+  }
 }
 
 /* ══════ MODAL ══════ */
@@ -1382,7 +2256,15 @@ function openNewEntryInSection(secaoId){
     const el=document.getElementById('ef-'+f);
     if(el) el.value = f==='secao'?secaoId : f==='status'?'Y' : '';
   });
+  const autorEl=document.getElementById('ef-autor');
+  if(autorEl) autorEl.value='';
+  _toggleAutorField(secaoId);
   document.getElementById('edit-modal').classList.add('open');
+}
+function openNewEntryInSectionAutor(secaoId, autor){
+  openNewEntryInSection(secaoId);
+  const autorEl=document.getElementById('ef-autor');
+  if(autorEl) autorEl.value=autor||'';
 }
 function openEditEntry(secaoId,itemId){
   const sec=DATA.secoes.find(s=>s.id===secaoId); if(!sec) return;
@@ -1399,6 +2281,9 @@ function openEditEntry(secaoId,itemId){
   document.getElementById('ef-resumo').value=item.resumo||'';
   document.getElementById('ef-arquivo').value=item.arquivo||'';
   document.getElementById('ef-conteudo').value=item.conteudo||'';
+  const autorEl=document.getElementById('ef-autor');
+  if(autorEl) autorEl.value=item.autor||'';
+  _toggleAutorField(secaoId);
   document.getElementById('edit-modal').classList.add('open');
 }
 function closeEditModal(){ document.getElementById('edit-modal').classList.remove('open'); }
@@ -1408,6 +2293,7 @@ function saveEditEntry(){
   if(!sec){ alert('Seção não encontrada.'); return; }
   const titulo=document.getElementById('ef-titulo').value.trim();
   if(!titulo){ alert('Título obrigatório.'); return; }
+  const autorVal=(document.getElementById('ef-autor')||{}).value;
   const newItem={
     id:editingId||('item-'+Date.now()),
     status:document.getElementById('ef-status').value,
@@ -1419,6 +2305,7 @@ function saveEditEntry(){
     arquivo:document.getElementById('ef-arquivo').value.trim()||undefined,
     conteudo:document.getElementById('ef-conteudo').value.trim()
   };
+  if(autorVal && autorVal.trim()) newItem.autor = autorVal.trim();
   if(editingId){
     const oldSec=DATA.secoes.find(s=>(s.itens||[]).some(i=>i.id===editingId));
     if(oldSec&&oldSec.id!==secaoId) oldSec.itens=(oldSec.itens||[]).filter(i=>i.id!==editingId);
@@ -1435,6 +2322,420 @@ function deleteEditEntry(){
   DATA.secoes.forEach(sec=>{ sec.itens=(sec.itens||[]).filter(i=>i.id!==editingId); });
   closeEditModal(); renderAll();
 }
+function _toggleAutorField(secaoId){
+  // Mostrar campo de autor apenas quando a seção tem ou pode ter autores (qualquer seção com itens tipo jornal)
+  // Regra: mostrar se a seção já tem algum item com autor, OU se o ID da seção é "jornais"
+  const sec = DATA.secoes.find(s=>s.id===secaoId);
+  const hasAnyAutor = sec && (sec.itens||[]).some(i=>i.autor);
+  const isJornais = secaoId === 'jornais';
+  const group = document.getElementById('ef-autor-group');
+  if(group) group.style.display = (hasAnyAutor || isJornais) ? '' : '';
+  // Sempre mostrar o campo (pode ser útil em qualquer seção para expansão futura)
+  if(group) group.style.display = '';
+}
+function _updateAutorDatalist(){
+  const dl = document.getElementById('ef-autor-datalist');
+  if(!dl) return;
+  dl.innerHTML='';
+  const set = new Set();
+  (DATA.secoes||[]).forEach(sec=>(sec.itens||[]).forEach(item=>{ if(item.autor) set.add(item.autor); }));
+  set.forEach(a=>{ const o=document.createElement('option'); o.value=a; dl.appendChild(o); });
+}
+
+/* ══════ MAPA INTERATIVO ══════ */
+
+// Marcadores sao guardados no DATA.mapa (array)
+// Cada marcador: { id, tipo, nome, lore, img, x, y }
+// x, y sao percentuais (0-100) relativos ao tamanho natural da imagem
+
+let _mapScale = 1;
+let _mapOffX = 0;
+let _mapOffY = 0;
+let _mapDragging = false;
+let _mapDragStart = {x:0,y:0,ox:0,oy:0};
+let _mapEditType = 'cidade';
+let _mapAddingAt = null; // {x,y} percentual
+let _mapEditingId = null;
+let _mapActiveMarkerId = null;
+
+function initMap(){
+  const container = document.getElementById('map-container');
+  const img = document.getElementById('map-img');
+  if(!container || !img) return;
+
+  // Pan com mouse
+  container.addEventListener('mousedown', e=>{
+    if(e.target.closest('.map-marker') || e.target.closest('#map-add-modal') || e.target.closest('#map-detail-panel')) return;
+    _mapDragging = true;
+    container.classList.add('grabbing');
+    _mapDragStart = {x:e.clientX, y:e.clientY, ox:_mapOffX, oy:_mapOffY};
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e=>{
+    if(!_mapDragging) return;
+    _mapOffX = _mapDragStart.ox + (e.clientX - _mapDragStart.x);
+    _mapOffY = _mapDragStart.oy + (e.clientY - _mapDragStart.y);
+    applyMapTransform();
+  }, {passive:true});
+  window.addEventListener('mouseup', ()=>{
+    _mapDragging = false;
+    const container = document.getElementById('map-container');
+    if(container) container.classList.remove('grabbing');
+  }, {passive:true});
+
+  // Zoom com scroll
+  container.addEventListener('wheel', e=>{
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.12 : 0.9;
+    const rect = container.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    _mapOffX = mx - factor*(mx - _mapOffX);
+    _mapOffY = my - factor*(my - _mapOffY);
+    _mapScale *= factor;
+    _mapScale = Math.min(Math.max(_mapScale, 0.4), 4);
+    applyMapTransform();
+  }, {passive:false});
+
+  // Double-click no mapa para adicionar marcador (somente modo edit)
+  container.addEventListener('dblclick', e=>{
+    if(!EDIT_MODE) return;
+    if(e.target.closest('.map-marker') || e.target.closest('#map-add-modal') || e.target.closest('#map-detail-panel')) return;
+    const rect = container.getBoundingClientRect();
+    const img = document.getElementById('map-img');
+    const iw = img.naturalWidth || img.offsetWidth;
+    const ih = img.naturalHeight || img.offsetHeight;
+    const rendered = getRenderedImageRect(container, img);
+    const rawX = (e.clientX - rect.left - _mapOffX) / _mapScale;
+    const rawY = (e.clientY - rect.top  - _mapOffY) / _mapScale;
+    const relX = (rawX - rendered.left) / rendered.scale;
+    const relY = (rawY - rendered.top)  / rendered.scale;
+    const px = (relX / iw) * 100;
+    const py = (relY / ih) * 100;
+    if(px < 0 || py < 0 || px > 100 || py > 100) return;
+    _mapAddingAt = {x:px, y:py};
+    _mapEditingId = null;
+    // Mostrar crosshair no ponto clicado (coordenada container relativa ao layer = image-space)
+    showMapCrosshair(rawX, rawY);
+    openMapAddModal(e.clientX - rect.left, e.clientY - rect.top);
+    e.preventDefault();
+  });
+
+  renderMapMarkers();
+}
+
+function getRenderedImageRect(container, img){
+  const cw = container.offsetWidth;
+  const ch = container.offsetHeight;
+  const iw = img.naturalWidth || img.offsetWidth || cw;
+  const ih = img.naturalHeight || img.offsetHeight || ch;
+  const scale = Math.min(cw/iw, ch/ih);
+  const rw = iw * scale;
+  const rh = ih * scale;
+  const left = (cw - rw) / 2;
+  const top  = (ch - rh) / 2;
+  return {left, top, scale, rw, rh};
+}
+
+function applyMapTransform(){
+  const img = document.getElementById('map-img');
+  const layer = document.getElementById('map-markers-layer');
+  const t = `translate(${_mapOffX}px,${_mapOffY}px) scale(${_mapScale})`;
+  img.style.transform = t;
+  layer.style.transform = t;
+}
+
+function mapZoom(factor){
+  const container = document.getElementById('map-container');
+  const cx = container.offsetWidth/2;
+  const cy = container.offsetHeight/2;
+  _mapOffX = cx - factor*(cx - _mapOffX);
+  _mapOffY = cy - factor*(cy - _mapOffY);
+  _mapScale *= factor;
+  _mapScale = Math.min(Math.max(_mapScale,0.4),4);
+  applyMapTransform();
+}
+
+function mapReset(){
+  _mapScale = 1; _mapOffX = 0; _mapOffY = 0;
+  applyMapTransform();
+}
+
+function setMapType(tipo){
+  _mapEditType = tipo;
+  ['cidade','capital','porto','forte','ruina','faculdade','gelo'].forEach(t=>{
+    const b = document.getElementById('meb-'+t);
+    if(b) b.classList.toggle('active', t===tipo);
+  });
+  document.getElementById('mm-tipo').value = tipo;
+}
+
+function initModalDrag(modal){
+  const handle = document.getElementById('map-modal-drag-handle');
+  if(!handle || handle._dragInited) return;
+  handle._dragInited = true;
+  let dragging = false, startX, startY, origLeft, origTop;
+  handle.addEventListener('mousedown', e=>{
+    dragging = true;
+    startX = e.clientX; startY = e.clientY;
+    origLeft = parseInt(modal.style.left)||0;
+    origTop  = parseInt(modal.style.top)||0;
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', e=>{
+    if(!dragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    const vw = window.innerWidth; const vh = window.innerHeight;
+    let nl = origLeft + dx; let nt = origTop + dy;
+    nl = Math.max(0, Math.min(nl, vw - modal.offsetWidth));
+    nt = Math.max(0, Math.min(nt, vh - modal.offsetHeight));
+    modal.style.left = nl + 'px';
+    modal.style.top  = nt + 'px';
+  });
+  document.addEventListener('mouseup', ()=>{ dragging=false; document.body.style.userSelect=''; });
+}
+
+function openMapAddModal(cx, cy){
+  const modal = document.getElementById('map-add-modal');
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const mw = 300; const mh = 320;
+  // cx/cy podem ser coordenadas absolutas de container (absolute) — converter para viewport
+  const container = document.getElementById('map-container');
+  const rect = container.getBoundingClientRect();
+  let left = rect.left + cx + 14;
+  let top  = rect.top  + cy + 14;
+  // Garantir que fica dentro da viewport
+  if(left + mw > vw - 8) left = rect.left + cx - mw - 14;
+  if(top  + mh > vh - 8) top  = vh - mh - 8;
+  if(left < 8) left = 8;
+  if(top  < 8) top  = 8;
+  modal.style.left = left + 'px';
+  modal.style.top  = top  + 'px';
+  document.getElementById('mm-tipo').value = _mapEditType;
+  if(!_mapEditingId){
+    document.getElementById('mm-nome').value = '';
+    document.getElementById('mm-lore').value = '';
+  }
+  modal.classList.add('open');
+  document.getElementById('mm-nome').focus();
+  initModalDrag(modal);
+}
+
+function showMapCrosshair(x, y){
+  let ch = document.getElementById('map-pin-crosshair');
+  if(!ch){
+    ch = document.createElement('div');
+    ch.id = 'map-pin-crosshair';
+    document.getElementById('map-markers-layer').appendChild(ch);
+  }
+  ch.style.left = x + 'px';
+  ch.style.top  = y + 'px';
+  ch.style.display = 'block';
+}
+
+function hideMapCrosshair(){
+  const ch = document.getElementById('map-pin-crosshair');
+  if(ch) ch.style.display = 'none';
+}
+
+function closeMapModal(){
+  document.getElementById('map-add-modal').classList.remove('open');
+  hideMapCrosshair();
+  _mapAddingAt = null;
+  _mapEditingId = null;
+}
+
+function saveMapMarker(){
+  if(!DATA.mapa) DATA.mapa = [];
+  const nome = document.getElementById('mm-nome').value.trim();
+  const tipo = document.getElementById('mm-tipo').value;
+  const lore = document.getElementById('mm-lore').value.trim();
+  if(!nome){ alert('Nome obrigatório.'); return; }
+
+  if(_mapEditingId){
+    const m = DATA.mapa.find(m=>m.id===_mapEditingId);
+    if(m){ m.nome=nome; m.tipo=tipo; m.lore=lore; }
+  } else {
+    if(!_mapAddingAt) return;
+    DATA.mapa.push({
+      id: 'marker-'+Date.now(),
+      tipo, nome, lore,
+      x: _mapAddingAt.x,
+      y: _mapAddingAt.y
+    });
+  }
+  hideMapCrosshair();
+  closeMapModal();
+  closeMapDetail();
+  renderMapMarkers();
+}
+
+function renderMapMarkers(){
+  const layer = document.getElementById('map-markers-layer');
+  const container = document.getElementById('map-container');
+  const img = document.getElementById('map-img');
+  if(!layer || !container || !img) return;
+  layer.innerHTML = '';
+  const markers = (DATA&&DATA.mapa)||[];
+  if(!markers.length) return;
+
+  const iw = img.naturalWidth || img.offsetWidth || container.offsetWidth;
+  const ih = img.naturalHeight || img.offsetHeight || container.offsetHeight;
+  const rendered = getRenderedImageRect(container, img);
+
+  markers.forEach(m=>{
+    // Layer recebe o mesmo transform que a img, então usar coordenadas do espaço da img (sem _mapScale/_mapOffX)
+    const px = (m.x/100)*iw*rendered.scale + rendered.left;
+    const py = (m.y/100)*ih*rendered.scale + rendered.top;
+
+    const el = document.createElement('div');
+    el.className = 'map-marker';
+    el.dataset.id = m.id;
+    el.dataset.tipo = m.tipo;
+    el.style.left = px + 'px';
+    el.style.top  = py + 'px';
+    el.innerHTML = `<div class="map-pulse"></div><div class="map-marker-dot"></div><div class="map-marker-label">${m.nome}</div>`;
+
+    el.addEventListener('click', e=>{ e.stopPropagation(); openMapDetail(m.id); });
+    el.addEventListener('mouseenter', e=>{ showMapTooltip(m, e); });
+    el.addEventListener('mouseleave', ()=>{ hideMapTooltip(); });
+
+    layer.appendChild(el);
+  });
+}
+
+function showMapTooltip(m, e){
+  const tt = document.getElementById('map-tooltip');
+  const panel = document.getElementById('map-panel');
+  const rect = panel.getBoundingClientRect();
+  document.getElementById('mtt-tipo').textContent = tipoLabel(m.tipo);
+  document.getElementById('mtt-nome').textContent = m.nome;
+  document.getElementById('mtt-desc').textContent = (m.lore||'').substring(0,120)+(m.lore&&m.lore.length>120?'…':'');
+  let left = e.clientX - rect.left + 14;
+  let top  = e.clientY - rect.top  + 14;
+  if(left + 270 > panel.offsetWidth)  left = e.clientX - rect.left - 274;
+  if(top  + 120 > panel.offsetHeight) top  = e.clientY - rect.top  - 124;
+  tt.style.left = left + 'px';
+  tt.style.top  = top  + 'px';
+  tt.classList.add('visible');
+}
+function hideMapTooltip(){
+  document.getElementById('map-tooltip').classList.remove('visible');
+}
+
+function openMapDetail(id){
+  const m = (DATA.mapa||[]).find(m=>m.id===id);
+  if(!m) return;
+  _mapActiveMarkerId = id;
+  document.getElementById('mdp-tipo').textContent = tipoLabel(m.tipo);
+  document.getElementById('mdp-nome').textContent = m.nome;
+  document.getElementById('mdp-lore').textContent = m.lore||'';
+  const coordEl = document.getElementById('mdp-coords');
+  if(coordEl) coordEl.textContent = `Coord · ${m.x.toFixed(2)}° L · ${m.y.toFixed(2)}° N`;
+  const imgEl = document.getElementById('mdp-img');
+  // Tenta carregar imagem automática pelo nome do lugar em mapa/
+  const slug = m.nome.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+  const tryImg = (formats, idx) => {
+    if(idx >= formats.length){ imgEl.style.display='none'; imgEl.src=''; return; }
+    imgEl.src = './mapa/' + slug + '.' + formats[idx];
+    imgEl.style.display = 'block';
+    imgEl.onerror = () => tryImg(formats, idx+1);
+  };
+  tryImg(['jpg','png','jpeg','webp'], 0);
+  const editBtn = document.getElementById('mdp-edit-btn');
+  editBtn.style.display = EDIT_MODE ? '' : 'none';
+  document.getElementById('map-detail-panel').classList.add('open');
+  hideMapTooltip();
+}
+
+function closeMapDetail(){
+  document.getElementById('map-detail-panel').classList.remove('open');
+  _mapActiveMarkerId = null;
+}
+
+function editMapMarker(){
+  if(!_mapActiveMarkerId) return;
+  const m = (DATA.mapa||[]).find(m=>m.id===_mapActiveMarkerId);
+  if(!m) return;
+  _mapEditingId = m.id;
+  _mapEditType = m.tipo;  // preserva o tipo original
+  document.getElementById('mm-tipo').value = m.tipo;
+  document.getElementById('mm-nome').value = m.nome;
+  document.getElementById('mm-lore').value = m.lore||'';
+  setMapType(m.tipo);  // sincroniza botões visuais do tipo
+  const containerEl = document.getElementById('map-container');
+  const imgEl2 = document.getElementById('map-img');
+  const rendered = getRenderedImageRect(containerEl, imgEl2);
+  const iw = imgEl2.naturalWidth || imgEl2.offsetWidth || containerEl.offsetWidth;
+  const ih = imgEl2.naturalHeight || imgEl2.offsetHeight || containerEl.offsetHeight;
+  const px = (m.x/100)*iw*rendered.scale*_mapScale + rendered.left*_mapScale + _mapOffX;
+  const py = (m.y/100)*ih*rendered.scale*_mapScale + rendered.top *_mapScale + _mapOffY;
+  closeMapDetail();
+  openMapAddModal(px, py);
+
+  // Adicionar botao de deletar no modal
+  const actions = document.querySelector('#map-add-modal .map-modal-actions');
+  let delBtn = document.getElementById('mm-delete-btn');
+  if(!delBtn){
+    delBtn = document.createElement('button');
+    delBtn.className = 'map-modal-btn danger';
+    delBtn.id = 'mm-delete-btn';
+    delBtn.textContent = 'Excluir';
+    delBtn.onclick = deleteMapMarker;
+    actions.appendChild(delBtn);
+  }
+  delBtn.style.display = '';
+}
+
+function deleteMapMarker(){
+  if(!_mapEditingId) return;
+  if(!confirm('Excluir este marcador?')) return;
+  DATA.mapa = (DATA.mapa||[]).filter(m=>m.id!==_mapEditingId);
+  closeMapModal();
+  closeMapDetail();
+  renderMapMarkers();
+}
+
+function tipoLabel(tipo){
+  return {
+    cidade:'Cidade', capital:'Capital', porto:'Porto', forte:'Forte',
+    ruina:'Ruína', faculdade:'Faculdade',
+    gelo:'Gelo Negro'
+  }[tipo]||tipo;
+}
+
+function exportMapJSON(){
+  const blob = new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'letargia_data.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// Inicializar mapa quando a aba for aberta pela primeira vez
+let _mapInited = false;
+const _origSwitchTab = switchTab;
+// Re-renderizar marcadores quando janela redimensionar (throttled)
+let _mapResizeTimer = null;
+window.addEventListener('resize', ()=>{
+  clearTimeout(_mapResizeTimer);
+  _mapResizeTimer = setTimeout(()=>{
+    if(document.getElementById('map-section').style.display !== 'none') renderMapMarkers();
+  }, 120);
+}, {passive:true});
+// Inicializar ao carregar a aba do mapa
+document.addEventListener('click', e=>{
+  const btn = e.target.closest('.tab-btn');
+  if(btn && btn.dataset.secId === '__map__' && !_mapInited){
+    _mapInited = true;
+    setTimeout(initMap, 80);
+  }
+});
+
 function exportJSON(){
   const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
   const a=document.createElement('a');
