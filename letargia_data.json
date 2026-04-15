@@ -9,6 +9,159 @@
   },
   "secoes": [
     {
+      "id": "registro",
+      "titulo": "Registro Histórico",
+      "icone": "◈",
+      "descricao": "Conhecimento público sobre o mundo, suas instituições e sua história. O que qualquer pessoa educada em 1790 deveria saber.",
+      "itens": [
+        {
+          "id": "registro-inicio",
+          "status": "Y",
+          "titulo": "O Início — 1400",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "História",
+            "Gelo Negro",
+            "Cornélio de Aggripa"
+          ],
+          "resumo": "O que se sabe sobre o surgimento do Gelo Negro e os séculos que se seguiram.",
+          "conteudo": "Em 1400, o mundo foi surpreendido por um evento sem precedentes. Um grande mal emergiu: uma corrupção global que rapidamente deformou os continentes da Terra, unindo-os e separando-os simultaneamente. Os polos do planeta tornaram-se negros, corrompidos por uma força desconhecida.\n\nO Gelo Negro não deu qualquer aviso de sua chegada. Ele simplesmente se manifestou de forma abrupta. Cidades inteiras foram tragadas por abismos recém-formados; montanhas ergueram-se onde antes havia vastos campos; rios mudaram seus cursos, e a geografia do planeta jamais voltou a ser a mesma.\n\nEntre 1400 e 1600, o mundo mergulhou em caos. Reis foram assassinados, padres torturados por suas falsas promessas divinas. A Terra tornou-se um lugar com mais mortes do que soluções. Foi nesse cenário desolador que um homem se destacou: Cornélio de Aggripa, nascido oitenta anos após o surgimento do Gelo Negro.\n\nAggripa reuniu os povos, apaziguou os conflitos e direcionou os olhares não para si, mas para o futuro e o progresso. Os pagãos sobreviventes o chamavam de Grande Profeta; os bruxos, de Grande Detentor. Em 1530, Cornélio desapareceu misteriosamente. Sua figura substituiu a de Jesus como referência messiânica para a maioria da população, e sua influência moldou o desenvolvimento do Hermetismo, Ocultismo e Iluminismo como sistemas de crença dominantes.\n\nJunto ao Gelo Negro vieram criaturas de formas e tamanhos variados. A ciência as denominou Sentire. Elas vinham em hordas crescentes após 1600, com ataques coordenados que buscavam dominar territórios. Muitos países e continentes sucumbiram, tornando-se parte desse mal."
+        },
+        {
+          "id": "registro-vaughan",
+          "status": "Y",
+          "titulo": "Thomás Vaughan e o Arcanismo",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "Arcanismo",
+            "Vaughan",
+            "Mana",
+            "Faculdades"
+          ],
+          "resumo": "A descoberta da mana e a fundação das Faculdades que moldaram o mundo moderno.",
+          "conteudo": "Foi apenas por volta de 1650 que a mana foi finalmente descoberta, tornando-se visível e passível de estudo científico. Entre os líderes dessas pesquisas destacou-se Thomás Vaughan, um renomado ocultista influenciado pelo Grande Profeta.\n\nVaughan batizou essa nova área de estudo como Ciência do Arcanismo. Embora não manipulasse diretamente a magia, essa ciência buscava compreender seus efeitos no corpo humano e explorar suas aplicações benéficas. Vaughan descobriu formas de prolongar a longevidade, suprimir fome e sede e impulsionar avanços em diversas áreas do conhecimento.\n\nSua maior contribuição foi a fundação da Faculdade de Arcanismo — o primeiro centro de estudos sistematizado sobre mana e suas aplicações. Com os avanços propostos por Vaughan, tornou-se possível estudar as criaturas vindas do Gelo Negro. Antes consideradas aberrações demoníacas, essas criaturas revelaram-se biológicas, compostas de carne e ligamentos.\n\nVaughan também desenvolveu o sistema de Pactos e descobriu o limitador natural de cada ser — a quantidade máxima de contratos arcanos que uma pessoa pode sustentar antes de enlouquecer, infartar ou simplesmente definhar. Essa descoberta tornou os Pactos praticáveis em escala e é referência nas Faculdades até hoje.\n\nAo lado de Vaughan, outras Faculdades foram criadas: Iatroquimismo, Estrategismo, Fisicalismo e Velocismo. Cada uma dedicada a uma área específica do combate e do conhecimento. Estudantes formados recebem uma patente, não um diploma."
+        },
+        {
+          "id": "registro-germain",
+          "status": "Y",
+          "titulo": "Jacques Germain e o Aço Negro",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "Aço Negro",
+            "Germain",
+            "Cruzadas"
+          ],
+          "resumo": "A síntese do Aço Negro e o início das Cruzadas contra o Gelo Negro.",
+          "conteudo": "Durante cinquenta anos após Vaughan, a ciência avançou sem grandes descobertas revolucionárias. Isso mudou com o nascimento de Jacques Germain, um brilhante conde nascido na Antiga Romênia. Estudioso nas Faculdades de Arcanismo, Iatroquimismo e Estrategismo, Germain rapidamente ganhou notoriedade.\n\nSeu maior foco foi o Aço Negro — uma liga teórica capaz de resistir à corrosão do Gelo Negro. Se estivesse certo, seria possível explorar os polos da Terra sem medo da contaminação. Ele dedicou décadas à pesquisa, estudando minerais da Terra e tecidos das criaturas Sentire. Finalmente, em 1740, aos 90 anos, Jacques Germain conseguiu sintetizar o Aço Negro. Pouco depois, faleceu em sua mesa de trabalho, em paz.\n\nA Igreja declarou Germain um santo. Os pagãos o chamavam de Nivelador — aquele que nivelou o terreno para a humanidade.\n\nEm 1760, as Cruzadas para o Gelo Negro foram iniciadas utilizando a nova tecnologia do Aço Negro. Três unidades se destacaram: a Tropa de Gibraltar, representando a Europa; a Tropa de Zarcas, das Novas Américas; e a temida Tropa de Xzul'Dan, proveniente da Ásia. Cada uma possui características únicas e especializações distintas, formando a principal linha de defesa contra as hordas de Sentire."
+        },
+        {
+          "id": "registro-hermetismo",
+          "status": "Y",
+          "titulo": "O Hermetismo",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "Hermetismo",
+            "Leis",
+            "Filosofia",
+            "Ocultismo"
+          ],
+          "resumo": "O que é o Hermetismo e por que se tornou o sistema de conhecimento dominante do mundo moderno.",
+          "conteudo": "O Hermetismo não é uma religião. Não tem deus central, não tem ritual obrigatório de adoração, não tem promessa de salvação. É uma tentativa de descrever a estrutura da realidade com a precisão que ela permite.\n\nOs textos herméticos atribuídos a Hermes Trimegisto — figura mítica greco-egípcia cujo status histórico é incerto — foram sistematizados por Cornélio de Aggripa como ferramenta prática, não como curiosidade filosófica. Cada geração desde então pegou o que havia e perguntou a mesma coisa: se isso é verdade, o que fazemos com isso?\n\nO Hermetismo parte de três afirmações centrais. Primeira: a realidade é estruturada — existem leis que governam como as coisas funcionam, e essas leis são consistentes. Segunda: essas estruturas se repetem em escalas diferentes — o que acontece dentro de uma pessoa reflete o que acontece no mundo ao seu redor. Terceira: o conhecimento dessas estruturas tem aplicação prática.\n\nAs Sete Leis Herméticas são a expressão sistematizada dessas afirmações: Mentalismo, Correspondência, Polaridade, Ritmo, Vibração, Causalidade e Gênero. Não são mais importantes que as outras, mas cada uma ilumina um aspecto diferente de como a realidade opera.\n\nO Hermetismo sobreviveu ao Gelo Negro porque sempre foi um conhecimento de margens — nunca o sistema dominante, preservado por pessoas em vez de instituições. Quando as instituições caíram em 1400, o conhecimento hermético estava nas mãos de pessoas, e pessoas são mais difíceis de destruir completamente do que bibliotecas.\n\nGADU — Grande Arquiteto do Universo — é o nome que a Maçonaria usa para o princípio organizador da realidade que o Hermetismo pressupõe. Não é um deus pessoal. É o reconhecimento de que a estrutura da realidade sugere uma inteligência ou princípio organizador que nenhum ser humano conseguiu descrever completamente."
+        },
+        {
+          "id": "registro-pactos",
+          "status": "Y",
+          "titulo": "Os Pactos",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "Pactos",
+            "Iatroquimismo",
+            "Limitador"
+          ],
+          "resumo": "O que são os Pactos, como funcionam e o que custa fazê-los.",
+          "conteudo": "Desde a sistematização dos Pactos por Vaughan, a vida dos praticantes das Faculdades tornou-se mais eficiente. Com seus Pactos, era possível realizar feitos inéditos: duplicar materiais para ritos, prever ataques inimigos, potencializar capacidades físicas.\n\nExistem três tipos de Pacto. O Pacto Simples é uma troca direta e permanente — o praticante entrega algo e recebe algo de valor equivalente. O que foi perdido não volta, mas a troca é honesta: você sabe exatamente o que está pagando. O Pacto Hermético concede uma habilidade com efeito colateral proporcional imposto pela própria realidade — para cada poder concedido, há um custo que impede o abuso. O Pacto Sagrado exige um voto permanente e inquebrantável: não exige sangue nem alma, mas obediência absoluta a uma causa ou princípio.\n\nTodo ser vivo possui um limitador — uma quantidade máxima de Pactos que pode suportar antes de enlouquecer, infartar ou definhar. Esse número varia de indivíduo para indivíduo, podendo ir de um até cinco ou mais. Quando um estudante ingressa em qualquer Faculdade, o teste do limitador é realizado por um especialista em Iatroquimismo.\n\nO ritual mais seguro para selar um Pacto requer sala escura, velas e giz. Após o símbolo ritualístico ser desenhado e alinhado, o praticante senta no centro do círculo enquanto o instrutor recita: Qua uti serpio nyrkor em il necro nyl uti vortes — que significa, aproximadamente, que você tenha um contrato e não morra.\n\nUltrapassar o limite de Pactos causa o surgimento de marcas negras na pele — as mesmas marcas dos Decaídos. Cada Pacto além do limite deteriora o praticante de formas permanentes e progressivas."
+        },
+        {
+          "id": "registro-sentire",
+          "status": "Y",
+          "titulo": "Os Sentire",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "Sentire",
+            "Gelo Negro",
+            "Biologia Arcana"
+          ],
+          "resumo": "O que se sabe sobre as criaturas que emergem do Gelo Negro.",
+          "conteudo": "Os Sentire não são demônios no sentido religioso do termo. São criaturas biológicas — compostas de carne e ligamentos, anatomicamente verificáveis, indiscutivelmente reais. O consenso científico atual as classifica como entidades de origem desconhecida que emergem do Gelo Negro e são imunes à sua ação corrosiva por razões ainda não compreendidas.\n\nCada Sentire nasce diferente. Tamanhos, formas e capacidades variam enormemente. Mas todos compartilham três características fundamentais. Primeiro: fome constante e aparentemente insaciável. Segundo: ausência completa de medo — não é coragem, é a inexistência do instinto de preservação. Coloque fogo num Sentire e ele continuará avançando enquanto puder se mover. Terceiro: coordenação — eles não atacam aleatoriamente, observam e agem de forma sincronizada quando necessário.\n\nOs Sentire detectam mana passiva em corpos vivos — não mana sendo ativada, mas mana existindo em repouso. Isso significa que um Discipulus é um alvo prioritário antes mesmo de usar qualquer habilidade. Apenas por existir, é mais visível para essas criaturas do que qualquer outro combatente ao redor.\n\nSeu cheiro é característico: cadáveres recentes exalam aroma semelhante à pólvora adocicada do Gelo Negro, enquanto corpos em decomposição avançada se assemelham ao odor de frutas podres, particularmente uvas. Essa correspondência sensorial entre os Sentire e o Gelo Negro é documentada mas não explicada.\n\nSem a Gnose ou o Instinto de Combate, enfrentar um Sentire equivale a um civil enfrentando um dinossauro. Com o Instinto de Combate a luta se torna viável. Em estado de Gnose plena, o Hermético leva vantagem real."
+        },
+        {
+          "id": "registro-maconaria",
+          "status": "Y",
+          "titulo": "A Maçonaria",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "Maçonaria",
+            "Governo",
+            "Novas Américas"
+          ],
+          "resumo": "A organização que governa as Novas Américas e opera como principal poder mundial em 1790.",
+          "conteudo": "A Maçonaria não governa com trono ou coroa. Governa com regulamentos, contratos, infraestrutura e a arquitetura das cidades. Construiu estradas, pontes e sistemas de contenção contra os primeiros avanços dos Sentire — e quem constrói o que todos precisam eventualmente controla o que todos usam.\n\nEm 1790, as Novas Américas são o centro de poder do mundo. O Gelo Negro não chegou aqui com a força que chegou na Europa e na Ásia. As Cruzadas partem daqui. O suprimento industrial que alimenta as Tropas vem daqui.\n\nA hierarquia maçônica é encabeçada pelo Supremo Arquiteto — figura cuja identidade é desconhecida pelo público geral. Abaixo dele operam os Vigilantes, cada um responsável por uma área específica: o Véu, a Pedra, o Aço, a Chave, o Silêncio, a Lâmina e a Chama. Os Mestres Construtores dirigem operações em grandes cidades. Os Obreiros Maiores administram infraestrutura. Os Pedreiros do Véu atuam como guardas e caçadores especializados.\n\nA Maçonaria não é cruel por natureza. É eficiente. E a diferença entre os dois, para quem vive nas camadas mais baixas das cidades industriais, às vezes é difícil de encontrar.\n\nOutras organizações existem em relação à Maçonaria: a Ordem Rosa-Cruz busca um caminho alternativo para o poder através de Votos em vez de Pactos. A Astrum Argentum rejeita qualquer restrição e acredita que o verdadeiro poder está na quebra de limites. A Ordem Hermética da Aurora Dourada é considerada por muitos um mito — seus membros supostamente não pagam preço algum por seus poderes, o que contradiz todas as leis conhecidas do ocultismo."
+        },
+        {
+          "id": "registro-segundo-fogo",
+          "status": "Y",
+          "titulo": "O Segundo Fogo",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "Industrialização",
+            "Segundo Fogo",
+            "Aço Negro",
+            "Cruzadas"
+          ],
+          "resumo": "A industrialização que nasceu da necessidade de guerra e transformou o mundo em trinta anos.",
+          "conteudo": "O Segundo Fogo é o nome que estudiosos deram ao processo de industrialização acelerada que se seguiu à síntese do Aço Negro em 1740. Uma referência ao Athanor — o forno filosófico da tradição hermética. O primeiro fogo foi o Gelo Negro, que dissolveu o mundo antigo. O segundo é esse: a humanidade construindo algo novo sobre as cinzas.\n\nO processo não nasceu da ganância. Nasceu do desespero coletivo. Quando o Aço Negro tornou possível explorar territórios antes inacessíveis, a demanda por produção em escala explodiu — as Cruzadas precisavam de armas, as cidades reconstruídas precisavam de estrutura, as Tropas precisavam de suprimento constante. As primeiras grandes carvoarias e fundições surgiram entre 1740 e 1760, não por ambição econômica, mas porque a alternativa era perder para os Sentire.\n\nEm 1790, trinta anos depois do início das Cruzadas, o processo desenvolveu lógica própria. Cidades inteiras existem em torno da produção. O céu sobre centros industriais como Trenton raramente é azul. Trabalhadores fazem Pactos sob pressão econômica com supervisão inadequada, acumulando efeitos colaterais que nenhum sistema de saúde foi preparado para atender.\n\nO Segundo Fogo não é vilão nem herói. É consequência. Pessoas boas construíram carvoarias porque precisavam de combustível para forjar armas antes que as Cruzadas começassem. O resultado é um mundo onde o cinza da fumaça industrial e o negro azulado do Gelo se aproximam de direções opostas no horizonte das cidades."
+        },
+        {
+          "id": "registro-cidades-americas",
+          "status": "Y",
+          "titulo": "As Seis Cidades das Novas Américas",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "Novas Américas",
+            "Hartford",
+            "York",
+            "Cidades"
+          ],
+          "resumo": "Uma visão geral das principais cidades das Novas Américas em 1790.",
+          "conteudo": "Hartford é a capital. Cidade planejada do zero após o Gelo Negro, pelos Obreiros Maçônicos. As ruas são largas demais, os edifícios têm uma simetria que incomoda sem que se consiga explicar por quê. Os lampiões queimam com chama levemente azulada. É onde as decisões são tomadas — nem sempre onde se descobre o que foi decidido.\n\nYork é a maior cidade das Américas, sem discussão próxima. Nenhuma facção a controla completamente. Porto natural, história comercial anterior ao Gelo Negro, uma densidade de gente e dinheiro que nenhuma outra cidade replicou. Se você precisa de algo que não encontrou em lugar nenhum, York provavelmente tem.\n\nTrenton é o centro industrial. Carvoarias, fundições, produção de Aço Negro em escala. O céu nunca é azul. É a cidade que mantém as Cruzadas funcionando, e esse fato é usado para encerrar qualquer conversa inconveniente sobre as condições de quem trabalha aqui.\n\nPortsmouth é o porto. Por aqui passa o suprimento que vai para a Europa e volta o que sobra das Cruzadas. Cidade velha com partes que existem desde antes do Gelo Negro. A névoa raramente some completamente.\n\nAlbany é o centro político. Parlamento, tribunais, eleições. Tudo que um governo civil deveria ter — e funciona, dentro de certos limites que se tornam visíveis quando alguém tenta cruzá-los. Fala-se com cuidado em Albany.\n\nConcord é a fronteira. A cidade mais ao norte, mais próxima dos territórios que as Cruzadas ainda não mapearam completamente. As muralhas são de Aço Negro puro e brilham de forma estranha à noite. As pessoas aqui falam direto — quando se vive perto o suficiente do que existe lá fora, a pretensão perde a graça."
+        },
+        {
+          "id": "registro-gnose",
+          "status": "Y",
+          "titulo": "A Gnose e o Instinto de Combate",
+          "subtitulo": "Registro Histórico",
+          "data": "1790",
+          "tags": [
+            "Gnose",
+            "Combate",
+            "Transcendência",
+            "Newton"
+          ],
+          "resumo": "Os estados de consciência que separam um Hermético treinado de qualquer outra coisa no campo de batalha.",
+          "conteudo": "A Gnose não é uma técnica. Não é uma habilidade. É um estado — e existem graus dele, cada um separado do anterior por uma distância que a maioria dos Herméticos passa a vida inteira tentando cruzar.\n\nO Instinto de Combate é o primeiro estado. O que acontece quando um Hermético treinado enfrenta algo que opera numa frequência que o corpo humano comum não consegue acompanhar. Não é Gnose — é o treinamento sendo empurrado ao limite, o instinto sobrepondo a hesitação sem eliminá-la completamente. Sem ele, enfrentar um Sentire equivale a um civil enfrentando um dinossauro.\n\nA Gnose é o estado real. A suspensão completa da hesitação — o corpo age antes que a mente consciente interfira. O Hermético em Gnose não reage ao golpe. O golpe simplesmente já estava errado antes de partir. Não pode ser forçada por intenção direta: quanto mais deliberadamente se tenta alcançá-la, mais ela se afasta.\n\nA Transcendência está além da Gnose. Documentada apenas duas vezes na história. Os cálculos indicam uma probabilidade de um em quarenta e três milhões. Sir Isaac Newton a atingiu durante uma batalha no continente asiático — por um instante, deixou de ser humano no sentido convencional. Dezenas de Sentire em frações de milésimos de segundo. Depois parou. E nunca mais conseguiu repetir. Newton escreveu sobre esse momento em um diário, arrancou a página e a queimou. Ninguém sabe o que viu."
+        }
+      ]
+    },
+    {
       "id": "jornais",
       "titulo": "Jornais",
       "icone": "✦",
@@ -293,57 +446,6 @@
           ],
           "resumo": "Parte base militar, parte centro de abastecimento, parte lugar onde pessoas que não se encaixam.",
           "conteudo": "Concord cresceu rápido depois de 1760, quando as Cruzadas precisaram de uma base no norte do continente, e nunca teve tempo de se tornar uma cidade organizada no sentido convencional. É parte base militar, parte centro de abastecimento, parte lugar onde pessoas que não se encaixam mais em lugar nenhum eventualmente aparecem.\n\nÉ a cidade mais próxima dos territórios que as Cruzadas ainda não mapearam completamente, e isso define o caráter do lugar. Há uma urgência em Concord que Hartford e Albany não têm. As muralhas externas são de Aço Negro puro e têm um brilho estranho à noite que moradores param de mencionar depois de algum tempo.\n\nSoldados que partem para o norte se abastecem em Concord. Soldados que voltam chegam por aqui primeiro. As pessoas falam direto, sem o cuidado de Albany, e têm pouca paciência para pretensão. Quando você vive perto o suficiente do que existe lá fora, certas coisas perdem a importância que tinham antes."
-        }
-      ]
-    },
-    {
-      "id": "registros",
-      "titulo": "Registros Históricos",
-      "icone": "▸",
-      "descricao": "Eventos e ocorrências que os arquivos oficiais prefeririam não catalogar.",
-      "itens": [
-        {
-          "id": "reg-inicio",
-          "status": "Y",
-          "titulo": "O Início",
-          "subtitulo": "Registro Histórico — 1400",
-          "data": "~1400 d.C.",
-          "tags": [
-            "Gelo Negro",
-            "Origem",
-            "Discipulus"
-          ],
-          "resumo": "O que se sabe sobre o período entre 1400 e 1600 — o caos, as novas raças, os primeiros Discipulus.",
-          "conteudo": "Em 1400, algo emergiu dos polos que nenhum texto anterior havia previsto com especificidade suficiente para ser útil. Os continentes se moveram. Cidades desapareceram em fissuras que abriram e fecharam em horas. Montanhas surgiram onde havia planícies. Os polos ficaram pretos.\n\nNesse mesmo período, crianças começaram a nascer de formas que não tinham explicação. Alguns com habilidades que o mundo até então chamava de bruxaria e passou a chamar de Discipulus — uma palavra que significa aprendiz e foi escolhida por alguém que preferia não decidir se era bênção ou aberração. Junto com os humanos e os Discipulus, surgiram raças novas. Diferentes em aparência. Parecidas em tudo que importa.\n\nEntre 1400 e 1600, o mundo não tinha um nome para o que estava enfrentando e se matava por isso. Cornélio de Aggripa nasceu nesse intervalo e passou a vida fazendo o que ninguém conseguia: convencer as pessoas a pararem de se matar entre si enquanto havia algo externo matando todo mundo.\n\nEm 1650, Vaughan nomeou o campo. Em 1740, Germain criou o material. Em 1760, as Cruzadas começaram de verdade — com estrutura, hierarquia e Aço Negro suficiente para entrar nos territórios e voltar."
-        },
-        {
-          "id": "reg-cruzadas",
-          "status": "Y",
-          "titulo": "As Cruzadas",
-          "subtitulo": "Registro Histórico — 1760",
-          "data": "1760 d.C.",
-          "tags": [
-            "Cruzadas",
-            "Gibraltar",
-            "Zarcas",
-            "Xzul'Dan"
-          ],
-          "resumo": "Três tropas. Três continentes. A primeira expedição organizada ao território do Gelo Negro.",
-          "conteudo": "As Cruzadas para o Gelo Negro começaram em 1760, vinte anos depois que o Aço Negro foi sintetizado e distribuído em quantidade suficiente para equipar uma força de tamanho razoável. A tecnologia era nova e os territórios eram desconhecidos, o que significava que o primeiro critério de seleção não era habilidade — era disposição para ir mesmo sem garantia de voltar.\n\nTrês unidades foram organizadas. A Tropa de Gibraltar representava a Europa e operava a partir das bordas do que restava do mediterrâneo. A Tropa de Zarcas vinha das Novas Américas e avançava para o noroeste, onde os mapas simplesmente paravam. A Tropa de Xzul'Dan, proveniente da Ásia, era a mais antiga das três em termos de prática de combate contra Sentire, e suas táticas foram adotadas parcialmente pelas outras.\n\nO que essas tropas encontraram nas primeiras décadas de operação mudou o que se pensava saber sobre o Gelo Negro. Os relatórios completos existem. Poucos têm acesso a eles."
-        },
-        {
-          "id": "reg-sentire",
-          "status": "Y",
-          "titulo": "Anatomia dos Sentire",
-          "subtitulo": "Registro Acadêmico — Academia de Arcanismo",
-          "data": "Pós-1650",
-          "tags": [
-            "Sentire",
-            "Biologia",
-            "Arcanismo"
-          ],
-          "resumo": "O que se sabe sobre os Sentire depois de décadas de estudo — que é menos do que parece e mais do que era antes.",
-          "conteudo": "Antes de Vaughan, os Sentire eram tratados como fenômenos — sem origem, sem biologia, sem lógica interna. Depois que a Academia de Arcanismo começou a estudar os cadáveres que as Cruzadas trouxeram, o quadro mudou. São biológicos. Têm tecidos, têm o que parece ser um sistema circulatório, têm estruturas que correspondem vagamente a órgãos. São anormais para qualquer padrão natural, mas são materiais. Reais. Que podem ser estudados.\n\nA imunidade ao Gelo Negro ainda não tem explicação satisfatória. Os tecidos de Sentire compartilham algo — uma propriedade química, possivelmente — com a gordura humana, que também sobrevive ao contato. Foi essa linha de pesquisa que Germain seguiu para chegar ao Aço Negro.\n\nO cheiro de pólvora adocicada é consistente em espécimes frescos. Em decomposição avançada, a semelhança com frutas podres levou pelo menos um pesquisador a uma teoria sobre processos fermentativos que a Academia ainda não confirmou nem descartou formalmente."
         }
       ]
     }
